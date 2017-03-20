@@ -4564,14 +4564,20 @@ var AbstractRepositoryCardGerator = (function (_super) {
         return scriptArray.join("\n");
     };
     AbstractRepositoryCardGerator.prototype.createCardHeader = function () {
-        var subheader = this.createElement("div", "sub header");
-        subheader.appendChild(this._doc.createTextNode(this.getCardData("owner_name")));
         var header = this.createElement("div", "ui dividing " + this.headerSize + " header");
         header.appendChild(this.createOwnerAvatar());
         header.appendChild(this.createPopup());
-        header.appendChild(this.createContentElement([
-            this.createRepositoryName(), subheader
-        ]));
+        var subheaderText = this.getCardData("owner_name");
+        if (subheaderText == null) {
+            subheaderText = this.getCardData("organization")["name"];
+        }
+        if (subheaderText != null) {
+            var subheader = this.createElement("div", "sub header");
+            subheader.appendChild(this._doc.createTextNode(subheaderText));
+            header.appendChild(this.createContentElement([
+                this.createRepositoryName(), subheader
+            ]));
+        }
         var latest_tag = this.getCardData("latest_tag");
         if (typeof latest_tag === "string" && latest_tag) {
             header.appendChild(this.createTagLabel());
@@ -4855,7 +4861,7 @@ var AbstractRepositoryCardGerator = (function (_super) {
     };
     AbstractRepositoryCardGerator.prototype.createLicenseElement = function (className) {
         var licenseData = this.getCardData("license");
-        if (licenseData == null) {
+        if (licenseData == null || licenseData["spdx_id"] == null) {
             return null;
         }
         var licenseElement = this.createElement("div", className);
