@@ -4405,6 +4405,59 @@ var Emoji;
     Emoji.WIDTH = 16;
     Emoji.HEIGHT = 16;
 })(Emoji = exports.Emoji || (exports.Emoji = {}));
+var STEP_HEIGHT = 20;
+var BaseChartSize;
+(function (BaseChartSize) {
+    var Line;
+    (function (Line) {
+        Line.HEIGHT = 110;
+        Line.TITLE_FONT_SIZE = 10;
+        Line.TICK_FONT_SIZE = 8;
+    })(Line = BaseChartSize.Line || (BaseChartSize.Line = {}));
+    var Pie;
+    (function (Pie) {
+        Pie.HEIGHT = 160;
+    })(Pie = BaseChartSize.Pie || (BaseChartSize.Pie = {}));
+})(BaseChartSize || (BaseChartSize = {}));
+var ChartSize;
+(function (ChartSize) {
+    var Line;
+    (function (Line) {
+        var Medium;
+        (function (Medium) {
+            Medium.HEIGHT = BaseChartSize.Line.HEIGHT + STEP_HEIGHT * 2;
+            Medium.TITLE_FONT_SIZE = BaseChartSize.Line.TITLE_FONT_SIZE + 2;
+            Medium.TICK_FONT_SIZE = BaseChartSize.Line.TICK_FONT_SIZE + 2;
+        })(Medium = Line.Medium || (Line.Medium = {}));
+        var Small;
+        (function (Small) {
+            Small.HEIGHT = BaseChartSize.Line.HEIGHT + STEP_HEIGHT * 1;
+            Small.TITLE_FONT_SIZE = BaseChartSize.Line.TITLE_FONT_SIZE + 1;
+            Small.TICK_FONT_SIZE = BaseChartSize.Line.TICK_FONT_SIZE + 1;
+        })(Small = Line.Small || (Line.Small = {}));
+        var Tiny;
+        (function (Tiny) {
+            Tiny.HEIGHT = BaseChartSize.Line.HEIGHT;
+            Tiny.TITLE_FONT_SIZE = BaseChartSize.Line.TITLE_FONT_SIZE;
+            Tiny.TICK_FONT_SIZE = BaseChartSize.Line.TICK_FONT_SIZE;
+        })(Tiny = Line.Tiny || (Line.Tiny = {}));
+    })(Line = ChartSize.Line || (ChartSize.Line = {}));
+    var Pie;
+    (function (Pie) {
+        var Medium;
+        (function (Medium) {
+            Medium.HEIGHT = BaseChartSize.Pie.HEIGHT + STEP_HEIGHT * 2;
+        })(Medium = Pie.Medium || (Pie.Medium = {}));
+        var Small;
+        (function (Small) {
+            Small.HEIGHT = BaseChartSize.Pie.HEIGHT + STEP_HEIGHT * 1;
+        })(Small = Pie.Small || (Pie.Small = {}));
+        var Tiny;
+        (function (Tiny) {
+            Tiny.HEIGHT = BaseChartSize.Pie.HEIGHT + STEP_HEIGHT;
+        })(Tiny = Pie.Tiny || (Pie.Tiny = {}));
+    })(Pie = ChartSize.Pie || (ChartSize.Pie = {}));
+})(ChartSize = exports.ChartSize || (exports.ChartSize = {}));
 //# sourceMappingURL=const.js.map
 
 /***/ }),
@@ -4513,6 +4566,20 @@ var AbstractRepositoryCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(AbstractRepositoryCardGerator.prototype, "chartTitleFontSize", {
+        get: function () {
+            throw Error("not implemented");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AbstractRepositoryCardGerator.prototype, "chartTickFontSize", {
+        get: function () {
+            throw Error("not implemented");
+        },
+        enumerable: true,
+        configurable: true
+    });
     AbstractRepositoryCardGerator.prototype.isCreateChart = function () {
         throw Error("not implemented");
     };
@@ -4538,7 +4605,7 @@ var AbstractRepositoryCardGerator = (function (_super) {
             var languageLabel = _c[_b];
             languageLabelArray.push("'" + languageLabel + "'");
         }
-        var chartScript = "\nvar commitsCanvas = document.getElementById('" + CanvasId.COMMITS_CHART + "');\nvar issuesCanvas = document.getElementById('" + CanvasId.ISSUES_CHART + "');\nvar languageCanvas = document.getElementById('" + CanvasId.LANGUAGES_CHART + "');\n\nChart.defaults.global.defaultFontSize = 10;\n\nif (commitsCanvas) {\n    var commitsChart = new Chart(commitsCanvas, {\n        type: 'line',\n        data: {\n            labels: [" + dateArray.join(", ") + "],\n            datasets: [{\n                label: 'Commits',\n                data: [" + this.getCardData("participation") + "],\n                fill: true,\n                backgroundColor: 'rgba(136, 211, 161, 0.9)',\n                borderWidth: 0,\n                pointRadius: 0.5,\n                pointHitRadius: 16,\n                showLine: true,\n            }]\n        },\n        options: {\n            responsive: false,\n            title: {\n                display: true,\n                text: '" + this.getCardData("commits_last_year") + " commits in the last year'\n            },\n            legend: { display: false },\n            scales:{\n                xAxes: [{\n                    type: 'time',\n                    time: { format: 'MM/YYYY', tooltipFormat: 'YYYY wo [week]' },\n                    gridLines: { display: false },\n                    ticks: { minRotation: 30 },\n                }],\n                yAxes: [{\n                    scaleLabel: { display: true, labelString: 'Commits' },\n                }],\n            },\n        }\n    });\n}\n\nif (issuesCanvas) {\n    let myPieChart = new Chart(issuesCanvas, {\n        type: 'pie',\n        data: {\n            labels: [" + issuesLabelArray.join(", ") + "],\n            datasets: [{\n                data: [" + this.getCardData("open_issues")["data"] + "],\n                backgroundColor: Please.make_color({\n                    colors_returned: " + this.getCardData("open_issues_count") + ",\n                }),\n            }]\n        },\n        options: {\n            responsive: false,\n        }\n    });\n}\n\nif (languageCanvas) {\n    let myPieChart = new Chart(languageCanvas, {\n        type: 'pie',\n        data: {\n            labels: [" + languageLabelArray.join(", ") + "],\n            datasets: [{\n                data: [" + this.getCardData("languages")["data"] + "],\n                backgroundColor: Please.make_color({\n                    colors_returned: " + this.getCardData("languages")["labels"].length + ",\n                }),\n            }]\n        },\n        options: {\n            responsive: false,\n        }\n    });\n}\n";
+        var chartScript = "\nvar commitsCanvas = document.getElementById('" + CanvasId.COMMITS_CHART + "');\nvar issuesCanvas = document.getElementById('" + CanvasId.ISSUES_CHART + "');\nvar languageCanvas = document.getElementById('" + CanvasId.LANGUAGES_CHART + "');\n\nChart.defaults.global.defaultFontSize = 10;\n\nif (commitsCanvas) {\n    var commitsChart = new Chart(commitsCanvas, {\n        type: 'line',\n        data: {\n            labels: [" + dateArray.join(", ") + "],\n            datasets: [{\n                label: 'Commits',\n                data: [" + this.getCardData("participation") + "],\n                fill: true,\n                backgroundColor: 'rgba(136, 211, 161, 0.9)',\n                borderWidth: 0,\n                pointRadius: 0.5,\n                pointHitRadius: 16,\n                showLine: true,\n            }]\n        },\n        options: {\n            responsive: false,\n            title: {\n                display: true,\n                fontSize: " + this.chartTitleFontSize + ",\n                text: '" + this.getCardData("commits_last_year") + " commits in the last year'\n            },\n            legend: { display: false },\n            scales:{\n                xAxes: [{\n                    type: 'time',\n                    time: { format: 'MM/YYYY', tooltipFormat: 'YYYY wo [week]' },\n                    gridLines: { display: false },\n                    ticks: { minRotation: 25, fontSize: " + this.chartTickFontSize + " },\n                }],\n                yAxes: [{\n                    scaleLabel: { display: true, labelString: 'Commits' },\n                }],\n            },\n        }\n    });\n}\n\nif (issuesCanvas) {\n    let myPieChart = new Chart(issuesCanvas, {\n        type: 'pie',\n        data: {\n            labels: [" + issuesLabelArray.join(", ") + "],\n            datasets: [{\n                data: [" + this.getCardData("open_issues")["data"] + "],\n                backgroundColor: Please.make_color({\n                    colors_returned: " + this.getCardData("open_issues_count") + ",\n                }),\n            }]\n        },\n        options: {\n            responsive: false,\n        }\n    });\n}\n\nif (languageCanvas) {\n    let myPieChart = new Chart(languageCanvas, {\n        type: 'pie',\n        data: {\n            labels: [" + languageLabelArray.join(", ") + "],\n            datasets: [{\n                data: [" + this.getCardData("languages")["data"] + "],\n                backgroundColor: Please.make_color({\n                    colors_returned: " + this.getCardData("languages")["labels"].length + ",\n                }),\n            }]\n        },\n        options: {\n            responsive: false,\n        }\n    });\n}\n";
         var scriptArray = [
             "$('#" + const_1.AVATAR_ELEMENT_ID + ".ui.image').popup({",
             "  on: 'click',",
@@ -4739,35 +4806,40 @@ var AbstractRepositoryCardGerator = (function (_super) {
                 infoCount++;
             }
         }
-        if (displayMapping["subscribers_count"]) {
+        if (displayMapping["subscribers_count"]
+            && Number(this.getCardData("subscribers_count")) > 0) {
             var element = this.createWatchersElement(itemClassName);
-            if (element && (Number(this.getCardData("subscribers_count")) > 0)) {
+            if (element) {
                 infoList.appendChild(element);
                 infoCount++;
             }
         }
-        if (displayMapping["open_issues_count"]) {
+        if (displayMapping["open_issues_count"]
+            && Number(this.getCardData("open_issues_count")) > 0) {
             var element = this.createIssuesElement(itemClassName);
-            if (element && (Number(this.getCardData("open_issues_count")) > 0)) {
+            if (element) {
                 infoList.appendChild(element);
                 infoCount++;
             }
         }
-        if (displayMapping["pulls_count"]) {
+        if (displayMapping["pulls_count"]
+            && (Number(this.getCardData("pulls_count")) > 0)) {
             var element = this.createPullsElement(itemClassName);
-            if (element && (Number(this.getCardData("pulls_count")) > 0)) {
+            if (element) {
                 infoList.appendChild(element);
                 infoCount++;
             }
         }
-        if (displayMapping["branches_count"]) {
+        if (displayMapping["branches_count"]
+            && (Number(this.getCardData("branches_count")) > 0)) {
             var element = this.createBranchElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
                 infoCount++;
             }
         }
-        if (displayMapping["contributors_count"]) {
+        if (displayMapping["contributors_count"]
+            && Number(this.getCardData("contributors_count")) > 0) {
             var element = this.createContributorsElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
@@ -26256,6 +26328,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var const_1 = __webpack_require__(1);
 var base_repository_1 = __webpack_require__(2);
 var MediumRepoCardGerator = (function (_super) {
     __extends(MediumRepoCardGerator, _super);
@@ -26292,14 +26365,28 @@ var MediumRepoCardGerator = (function (_super) {
     });
     Object.defineProperty(MediumRepoCardGerator.prototype, "lineChartHeight", {
         get: function () {
-            return 180;
+            return const_1.ChartSize.Line.Medium.HEIGHT;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(MediumRepoCardGerator.prototype, "pieChartHeight", {
         get: function () {
-            return 240;
+            return const_1.ChartSize.Pie.Medium.HEIGHT;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MediumRepoCardGerator.prototype, "chartTitleFontSize", {
+        get: function () {
+            return const_1.ChartSize.Line.Medium.TITLE_FONT_SIZE;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MediumRepoCardGerator.prototype, "chartTickFontSize", {
+        get: function () {
+            return const_1.ChartSize.Line.Medium.TICK_FONT_SIZE;
         },
         enumerable: true,
         configurable: true
@@ -26332,6 +26419,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var const_1 = __webpack_require__(1);
 var base_repository_1 = __webpack_require__(2);
 var SmallRepoCardGerator = (function (_super) {
     __extends(SmallRepoCardGerator, _super);
@@ -26368,14 +26456,28 @@ var SmallRepoCardGerator = (function (_super) {
     });
     Object.defineProperty(SmallRepoCardGerator.prototype, "lineChartHeight", {
         get: function () {
-            return 160;
+            return const_1.ChartSize.Line.Small.HEIGHT;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(SmallRepoCardGerator.prototype, "pieChartHeight", {
         get: function () {
-            return 220;
+            return const_1.ChartSize.Pie.Small.HEIGHT;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SmallRepoCardGerator.prototype, "chartTitleFontSize", {
+        get: function () {
+            return const_1.ChartSize.Line.Small.TITLE_FONT_SIZE;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SmallRepoCardGerator.prototype, "chartTickFontSize", {
+        get: function () {
+            return const_1.ChartSize.Line.Small.TICK_FONT_SIZE;
         },
         enumerable: true,
         configurable: true
@@ -26408,6 +26510,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var const_1 = __webpack_require__(1);
 var base_repository_1 = __webpack_require__(2);
 var TinyRepoCardGerator = (function (_super) {
     __extends(TinyRepoCardGerator, _super);
@@ -26444,14 +26547,28 @@ var TinyRepoCardGerator = (function (_super) {
     });
     Object.defineProperty(TinyRepoCardGerator.prototype, "lineChartHeight", {
         get: function () {
-            return 140;
+            return const_1.ChartSize.Line.Tiny.HEIGHT;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(TinyRepoCardGerator.prototype, "pieChartHeight", {
         get: function () {
-            return 200;
+            return const_1.ChartSize.Pie.Tiny.HEIGHT;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TinyRepoCardGerator.prototype, "chartTitleFontSize", {
+        get: function () {
+            return const_1.ChartSize.Line.Tiny.TITLE_FONT_SIZE;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TinyRepoCardGerator.prototype, "chartTickFontSize", {
+        get: function () {
+            return const_1.ChartSize.Line.Tiny.TICK_FONT_SIZE;
         },
         enumerable: true,
         configurable: true
