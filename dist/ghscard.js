@@ -4394,8 +4394,8 @@ var SEMANTIC_UI_VERSION = "2.2.9";
 var JsUrl;
 (function (JsUrl) {
     JsUrl.CHART = CDN_PREFIX + "/Chart.js/2.5.0/Chart.min.js";
-    JsUrl.JQUERY = CDN_PREFIX + "/jquery/3.2.0/jquery.min.js";
-    JsUrl.MOMENT = CDN_PREFIX + "/moment.js/2.18.0/moment.min.js";
+    JsUrl.JQUERY = CDN_PREFIX + "/jquery/3.2.1/jquery.min.js";
+    JsUrl.MOMENT = CDN_PREFIX + "/moment.js/2.18.1/moment.min.js";
     JsUrl.PLEASE = CDN_PREFIX + "/pleasejs/0.4.2/Please.min.js";
     JsUrl.SEMANTIC_UI = (CDN_PREFIX + "/semantic-ui/" + SEMANTIC_UI_VERSION + "/semantic.min.js");
 })(JsUrl = exports.JsUrl || (exports.JsUrl = {}));
