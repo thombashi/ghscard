@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 127);
+/******/ 	return __webpack_require__(__webpack_require__.s = 129);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1884,7 +1884,7 @@ function loadLocale(name) {
             module && module.exports) {
         try {
             oldLocale = globalLocale._abbr;
-            __webpack_require__(125)("./" + name);
+            __webpack_require__(127)("./" + name);
             // because defineLocale currently also sets the global locale, we
             // want to undo that for lazy loaded locales
             getSetGlobalLocale(oldLocale);
@@ -4372,7 +4372,7 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(126)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(128)(module)))
 
 /***/ }),
 /* 1 */
@@ -4477,8 +4477,65 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var base_user_org_1 = __webpack_require__(7);
+var AbstractOrgCardGerator = (function (_super) {
+    __extends(AbstractOrgCardGerator, _super);
+    function AbstractOrgCardGerator() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    AbstractOrgCardGerator.prototype.createCardHeader = function () {
+        var header = this.createAnchorElement(this.htmlUrl, "ui " + this.headerSize + " dividing header");
+        if (this.getCardData("name")) {
+            header.appendChild(this._doc.createTextNode(this.getCardData("name")));
+            var subheader = this.createElement("div", "sub header");
+            subheader.appendChild(this._doc.createTextNode(this.getCardData("id")));
+            header.appendChild(subheader);
+        }
+        else {
+            header.appendChild(this._doc.createTextNode(this.getCardData("id")));
+        }
+        return header;
+    };
+    AbstractOrgCardGerator.prototype.createStatistics = function () {
+        var items = this.createElement("div", "ui " + this.infoSize + " aligned selection list");
+        if (Number(this.publicRepos) > 0) {
+            var item = this.createAnchorElement(this.htmlUrl + "?tab=repositories", "item");
+            item.appendChild(this._doc.createTextNode("Repositories"));
+            item.appendChild(this.createLabelElement(this.publicRepos, this.infoSize));
+            items.appendChild(item);
+        }
+        if (Number(this.getCardData("public_members_count")) > 0) {
+            var item = this.createAnchorElement("https://github.com/orgs/" + this.getCardData("id") + "/people", "item");
+            item.appendChild(this._doc.createTextNode("People"));
+            item.appendChild(this.createLabelElement(this.getCardData("public_members_count"), this.infoSize));
+            items.appendChild(item);
+        }
+        return items;
+    };
+    return AbstractOrgCardGerator;
+}(base_user_org_1.AbstractUserOrgCardGerator));
+exports.AbstractOrgCardGerator = AbstractOrgCardGerator;
+//# sourceMappingURL=base_organization.js.map
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var const_1 = __webpack_require__(1);
-var base_1 = __webpack_require__(5);
+var base_1 = __webpack_require__(6);
 var moment = __webpack_require__(0);
 var CanvasId;
 (function (CanvasId) {
@@ -5044,7 +5101,7 @@ exports.AbstractRepositoryCardGerator = AbstractRepositoryCardGerator;
 //# sourceMappingURL=base_repository.js.map
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5060,7 +5117,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var base_user_org_1 = __webpack_require__(6);
+var base_user_org_1 = __webpack_require__(7);
 var AbstractUserCardGerator = (function (_super) {
     __extends(AbstractUserCardGerator, _super);
     function AbstractUserCardGerator() {
@@ -5192,7 +5249,7 @@ exports.AbstractUserCardGerator = AbstractUserCardGerator;
 //# sourceMappingURL=base_user.js.map
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -15419,7 +15476,7 @@ return jQuery;
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15608,7 +15665,7 @@ exports.AbstractCardGerator = AbstractCardGerator;
 //# sourceMappingURL=base.js.map
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15625,7 +15682,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var const_1 = __webpack_require__(1);
-var base_1 = __webpack_require__(5);
+var base_1 = __webpack_require__(6);
 var AbstractUserOrgCardGerator = (function (_super) {
     __extends(AbstractUserOrgCardGerator, _super);
     function AbstractUserOrgCardGerator(doc, cardData, color, emojiProcessor) {
@@ -15671,6 +15728,9 @@ var AbstractUserOrgCardGerator = (function (_super) {
         return this._color;
     };
     AbstractUserOrgCardGerator.prototype.createCardContent = function () {
+        return this._createCardContent();
+    };
+    AbstractUserOrgCardGerator.prototype._createCardContent = function () {
         var segmentClassName = "ui vertical basic compact segment";
         var content = this.createContentElement([this.createCardHeader()]);
         {
@@ -15701,6 +15761,36 @@ var AbstractUserOrgCardGerator = (function (_super) {
             var userInfoList = this.createUserInfoList();
             if (userInfoList) {
                 content.appendChild(this.createElementWithChild(segmentClassName, [userInfoList]));
+            }
+        }
+        return content;
+    };
+    AbstractUserOrgCardGerator.prototype._createCardContentTiny = function () {
+        var segment_style = "ui vertical basic compact segment";
+        var content = this.createContentElement([this.createCardHeader()]);
+        {
+            var grid = this.createElement("div", "ui grid");
+            {
+                var avatarColumn = this.createElement("div", this.avatarColumnWide + " wide center aligned column");
+                avatarColumn.appendChild(this.createAvatar());
+                avatarColumn.appendChild(this.createPopup());
+                grid.appendChild(avatarColumn);
+            }
+            {
+                var userInfoColumn = this.createElement("div", "nine wide left aligned column");
+                userInfoColumn.appendChild(this.createUserInfoList());
+                grid.appendChild(userInfoColumn);
+            }
+            var segment = this.createElement("div", segment_style);
+            segment.appendChild(grid);
+            content.appendChild(segment);
+        }
+        {
+            var bioElement = this.createDescription(this.getCardData("description"));
+            if (bioElement) {
+                var segment = this.createElement("div", segment_style);
+                segment.appendChild(bioElement);
+                content.appendChild(segment);
             }
         }
         return content;
@@ -15818,7 +15908,7 @@ exports.AbstractUserOrgCardGerator = AbstractUserOrgCardGerator;
 //# sourceMappingURL=base_user_org.js.map
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15896,7 +15986,7 @@ return af;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15960,7 +16050,7 @@ return arDz;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16091,7 +16181,7 @@ return arLy;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16156,7 +16246,7 @@ return arMa;
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16266,7 +16356,7 @@ return arSa;
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16330,7 +16420,7 @@ return arTn;
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16477,7 +16567,7 @@ return ar;
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16587,7 +16677,7 @@ return az;
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16726,7 +16816,7 @@ return be;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16821,7 +16911,7 @@ return bg;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16945,7 +17035,7 @@ return bn;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17069,7 +17159,7 @@ return bo;
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17182,7 +17272,7 @@ return br;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17330,7 +17420,7 @@ return bs;
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17416,7 +17506,7 @@ return ca;
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17593,7 +17683,7 @@ return cs;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17661,7 +17751,7 @@ return cv;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17747,7 +17837,7 @@ return cy;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17812,7 +17902,7 @@ return da;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17896,7 +17986,7 @@ return deAt;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17979,7 +18069,7 @@ return de;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18084,7 +18174,7 @@ return dv;
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18187,7 +18277,7 @@ return el;
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18259,7 +18349,7 @@ return enAu;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18327,7 +18417,7 @@ return enCa;
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18399,7 +18489,7 @@ return enGb;
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18471,7 +18561,7 @@ return enIe;
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18543,7 +18633,7 @@ return enNz;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18621,7 +18711,7 @@ return eo;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18706,7 +18796,7 @@ return esDo;
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18792,7 +18882,7 @@ return es;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18877,7 +18967,7 @@ return et;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18948,7 +19038,7 @@ return eu;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19060,7 +19150,7 @@ return fa;
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19172,7 +19262,7 @@ return fi;
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19237,7 +19327,7 @@ return fo;
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19302,7 +19392,7 @@ return frCa;
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19371,7 +19461,7 @@ return frCh;
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19440,7 +19530,7 @@ return fr;
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19518,7 +19608,7 @@ return fy;
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19599,7 +19689,7 @@ return gd;
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19681,7 +19771,7 @@ return gl;
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19785,7 +19875,7 @@ return he;
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19914,7 +20004,7 @@ return hi;
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20064,7 +20154,7 @@ return hr;
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20178,7 +20268,7 @@ return hu;
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20278,7 +20368,7 @@ return hyAm;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20366,7 +20456,7 @@ return id;
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20498,7 +20588,7 @@ return is;
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20573,7 +20663,7 @@ return it;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20654,7 +20744,7 @@ return ja;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20742,7 +20832,7 @@ return jv;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20836,7 +20926,7 @@ return ka;
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20928,7 +21018,7 @@ return kk;
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20991,7 +21081,7 @@ return km;
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21061,7 +21151,7 @@ return ko;
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21154,7 +21244,7 @@ return ky;
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21296,7 +21386,7 @@ return lb;
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21371,7 +21461,7 @@ return lo;
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21493,7 +21583,7 @@ return lt;
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21595,7 +21685,7 @@ return lv;
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21711,7 +21801,7 @@ return me;
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21780,7 +21870,7 @@ return mi;
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21875,7 +21965,7 @@ return mk;
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21961,7 +22051,7 @@ return ml;
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22125,7 +22215,7 @@ return mr;
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22213,7 +22303,7 @@ return msMy;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22300,7 +22390,7 @@ return ms;
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22401,7 +22491,7 @@ return my;
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22469,7 +22559,7 @@ return nb;
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22597,7 +22687,7 @@ return ne;
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22688,7 +22778,7 @@ return nlBe;
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22779,7 +22869,7 @@ return nl;
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22844,7 +22934,7 @@ return nn;
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22973,7 +23063,7 @@ return paIn;
 
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23083,7 +23173,7 @@ return pl;
 
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23149,7 +23239,7 @@ return ptBr;
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23219,7 +23309,7 @@ return pt;
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23299,7 +23389,7 @@ return ro;
 
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23487,7 +23577,7 @@ return ru;
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23553,7 +23643,7 @@ return se;
 
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23629,7 +23719,7 @@ return si;
 
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23784,7 +23874,7 @@ return sk;
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23951,7 +24041,7 @@ return sl;
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24026,7 +24116,7 @@ return sq;
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24141,7 +24231,7 @@ return srCyrl;
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24256,7 +24346,7 @@ return sr;
 
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24350,7 +24440,7 @@ return ss;
 
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24424,7 +24514,7 @@ return sv;
 
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24488,7 +24578,7 @@ return sw;
 
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24623,7 +24713,7 @@ return ta;
 
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24717,7 +24807,7 @@ return te;
 
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24790,7 +24880,7 @@ return tet;
 
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24862,7 +24952,7 @@ return th;
 
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24929,7 +25019,7 @@ return tlPh;
 
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25054,7 +25144,7 @@ return tlh;
 
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25149,7 +25239,7 @@ return tr;
 
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25245,7 +25335,7 @@ return tzl;
 
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25308,7 +25398,7 @@ return tzmLatn;
 
 
 /***/ }),
-/* 106 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25371,7 +25461,7 @@ return tzm;
 
 
 /***/ }),
-/* 107 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25522,7 +25612,7 @@ return uk;
 
 
 /***/ }),
-/* 108 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25585,7 +25675,7 @@ return uz;
 
 
 /***/ }),
-/* 109 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25669,7 +25759,7 @@ return vi;
 
 
 /***/ }),
-/* 110 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25742,7 +25832,7 @@ return xPseudo;
 
 
 /***/ }),
-/* 111 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25807,7 +25897,7 @@ return yo;
 
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25939,7 +26029,7 @@ return zhCn;
 
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26049,7 +26139,7 @@ return zhHk;
 
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26158,22 +26248,24 @@ return zhTw;
 
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var medium_1 = __webpack_require__(117);
-var medium_2 = __webpack_require__(118);
-var small_1 = __webpack_require__(119);
-var tiny_1 = __webpack_require__(120);
-var medium_3 = __webpack_require__(121);
-var small_2 = __webpack_require__(122);
-var tiny_2 = __webpack_require__(123);
+var small_1 = __webpack_require__(118);
+var tiny_1 = __webpack_require__(119);
+var medium_2 = __webpack_require__(120);
+var small_2 = __webpack_require__(121);
+var tiny_2 = __webpack_require__(122);
+var medium_3 = __webpack_require__(123);
+var small_3 = __webpack_require__(124);
+var tiny_3 = __webpack_require__(125);
 var const_1 = __webpack_require__(1);
-var emoji_1 = __webpack_require__(124);
-var $ = __webpack_require__(4);
+var emoji_1 = __webpack_require__(126);
+var $ = __webpack_require__(5);
 var CardAttr;
 (function (CardAttr) {
     CardAttr.WIDTH = "card-width";
@@ -26196,10 +26288,10 @@ function createCardGenerator(iframeDocument, cardType, cardStyle, cardData, colo
                     return new medium_1.MediumOrgCardGerator(iframeDocument, cardData, color, emojiProcessor);
                 }
                 case "small": {
-                    return new medium_1.MediumOrgCardGerator(iframeDocument, cardData, color, emojiProcessor);
+                    return new small_1.SmallOrgCardGerator(iframeDocument, cardData, color, emojiProcessor);
                 }
                 case "tiny": {
-                    return new medium_1.MediumOrgCardGerator(iframeDocument, cardData, color, emojiProcessor);
+                    return new tiny_1.TinyOrgCardGerator(iframeDocument, cardData, color, emojiProcessor);
                 }
                 default: {
                     console.error("invalid card style: type=" + cardType + ", style=" + cardStyle);
@@ -26212,10 +26304,10 @@ function createCardGenerator(iframeDocument, cardType, cardStyle, cardData, colo
                     return new medium_2.MediumRepoCardGerator(iframeDocument, cardData, color, chartVisibility, emojiProcessor);
                 }
                 case "small": {
-                    return new small_1.SmallRepoCardGerator(iframeDocument, cardData, color, chartVisibility, emojiProcessor);
+                    return new small_2.SmallRepoCardGerator(iframeDocument, cardData, color, chartVisibility, emojiProcessor);
                 }
                 case "tiny": {
-                    return new tiny_1.TinyRepoCardGerator(iframeDocument, cardData, color, chartVisibility, emojiProcessor);
+                    return new tiny_2.TinyRepoCardGerator(iframeDocument, cardData, color, chartVisibility, emojiProcessor);
                 }
                 default: {
                     console.error("invalid card style: type=" + cardType + ", style=" + cardStyle);
@@ -26228,10 +26320,10 @@ function createCardGenerator(iframeDocument, cardType, cardStyle, cardData, colo
                     return new medium_3.MediumUserCardGerator(iframeDocument, cardData, color, emojiProcessor);
                 }
                 case "small": {
-                    return new small_2.SmallUserCardGerator(iframeDocument, cardData, color, emojiProcessor);
+                    return new small_3.SmallUserCardGerator(iframeDocument, cardData, color, emojiProcessor);
                 }
                 case "tiny": {
-                    return new tiny_2.TinyUserCardGerator(iframeDocument, cardData, color, emojiProcessor);
+                    return new tiny_3.TinyUserCardGerator(iframeDocument, cardData, color, emojiProcessor);
                 }
                 default: {
                     console.error("invalid card style: type=" + cardType + ", style=" + cardStyle);
@@ -26322,7 +26414,7 @@ var CardGeneratorManager = (function () {
                         "});",
                     ].join("\n");
                     var scriptElement = _this._doc.createElement("script");
-                    scriptElement.appendChild(_this._doc.createTextNode(scriptContent));
+                    scriptElement.innerHTML = scriptContent.concat("\n");
                     iframeBufferDocument.body.appendChild(scriptElement);
                 }
                 var cardFrame = _this._doc.createElement("iframe");
@@ -26334,17 +26426,13 @@ var CardGeneratorManager = (function () {
                         return;
                     }
                     cardFrame.height = card.getBoundingClientRect().height + const_1.Margin.FRAME * 2 + "px";
-                    {
-                        cardFrame.style.visibility = "visible";
-                    }
+                    cardFrame.style.visibility = "visible";
                     if (iframeBuffer && !isChrome) {
                         cardElement.parentNode.removeChild(iframeBuffer);
                         iframeBuffer = null;
                     }
                 });
-                {
-                    cardFrame.style.visibility = "hidden";
-                }
+                cardFrame.style.visibility = "hidden";
                 cardElement.parentNode.insertBefore(cardFrame, cardElement);
                 _this.frameCount++;
                 cardFrame.id = "__ghscard_iframe" + _this.frameCount + "__";
@@ -26385,63 +26473,6 @@ exports.CardGeneratorManager = CardGeneratorManager;
 //# sourceMappingURL=manager.js.map
 
 /***/ }),
-/* 116 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var base_user_org_1 = __webpack_require__(6);
-var AbstractOrgCardGerator = (function (_super) {
-    __extends(AbstractOrgCardGerator, _super);
-    function AbstractOrgCardGerator() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    AbstractOrgCardGerator.prototype.createCardHeader = function () {
-        var header = this.createAnchorElement(this.htmlUrl, "ui " + this.headerSize + " dividing header");
-        if (this.getCardData("name")) {
-            header.appendChild(this._doc.createTextNode(this.getCardData("name")));
-            var subheader = this.createElement("div", "sub header");
-            subheader.appendChild(this._doc.createTextNode(this.getCardData("id")));
-            header.appendChild(subheader);
-        }
-        else {
-            header.appendChild(this._doc.createTextNode(this.getCardData("id")));
-        }
-        return header;
-    };
-    AbstractOrgCardGerator.prototype.createStatistics = function () {
-        var items = this.createElement("div", "ui " + this.infoSize + " aligned selection list");
-        if (Number(this.publicRepos) > 0) {
-            var item = this.createAnchorElement(this.htmlUrl + "?tab=repositories", "item");
-            item.appendChild(this._doc.createTextNode("Repositories"));
-            item.appendChild(this.createLabelElement(this.publicRepos, this.infoSize));
-            items.appendChild(item);
-        }
-        if (Number(this.getCardData("public_members_count")) > 0) {
-            var item = this.createAnchorElement("https://github.com/orgs/" + this.getCardData("id") + "/people", "item");
-            item.appendChild(this._doc.createTextNode("People"));
-            item.appendChild(this.createLabelElement(this.getCardData("public_members_count"), this.infoSize));
-            items.appendChild(item);
-        }
-        return items;
-    };
-    return AbstractOrgCardGerator;
-}(base_user_org_1.AbstractUserOrgCardGerator));
-exports.AbstractOrgCardGerator = AbstractOrgCardGerator;
-//# sourceMappingURL=base_organization.js.map
-
-/***/ }),
 /* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26458,7 +26489,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var base_organization_1 = __webpack_require__(116);
+var base_organization_1 = __webpack_require__(2);
 var MediumOrgCardGerator = (function (_super) {
     __extends(MediumOrgCardGerator, _super);
     function MediumOrgCardGerator() {
@@ -26514,8 +26545,131 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+var base_organization_1 = __webpack_require__(2);
+var SmallOrgCardGerator = (function (_super) {
+    __extends(SmallOrgCardGerator, _super);
+    function SmallOrgCardGerator() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(SmallOrgCardGerator.prototype, "headerSize", {
+        get: function () {
+            return "small";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SmallOrgCardGerator.prototype, "infoSize", {
+        get: function () {
+            return "small";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SmallOrgCardGerator.prototype, "popupSize", {
+        get: function () {
+            return "small";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SmallOrgCardGerator.prototype, "avatarColumnWide", {
+        get: function () {
+            return "eight";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return SmallOrgCardGerator;
+}(base_organization_1.AbstractOrgCardGerator));
+exports.SmallOrgCardGerator = SmallOrgCardGerator;
+//# sourceMappingURL=small.js.map
+
+/***/ }),
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var base_organization_1 = __webpack_require__(2);
+var TinyOrgCardGerator = (function (_super) {
+    __extends(TinyOrgCardGerator, _super);
+    function TinyOrgCardGerator() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(TinyOrgCardGerator.prototype, "headerSize", {
+        get: function () {
+            return "tiny";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TinyOrgCardGerator.prototype, "infoSize", {
+        get: function () {
+            return "tiny";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TinyOrgCardGerator.prototype, "popupSize", {
+        get: function () {
+            return "tiny";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TinyOrgCardGerator.prototype, "avatarColumnWide", {
+        get: function () {
+            return "four";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    TinyOrgCardGerator.prototype.createPopupInfoList = function () {
+        return this._createInfoList({
+            "email": true,
+            "blog": true,
+            "created_at": true,
+            "updated_at": true,
+        }, this.popupSize);
+    };
+    TinyOrgCardGerator.prototype.createCardContent = function () {
+        return this._createCardContentTiny();
+    };
+    return TinyOrgCardGerator;
+}(base_organization_1.AbstractOrgCardGerator));
+exports.TinyOrgCardGerator = TinyOrgCardGerator;
+//# sourceMappingURL=tiny.js.map
+
+/***/ }),
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 var const_1 = __webpack_require__(1);
-var base_repository_1 = __webpack_require__(2);
+var base_repository_1 = __webpack_require__(3);
 var MediumRepoCardGerator = (function (_super) {
     __extends(MediumRepoCardGerator, _super);
     function MediumRepoCardGerator() {
@@ -26596,7 +26750,7 @@ exports.MediumRepoCardGerator = MediumRepoCardGerator;
 //# sourceMappingURL=medium.js.map
 
 /***/ }),
-/* 119 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26613,7 +26767,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var const_1 = __webpack_require__(1);
-var base_repository_1 = __webpack_require__(2);
+var base_repository_1 = __webpack_require__(3);
 var SmallRepoCardGerator = (function (_super) {
     __extends(SmallRepoCardGerator, _super);
     function SmallRepoCardGerator() {
@@ -26694,7 +26848,7 @@ exports.SmallRepoCardGerator = SmallRepoCardGerator;
 //# sourceMappingURL=small.js.map
 
 /***/ }),
-/* 120 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26711,7 +26865,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var const_1 = __webpack_require__(1);
-var base_repository_1 = __webpack_require__(2);
+var base_repository_1 = __webpack_require__(3);
 var TinyRepoCardGerator = (function (_super) {
     __extends(TinyRepoCardGerator, _super);
     function TinyRepoCardGerator() {
@@ -26803,7 +26957,7 @@ exports.TinyRepoCardGerator = TinyRepoCardGerator;
 //# sourceMappingURL=tiny.js.map
 
 /***/ }),
-/* 121 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26819,7 +26973,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var base_user_1 = __webpack_require__(3);
+var base_user_1 = __webpack_require__(4);
 var MediumUserCardGerator = (function (_super) {
     __extends(MediumUserCardGerator, _super);
     function MediumUserCardGerator() {
@@ -26859,7 +27013,7 @@ exports.MediumUserCardGerator = MediumUserCardGerator;
 //# sourceMappingURL=medium.js.map
 
 /***/ }),
-/* 122 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26875,7 +27029,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var base_user_1 = __webpack_require__(3);
+var base_user_1 = __webpack_require__(4);
 var SmallUserCardGerator = (function (_super) {
     __extends(SmallUserCardGerator, _super);
     function SmallUserCardGerator() {
@@ -26915,7 +27069,7 @@ exports.SmallUserCardGerator = SmallUserCardGerator;
 //# sourceMappingURL=small.js.map
 
 /***/ }),
-/* 123 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -26931,7 +27085,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var base_user_1 = __webpack_require__(3);
+var base_user_1 = __webpack_require__(4);
 var TinyUserCardGerator = (function (_super) {
     __extends(TinyUserCardGerator, _super);
     function TinyUserCardGerator() {
@@ -26965,36 +27119,6 @@ var TinyUserCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    TinyUserCardGerator.prototype.createCardContent = function () {
-        var segment_style = "ui vertical basic compact segment";
-        var content = this.createContentElement([this.createCardHeader()]);
-        {
-            var grid = this.createElement("div", "ui grid");
-            {
-                var avatarColumn = this.createElement("div", this.avatarColumnWide + " wide center aligned column");
-                avatarColumn.appendChild(this.createAvatar());
-                avatarColumn.appendChild(this.createPopup());
-                grid.appendChild(avatarColumn);
-            }
-            {
-                var userInfoColumn = this.createElement("div", "nine wide left aligned column");
-                userInfoColumn.appendChild(this.createUserInfoList());
-                grid.appendChild(userInfoColumn);
-            }
-            var segment = this.createElement("div", segment_style);
-            segment.appendChild(grid);
-            content.appendChild(segment);
-        }
-        {
-            var bioElement = this.createDescription(this.getCardData("description"));
-            if (bioElement) {
-                var segment = this.createElement("div", segment_style);
-                segment.appendChild(bioElement);
-                content.appendChild(segment);
-            }
-        }
-        return content;
-    };
     TinyUserCardGerator.prototype.createUserInfoList = function () {
         return this._createInfoList({
             "company": true,
@@ -27009,6 +27133,9 @@ var TinyUserCardGerator = (function (_super) {
             "updated_at": true,
         }, this.popupSize);
     };
+    TinyUserCardGerator.prototype.createCardContent = function () {
+        return this._createCardContentTiny();
+    };
     TinyUserCardGerator.prototype.createOrganizations = function () {
         return null;
     };
@@ -27018,7 +27145,7 @@ exports.TinyUserCardGerator = TinyUserCardGerator;
 //# sourceMappingURL=tiny.js.map
 
 /***/ }),
-/* 124 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27116,226 +27243,226 @@ exports.EmojiProcessorFactory = EmojiProcessorFactory;
 //# sourceMappingURL=emoji.js.map
 
 /***/ }),
-/* 125 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 7,
-	"./af.js": 7,
-	"./ar": 13,
-	"./ar-dz": 8,
-	"./ar-dz.js": 8,
-	"./ar-ly": 9,
-	"./ar-ly.js": 9,
-	"./ar-ma": 10,
-	"./ar-ma.js": 10,
-	"./ar-sa": 11,
-	"./ar-sa.js": 11,
-	"./ar-tn": 12,
-	"./ar-tn.js": 12,
-	"./ar.js": 13,
-	"./az": 14,
-	"./az.js": 14,
-	"./be": 15,
-	"./be.js": 15,
-	"./bg": 16,
-	"./bg.js": 16,
-	"./bn": 17,
-	"./bn.js": 17,
-	"./bo": 18,
-	"./bo.js": 18,
-	"./br": 19,
-	"./br.js": 19,
-	"./bs": 20,
-	"./bs.js": 20,
-	"./ca": 21,
-	"./ca.js": 21,
-	"./cs": 22,
-	"./cs.js": 22,
-	"./cv": 23,
-	"./cv.js": 23,
-	"./cy": 24,
-	"./cy.js": 24,
-	"./da": 25,
-	"./da.js": 25,
-	"./de": 27,
-	"./de-at": 26,
-	"./de-at.js": 26,
-	"./de.js": 27,
-	"./dv": 28,
-	"./dv.js": 28,
-	"./el": 29,
-	"./el.js": 29,
-	"./en-au": 30,
-	"./en-au.js": 30,
-	"./en-ca": 31,
-	"./en-ca.js": 31,
-	"./en-gb": 32,
-	"./en-gb.js": 32,
-	"./en-ie": 33,
-	"./en-ie.js": 33,
-	"./en-nz": 34,
-	"./en-nz.js": 34,
-	"./eo": 35,
-	"./eo.js": 35,
-	"./es": 37,
-	"./es-do": 36,
-	"./es-do.js": 36,
-	"./es.js": 37,
-	"./et": 38,
-	"./et.js": 38,
-	"./eu": 39,
-	"./eu.js": 39,
-	"./fa": 40,
-	"./fa.js": 40,
-	"./fi": 41,
-	"./fi.js": 41,
-	"./fo": 42,
-	"./fo.js": 42,
-	"./fr": 45,
-	"./fr-ca": 43,
-	"./fr-ca.js": 43,
-	"./fr-ch": 44,
-	"./fr-ch.js": 44,
-	"./fr.js": 45,
-	"./fy": 46,
-	"./fy.js": 46,
-	"./gd": 47,
-	"./gd.js": 47,
-	"./gl": 48,
-	"./gl.js": 48,
-	"./he": 49,
-	"./he.js": 49,
-	"./hi": 50,
-	"./hi.js": 50,
-	"./hr": 51,
-	"./hr.js": 51,
-	"./hu": 52,
-	"./hu.js": 52,
-	"./hy-am": 53,
-	"./hy-am.js": 53,
-	"./id": 54,
-	"./id.js": 54,
-	"./is": 55,
-	"./is.js": 55,
-	"./it": 56,
-	"./it.js": 56,
-	"./ja": 57,
-	"./ja.js": 57,
-	"./jv": 58,
-	"./jv.js": 58,
-	"./ka": 59,
-	"./ka.js": 59,
-	"./kk": 60,
-	"./kk.js": 60,
-	"./km": 61,
-	"./km.js": 61,
-	"./ko": 62,
-	"./ko.js": 62,
-	"./ky": 63,
-	"./ky.js": 63,
-	"./lb": 64,
-	"./lb.js": 64,
-	"./lo": 65,
-	"./lo.js": 65,
-	"./lt": 66,
-	"./lt.js": 66,
-	"./lv": 67,
-	"./lv.js": 67,
-	"./me": 68,
-	"./me.js": 68,
-	"./mi": 69,
-	"./mi.js": 69,
-	"./mk": 70,
-	"./mk.js": 70,
-	"./ml": 71,
-	"./ml.js": 71,
-	"./mr": 72,
-	"./mr.js": 72,
-	"./ms": 74,
-	"./ms-my": 73,
-	"./ms-my.js": 73,
-	"./ms.js": 74,
-	"./my": 75,
-	"./my.js": 75,
-	"./nb": 76,
-	"./nb.js": 76,
-	"./ne": 77,
-	"./ne.js": 77,
-	"./nl": 79,
-	"./nl-be": 78,
-	"./nl-be.js": 78,
-	"./nl.js": 79,
-	"./nn": 80,
-	"./nn.js": 80,
-	"./pa-in": 81,
-	"./pa-in.js": 81,
-	"./pl": 82,
-	"./pl.js": 82,
-	"./pt": 84,
-	"./pt-br": 83,
-	"./pt-br.js": 83,
-	"./pt.js": 84,
-	"./ro": 85,
-	"./ro.js": 85,
-	"./ru": 86,
-	"./ru.js": 86,
-	"./se": 87,
-	"./se.js": 87,
-	"./si": 88,
-	"./si.js": 88,
-	"./sk": 89,
-	"./sk.js": 89,
-	"./sl": 90,
-	"./sl.js": 90,
-	"./sq": 91,
-	"./sq.js": 91,
-	"./sr": 93,
-	"./sr-cyrl": 92,
-	"./sr-cyrl.js": 92,
-	"./sr.js": 93,
-	"./ss": 94,
-	"./ss.js": 94,
-	"./sv": 95,
-	"./sv.js": 95,
-	"./sw": 96,
-	"./sw.js": 96,
-	"./ta": 97,
-	"./ta.js": 97,
-	"./te": 98,
-	"./te.js": 98,
-	"./tet": 99,
-	"./tet.js": 99,
-	"./th": 100,
-	"./th.js": 100,
-	"./tl-ph": 101,
-	"./tl-ph.js": 101,
-	"./tlh": 102,
-	"./tlh.js": 102,
-	"./tr": 103,
-	"./tr.js": 103,
-	"./tzl": 104,
-	"./tzl.js": 104,
-	"./tzm": 106,
-	"./tzm-latn": 105,
-	"./tzm-latn.js": 105,
-	"./tzm.js": 106,
-	"./uk": 107,
-	"./uk.js": 107,
-	"./uz": 108,
-	"./uz.js": 108,
-	"./vi": 109,
-	"./vi.js": 109,
-	"./x-pseudo": 110,
-	"./x-pseudo.js": 110,
-	"./yo": 111,
-	"./yo.js": 111,
-	"./zh-cn": 112,
-	"./zh-cn.js": 112,
-	"./zh-hk": 113,
-	"./zh-hk.js": 113,
-	"./zh-tw": 114,
-	"./zh-tw.js": 114
+	"./af": 8,
+	"./af.js": 8,
+	"./ar": 14,
+	"./ar-dz": 9,
+	"./ar-dz.js": 9,
+	"./ar-ly": 10,
+	"./ar-ly.js": 10,
+	"./ar-ma": 11,
+	"./ar-ma.js": 11,
+	"./ar-sa": 12,
+	"./ar-sa.js": 12,
+	"./ar-tn": 13,
+	"./ar-tn.js": 13,
+	"./ar.js": 14,
+	"./az": 15,
+	"./az.js": 15,
+	"./be": 16,
+	"./be.js": 16,
+	"./bg": 17,
+	"./bg.js": 17,
+	"./bn": 18,
+	"./bn.js": 18,
+	"./bo": 19,
+	"./bo.js": 19,
+	"./br": 20,
+	"./br.js": 20,
+	"./bs": 21,
+	"./bs.js": 21,
+	"./ca": 22,
+	"./ca.js": 22,
+	"./cs": 23,
+	"./cs.js": 23,
+	"./cv": 24,
+	"./cv.js": 24,
+	"./cy": 25,
+	"./cy.js": 25,
+	"./da": 26,
+	"./da.js": 26,
+	"./de": 28,
+	"./de-at": 27,
+	"./de-at.js": 27,
+	"./de.js": 28,
+	"./dv": 29,
+	"./dv.js": 29,
+	"./el": 30,
+	"./el.js": 30,
+	"./en-au": 31,
+	"./en-au.js": 31,
+	"./en-ca": 32,
+	"./en-ca.js": 32,
+	"./en-gb": 33,
+	"./en-gb.js": 33,
+	"./en-ie": 34,
+	"./en-ie.js": 34,
+	"./en-nz": 35,
+	"./en-nz.js": 35,
+	"./eo": 36,
+	"./eo.js": 36,
+	"./es": 38,
+	"./es-do": 37,
+	"./es-do.js": 37,
+	"./es.js": 38,
+	"./et": 39,
+	"./et.js": 39,
+	"./eu": 40,
+	"./eu.js": 40,
+	"./fa": 41,
+	"./fa.js": 41,
+	"./fi": 42,
+	"./fi.js": 42,
+	"./fo": 43,
+	"./fo.js": 43,
+	"./fr": 46,
+	"./fr-ca": 44,
+	"./fr-ca.js": 44,
+	"./fr-ch": 45,
+	"./fr-ch.js": 45,
+	"./fr.js": 46,
+	"./fy": 47,
+	"./fy.js": 47,
+	"./gd": 48,
+	"./gd.js": 48,
+	"./gl": 49,
+	"./gl.js": 49,
+	"./he": 50,
+	"./he.js": 50,
+	"./hi": 51,
+	"./hi.js": 51,
+	"./hr": 52,
+	"./hr.js": 52,
+	"./hu": 53,
+	"./hu.js": 53,
+	"./hy-am": 54,
+	"./hy-am.js": 54,
+	"./id": 55,
+	"./id.js": 55,
+	"./is": 56,
+	"./is.js": 56,
+	"./it": 57,
+	"./it.js": 57,
+	"./ja": 58,
+	"./ja.js": 58,
+	"./jv": 59,
+	"./jv.js": 59,
+	"./ka": 60,
+	"./ka.js": 60,
+	"./kk": 61,
+	"./kk.js": 61,
+	"./km": 62,
+	"./km.js": 62,
+	"./ko": 63,
+	"./ko.js": 63,
+	"./ky": 64,
+	"./ky.js": 64,
+	"./lb": 65,
+	"./lb.js": 65,
+	"./lo": 66,
+	"./lo.js": 66,
+	"./lt": 67,
+	"./lt.js": 67,
+	"./lv": 68,
+	"./lv.js": 68,
+	"./me": 69,
+	"./me.js": 69,
+	"./mi": 70,
+	"./mi.js": 70,
+	"./mk": 71,
+	"./mk.js": 71,
+	"./ml": 72,
+	"./ml.js": 72,
+	"./mr": 73,
+	"./mr.js": 73,
+	"./ms": 75,
+	"./ms-my": 74,
+	"./ms-my.js": 74,
+	"./ms.js": 75,
+	"./my": 76,
+	"./my.js": 76,
+	"./nb": 77,
+	"./nb.js": 77,
+	"./ne": 78,
+	"./ne.js": 78,
+	"./nl": 80,
+	"./nl-be": 79,
+	"./nl-be.js": 79,
+	"./nl.js": 80,
+	"./nn": 81,
+	"./nn.js": 81,
+	"./pa-in": 82,
+	"./pa-in.js": 82,
+	"./pl": 83,
+	"./pl.js": 83,
+	"./pt": 85,
+	"./pt-br": 84,
+	"./pt-br.js": 84,
+	"./pt.js": 85,
+	"./ro": 86,
+	"./ro.js": 86,
+	"./ru": 87,
+	"./ru.js": 87,
+	"./se": 88,
+	"./se.js": 88,
+	"./si": 89,
+	"./si.js": 89,
+	"./sk": 90,
+	"./sk.js": 90,
+	"./sl": 91,
+	"./sl.js": 91,
+	"./sq": 92,
+	"./sq.js": 92,
+	"./sr": 94,
+	"./sr-cyrl": 93,
+	"./sr-cyrl.js": 93,
+	"./sr.js": 94,
+	"./ss": 95,
+	"./ss.js": 95,
+	"./sv": 96,
+	"./sv.js": 96,
+	"./sw": 97,
+	"./sw.js": 97,
+	"./ta": 98,
+	"./ta.js": 98,
+	"./te": 99,
+	"./te.js": 99,
+	"./tet": 100,
+	"./tet.js": 100,
+	"./th": 101,
+	"./th.js": 101,
+	"./tl-ph": 102,
+	"./tl-ph.js": 102,
+	"./tlh": 103,
+	"./tlh.js": 103,
+	"./tr": 104,
+	"./tr.js": 104,
+	"./tzl": 105,
+	"./tzl.js": 105,
+	"./tzm": 107,
+	"./tzm-latn": 106,
+	"./tzm-latn.js": 106,
+	"./tzm.js": 107,
+	"./uk": 108,
+	"./uk.js": 108,
+	"./uz": 109,
+	"./uz.js": 109,
+	"./vi": 110,
+	"./vi.js": 110,
+	"./x-pseudo": 111,
+	"./x-pseudo.js": 111,
+	"./yo": 112,
+	"./yo.js": 112,
+	"./zh-cn": 113,
+	"./zh-cn.js": 113,
+	"./zh-hk": 114,
+	"./zh-hk.js": 114,
+	"./zh-tw": 115,
+	"./zh-tw.js": 115
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -27351,11 +27478,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 125;
+webpackContext.id = 127;
 
 
 /***/ }),
-/* 126 */
+/* 128 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -27383,14 +27510,14 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 127 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var manager_1 = __webpack_require__(115);
-var $ = __webpack_require__(4);
+var manager_1 = __webpack_require__(116);
+var $ = __webpack_require__(5);
 (function (window, $) {
     $(window).on("load", function () {
         var generator_card = new manager_1.CardGeneratorManager(document);
