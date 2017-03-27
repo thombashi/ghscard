@@ -4483,6 +4483,13 @@ var AbstractOrgCardGerator = (function (_super) {
     function AbstractOrgCardGerator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    Object.defineProperty(AbstractOrgCardGerator.prototype, "statsColumnWide", {
+        get: function () {
+            return "eight";
+        },
+        enumerable: true,
+        configurable: true
+    });
     AbstractOrgCardGerator.prototype.createCardHeader = function () {
         var header = this.createAnchorElement(this.htmlUrl, "ui " + this.headerSize + " dividing header");
         if (this.getCardData("name")) {
@@ -4496,7 +4503,7 @@ var AbstractOrgCardGerator = (function (_super) {
         }
         return header;
     };
-    AbstractOrgCardGerator.prototype.createStatistics = function () {
+    AbstractOrgCardGerator.prototype.createStatisticsElement = function () {
         var items = this.createElement("div", "ui " + this.infoSize + " aligned selection list");
         if (Number(this.publicRepos) > 0) {
             var item = this.createAnchorElement(this.htmlUrl + "?tab=repositories", "item");
@@ -5123,6 +5130,13 @@ var AbstractUserCardGerator = (function (_super) {
     function AbstractUserCardGerator() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    Object.defineProperty(AbstractUserCardGerator.prototype, "statsColumnWide", {
+        get: function () {
+            return "seven";
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(AbstractUserCardGerator.prototype, "followers", {
         get: function () {
             return this.getCardData("followers");
@@ -5190,7 +5204,7 @@ var AbstractUserCardGerator = (function (_super) {
         }
         return this.createElement("div", "ui vertical segment");
     };
-    AbstractUserCardGerator.prototype.createStatistics = function () {
+    AbstractUserCardGerator.prototype.createStatisticsElement = function () {
         var items = this.createElement("div", "ui " + this.infoSize + " aligned selection list");
         if (Number(this.publicRepos) > 0) {
             var item = this.createAnchorElement(this.htmlUrl + "?tab=repositories", "item");
@@ -15695,6 +15709,13 @@ var AbstractUserOrgCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(AbstractUserOrgCardGerator.prototype, "statsColumnWide", {
+        get: function () {
+            throw Error("not implemented");
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(AbstractUserOrgCardGerator.prototype, "htmlUrl", {
         get: function () {
             return this.getCardData("html_url");
@@ -15709,7 +15730,7 @@ var AbstractUserOrgCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    AbstractUserOrgCardGerator.prototype.createStatistics = function () {
+    AbstractUserOrgCardGerator.prototype.createStatisticsElement = function () {
         throw Error("not implemented");
     };
     AbstractUserOrgCardGerator.prototype.getCardData = function (key) {
@@ -15742,12 +15763,12 @@ var AbstractUserOrgCardGerator = (function (_super) {
                 grid.appendChild(avatarColumn);
             }
             {
-                var userStatsColumn = this.createElement("div", "eight wide left aligned column");
-                var userStats = this.createStatistics();
-                if (userStats) {
-                    userStatsColumn.appendChild(userStats);
+                var statsColumn = this.createElement("div", this.statsColumnWide + " wide left aligned column");
+                var statsElement = this.createStatisticsElement();
+                if (statsElement) {
+                    statsColumn.appendChild(statsElement);
                 }
-                grid.appendChild(userStatsColumn);
+                grid.appendChild(statsColumn);
             }
             content.appendChild(this.createElementWithChild(segmentClassName, [grid]));
         }
