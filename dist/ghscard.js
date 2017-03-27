@@ -15742,7 +15742,7 @@ var AbstractUserOrgCardGerator = (function (_super) {
                 grid.appendChild(avatarColumn);
             }
             {
-                var userStatsColumn = this.createElement("div", "seven wide left aligned column");
+                var userStatsColumn = this.createElement("div", "eight wide left aligned column");
                 var userStats = this.createStatistics();
                 if (userStats) {
                     userStatsColumn.appendChild(userStats);
@@ -15811,7 +15811,7 @@ var AbstractUserOrgCardGerator = (function (_super) {
     };
     AbstractUserOrgCardGerator.prototype.createCompanyElement = function (className) {
         var companyName = this.getCardData("company");
-        if (companyName == null) {
+        if (!companyName) {
             return null;
         }
         var company = this.createElement("div", className);
@@ -15822,7 +15822,7 @@ var AbstractUserOrgCardGerator = (function (_super) {
     };
     AbstractUserOrgCardGerator.prototype.createLocationElement = function (className) {
         var locationName = this.getCardData("location");
-        if (locationName == null) {
+        if (!locationName) {
             return null;
         }
         var location = this.createElement("div", className);
@@ -15833,7 +15833,7 @@ var AbstractUserOrgCardGerator = (function (_super) {
     };
     AbstractUserOrgCardGerator.prototype.createBlogElement = function (className) {
         var url = this.getCardData("blog");
-        if (url == null) {
+        if (!url) {
             return null;
         }
         var blogLink = this.createAnchorElement(url, "content");
@@ -26414,7 +26414,7 @@ var CardGeneratorManager = (function () {
                         "});",
                     ].join("\n");
                     var scriptElement = _this._doc.createElement("script");
-                    scriptElement.innerHTML = scriptContent.concat("\n");
+                    scriptElement.innerHTML = scriptContent;
                     iframeBufferDocument.body.appendChild(scriptElement);
                 }
                 var cardFrame = _this._doc.createElement("iframe");
@@ -26518,7 +26518,7 @@ var MediumOrgCardGerator = (function (_super) {
     });
     Object.defineProperty(MediumOrgCardGerator.prototype, "avatarColumnWide", {
         get: function () {
-            return "nine";
+            return "eight";
         },
         enumerable: true,
         configurable: true
@@ -26574,7 +26574,7 @@ var SmallOrgCardGerator = (function (_super) {
     });
     Object.defineProperty(SmallOrgCardGerator.prototype, "avatarColumnWide", {
         get: function () {
-            return "eight";
+            return "six";
         },
         enumerable: true,
         configurable: true
