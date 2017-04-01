@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 129);
+/******/ 	return __webpack_require__(__webpack_require__.s = 130);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1884,7 +1884,7 @@ function loadLocale(name) {
             module && module.exports) {
         try {
             oldLocale = globalLocale._abbr;
-            __webpack_require__(127)("./" + name);
+            __webpack_require__(128)("./" + name);
             // because defineLocale currently also sets the global locale, we
             // want to undo that for lazy loaded locales
             getSetGlobalLocale(oldLocale);
@@ -4372,7 +4372,7 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(128)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(129)(module)))
 
 /***/ }),
 /* 1 */
@@ -4417,6 +4417,7 @@ var BaseChartSize;
     var Pie;
     (function (Pie) {
         Pie.HEIGHT = 160;
+        Pie.LEGEND_FONT_SIZE = 10;
     })(Pie = BaseChartSize.Pie || (BaseChartSize.Pie = {}));
 })(BaseChartSize || (BaseChartSize = {}));
 var ChartSize;
@@ -4447,14 +4448,17 @@ var ChartSize;
         var Medium;
         (function (Medium) {
             Medium.HEIGHT = BaseChartSize.Pie.HEIGHT + STEP_HEIGHT * 2;
+            Medium.LEGEND_FONT_SIZE = BaseChartSize.Pie.LEGEND_FONT_SIZE + 2;
         })(Medium = Pie.Medium || (Pie.Medium = {}));
         var Small;
         (function (Small) {
             Small.HEIGHT = BaseChartSize.Pie.HEIGHT + STEP_HEIGHT * 1;
+            Small.LEGEND_FONT_SIZE = BaseChartSize.Pie.LEGEND_FONT_SIZE + 1;
         })(Small = Pie.Small || (Pie.Small = {}));
         var Tiny;
         (function (Tiny) {
             Tiny.HEIGHT = BaseChartSize.Pie.HEIGHT + STEP_HEIGHT;
+            Tiny.LEGEND_FONT_SIZE = BaseChartSize.Pie.LEGEND_FONT_SIZE;
         })(Tiny = Pie.Tiny || (Pie.Tiny = {}));
     })(Pie = ChartSize.Pie || (ChartSize.Pie = {}));
 })(ChartSize = exports.ChartSize || (exports.ChartSize = {}));
@@ -4552,9 +4556,10 @@ var CanvasId;
 })(CanvasId || (CanvasId = {}));
 var AbstractRepositoryCardGerator = (function (_super) {
     __extends(AbstractRepositoryCardGerator, _super);
-    function AbstractRepositoryCardGerator(doc, cardData, color, chartVisibility, emojiProcessor) {
-        var _this = _super.call(this, doc, cardData, color, emojiProcessor) || this;
-        _this.chartVisibility = chartVisibility;
+    function AbstractRepositoryCardGerator(doc, cardData, iframeWidth, color, chartDisplay, topicDisplay, emojiProcessor) {
+        var _this = _super.call(this, doc, cardData, iframeWidth, color, emojiProcessor) || this;
+        _this.chartDisplay = chartDisplay;
+        _this.topicDisplay = topicDisplay;
         _this.colorMap = {
             "a": "red",
             "b": "orange",
@@ -4637,6 +4642,13 @@ var AbstractRepositoryCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(AbstractRepositoryCardGerator.prototype, "pieChartLegendFontSize", {
+        get: function () {
+            throw Error("not implemented");
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(AbstractRepositoryCardGerator.prototype, "chartTitleFontSize", {
         get: function () {
             throw Error("not implemented");
@@ -4651,19 +4663,67 @@ var AbstractRepositoryCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    AbstractRepositoryCardGerator.prototype.isCreateChart = function () {
-        throw Error("not implemented");
+    Object.defineProperty(AbstractRepositoryCardGerator.prototype, "releaseTagColor", {
+        get: function () {
+            return "blue";
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AbstractRepositoryCardGerator.prototype.isDisplayChart = function () {
+        if (this.chartDisplay === "none") {
+            return false;
+        }
+        return true;
+    };
+    AbstractRepositoryCardGerator.prototype.isDisplayCommitChart = function () {
+        return this.isDisplayChart() && Number(this.getCardData("commits_last_year")) > 0;
+    };
+    AbstractRepositoryCardGerator.prototype.isDisplayTopic = function () {
+        if (this.topicDisplay === "none") {
+            return false;
+        }
+        if (this.getCardData("topics") == null) {
+            return false;
+        }
+        return this.getCardData("topics").length > 0;
     };
     AbstractRepositoryCardGerator.prototype.getScript = function () {
-        var dateFormat = "YYYY-MM-DD";
-        var fetchDate = moment(this.getCardData("fetched_at"));
-        var dateArray = [];
-        for (var i = 0; i < 52; i++) {
-            var date = fetchDate.format(dateFormat);
-            dateArray.push("moment('" + date + "').toDate()");
-            fetchDate.subtract(1, "weeks");
+        var popupScript = [
+            "$('#" + const_1.AVATAR_ELEMENT_ID + ".ui.image').popup({",
+            "on: 'click',",
+            "inline: true,",
+            "});",
+        ].join("\n");
+        var scriptArray = [
+            popupScript,
+        ];
+        if (this.isDisplayChart()) {
+            scriptArray.push("$('.ui.accordion').accordion();");
+            scriptArray.push(this.getGlobalChartOption());
+            scriptArray.push(this.createIssuesLabeChartScript());
+            scriptArray.push(this.createLanguageLabeChartScript());
+            if (this.isDisplayCommitChart()) {
+                scriptArray.push(this.createCommitChartScript());
+            }
         }
-        dateArray.reverse();
+        return scriptArray.join("\n");
+    };
+    AbstractRepositoryCardGerator.prototype.getGlobalChartOption = function () {
+        return "Chart.defaults.global.defaultFontSize = 10;";
+    };
+    AbstractRepositoryCardGerator.prototype.getPieChartOption = function () {
+        return {
+            responsive: false,
+            legend: {
+                position: "right",
+                labels: {
+                    fontSize: this.pieChartLegendFontSize,
+                }
+            },
+        };
+    };
+    AbstractRepositoryCardGerator.prototype.createIssuesLabeChartScript = function () {
         var issuesLabelArray = [];
         if (this.getCardData("has_issues")) {
             for (var _i = 0, _a = this.getCardData("open_issues")["labels"]; _i < _a.length; _i++) {
@@ -4671,39 +4731,26 @@ var AbstractRepositoryCardGerator = (function (_super) {
                 issuesLabelArray.push("'" + issueLabel + "'");
             }
         }
+        return "\nvar issuesCanvas = document.getElementById('" + CanvasId.ISSUES_CHART + "');\nif (issuesCanvas) {\n    issuesCanvas.width = " + this.getChartWidth() + ";\n    let myPieChart = new Chart(issuesCanvas, {\n        type: 'pie',\n        data: {\n            labels: [" + issuesLabelArray.join(", ") + "],\n            datasets: [{\n                data: [" + this.getCardData("open_issues")["data"] + "],\n                backgroundColor: Please.make_color({\n                    colors_returned: " + this.getCardData("open_issues_count") + ",\n                }),\n            }]\n        },\n        options: " + JSON.stringify(this.getPieChartOption()) + ",\n    });\n}";
+    };
+    AbstractRepositoryCardGerator.prototype.createLanguageLabeChartScript = function () {
         var languageLabelArray = [];
-        for (var _b = 0, _c = this.getCardData("languages")["labels"]; _b < _c.length; _b++) {
-            var languageLabel = _c[_b];
+        for (var _i = 0, _a = this.getCardData("languages")["labels"]; _i < _a.length; _i++) {
+            var languageLabel = _a[_i];
             languageLabelArray.push("'" + languageLabel + "'");
         }
-        var pieChartOptions = {
-            responsive: false,
-            legend: { position: "right" },
-        };
-        var chartScript = "\nvar commitsCanvas = document.getElementById('" + CanvasId.COMMITS_CHART + "');\nvar issuesCanvas = document.getElementById('" + CanvasId.ISSUES_CHART + "');\nvar languageCanvas = document.getElementById('" + CanvasId.LANGUAGES_CHART + "');\n\nChart.defaults.global.defaultFontSize = 10;\n\nif (commitsCanvas) {\n    var commitsChart = new Chart(commitsCanvas, {\n        type: 'line',\n        data: {\n            labels: [" + dateArray.join(", ") + "],\n            datasets: [{\n                label: 'Commits',\n                data: [" + this.getCardData("participation") + "],\n                fill: true,\n                backgroundColor: 'rgba(136, 211, 161, 0.9)',\n                borderWidth: 0,\n                pointRadius: 0.5,\n                pointHitRadius: 16,\n                showLine: true,\n            }]\n        },\n        options: {\n            responsive: false,\n            title: {\n                display: true,\n                fontSize: " + this.chartTitleFontSize + ",\n                text: '" + this.getCardData("commits_last_year") + " commits in the last year'\n            },\n            legend: { display: false },\n            scales:{\n                xAxes: [{\n                    type: 'time',\n                    time: { format: 'MM/YYYY', tooltipFormat: 'YYYY wo [week]' },\n                    gridLines: { display: false },\n                    ticks: { minRotation: 25, fontSize: " + this.chartTickFontSize + " },\n                }],\n                yAxes: [{\n                    ticks: { min: 0 },\n                    scaleLabel: { display: true, labelString: 'Commits' },\n                }],\n            },\n        }\n    });\n}\n\nif (issuesCanvas) {\n    let myPieChart = new Chart(issuesCanvas, {\n        type: 'pie',\n        data: {\n            labels: [" + issuesLabelArray.join(", ") + "],\n            datasets: [{\n                data: [" + this.getCardData("open_issues")["data"] + "],\n                backgroundColor: Please.make_color({\n                    colors_returned: " + this.getCardData("open_issues_count") + ",\n                }),\n            }]\n        },\n        options: " + JSON.stringify(pieChartOptions) + ",\n    });\n}\n\nif (languageCanvas) {\n    let myPieChart = new Chart(languageCanvas, {\n        type: 'pie',\n        data: {\n            labels: [" + languageLabelArray.join(", ") + "],\n            datasets: [{\n                data: [" + this.getCardData("languages")["data"] + "],\n                backgroundColor: Please.make_color({\n                    colors_returned: " + this.getCardData("languages")["labels"].length + ",\n                }),\n            }]\n        },\n        options: " + JSON.stringify(pieChartOptions) + ",\n    });\n}\n";
-        var scriptArray = [
-            "$('#" + const_1.AVATAR_ELEMENT_ID + ".ui.image').popup({",
-            "  on: 'click',",
-            "  inline: true,",
-            "});",
-            "$('.ui.accordion').accordion();",
-        ];
-        if (this.isCreateChart()) {
-            var canvasIdArray = [
-                CanvasId.COMMITS_CHART,
-                CanvasId.ISSUES_CHART,
-                CanvasId.LANGUAGES_CHART,
-            ];
-            for (var _d = 0, canvasIdArray_1 = canvasIdArray; _d < canvasIdArray_1.length; _d++) {
-                var canvasId = canvasIdArray_1[_d];
-                var canvas = this._doc.getElementById(canvasId);
-                if (canvas) {
-                    canvas.width = this.getChartWidth();
-                }
-            }
-            scriptArray.push(chartScript);
+        return "\nvar languageCanvas = document.getElementById('" + CanvasId.LANGUAGES_CHART + "');\n\nif (languageCanvas) {\n    languageCanvas.width = " + this.getChartWidth() + ";\n    let myPieChart = new Chart(languageCanvas, {\n        type: 'pie',\n        data: {\n            labels: [" + languageLabelArray.join(", ") + "],\n            datasets: [{\n                data: [" + this.getCardData("languages")["data"] + "],\n                backgroundColor: Please.make_color({\n                    colors_returned: " + this.getCardData("languages")["labels"].length + ",\n                }),\n            }]\n        },\n        options: " + JSON.stringify(this.getPieChartOption()) + ",\n    });\n}\n";
+    };
+    AbstractRepositoryCardGerator.prototype.createCommitChartScript = function () {
+        var fetchDate = moment(this.getCardData("fetched_at"));
+        var dateArray = [];
+        for (var i = 0; i < 52; i++) {
+            dateArray.push("moment('" + fetchDate.format("YYYY-MM-DD") + "').toDate()");
+            fetchDate.subtract(1, "weeks");
         }
-        return scriptArray.join("\n");
+        dateArray.reverse();
+        var script = "\nvar commitsCanvas = document.getElementById('" + CanvasId.COMMITS_CHART + "');\nif (commitsCanvas) {\n    commitsCanvas.width = " + this.getChartWidth() + ";\n    var commitsChart = new Chart(commitsCanvas, {\n        type: 'line',\n        data: {\n            labels: [" + dateArray.join(", ") + "],\n            datasets: [{\n                label: 'Commits',\n                data: [" + this.getCardData("participation") + "],\n                fill: true,\n                backgroundColor: 'rgba(136, 211, 161, 0.9)',\n                borderWidth: 0,\n                pointRadius: 0.5,\n                pointHitRadius: 8,\n                showLine: true,\n            }]\n        },\n        options: {\n            responsive: false,\n            title: {\n                display: true,\n                fontSize: " + this.chartTitleFontSize + ",\n                text: '" + this.getCardData("commits_last_year") + " commits in the last year'\n            },\n            legend: { display: false },\n            scales:{\n                xAxes: [{\n                    type: 'time',\n                    time: { format: 'MM/YYYY', tooltipFormat: 'YYYY wo [week]' },\n                    gridLines: { display: false },\n                    ticks: { minRotation: 25, fontSize: " + this.chartTickFontSize + " },\n                }],\n                yAxes: [{\n                    ticks: { min: 0 },\n                    scaleLabel: { display: true, labelString: 'Commits' },\n                }],\n            },\n        }\n    });\n}";
+        return script;
     };
     AbstractRepositoryCardGerator.prototype.createCardHeader = function () {
         var header = this.createElement("div", "ui dividing " + this.headerSize + " header");
@@ -4728,7 +4775,7 @@ var AbstractRepositoryCardGerator = (function (_super) {
     };
     AbstractRepositoryCardGerator.prototype.getChartWidth = function () {
         var marginWidth = 32;
-        var cardWidth = this._doc.getElementById(const_1.CARD_ELEMENT_ID).getBoundingClientRect().width;
+        var cardWidth = this.cardWidth;
         var chartWidth = cardWidth - marginWidth;
         return chartWidth > marginWidth ? chartWidth : cardWidth;
     };
@@ -4736,10 +4783,10 @@ var AbstractRepositoryCardGerator = (function (_super) {
         return this._cardData[key];
     };
     AbstractRepositoryCardGerator.prototype.getColor = function () {
-        if (this._color !== "") {
-            return this._color;
+        if (this.color != null) {
+            return this.toUiColor(this.color);
         }
-        var defaultColor = "gray";
+        var defaultColor = "grey";
         if (this.language == null) {
             return defaultColor;
         }
@@ -4780,10 +4827,10 @@ var AbstractRepositoryCardGerator = (function (_super) {
                 childArray.push(this.createElementWithChild(segmentClassName, infoArray));
             }
         }
-        if (this.isCreateChart()) {
+        if (this.isDisplayCommitChart()) {
             childArray.push(this.createElementWithChild(segmentClassName, [this.createCommitChart()]));
         }
-        if (this.getCardData("topics")) {
+        if (this.isDisplayTopic()) {
             var topicsLabelList = [];
             for (var _i = 0, _a = this.getCardData("topics"); _i < _a.length; _i++) {
                 var labelText = _a[_i];
@@ -4805,7 +4852,7 @@ var AbstractRepositoryCardGerator = (function (_super) {
         var grid = this.createElement("div", "ui equal width center middle aligned grid");
         var languageLabel = this.createLanguageLabel();
         if (languageLabel) {
-            grid.appendChild(this.createColumn(languageLabel, "five wide"));
+            grid.appendChild(this.createColumn(languageLabel, "six wide"));
         }
         grid.appendChild(this.createColumn(this.createStars()));
         grid.appendChild(this.createColumn(this.createForks()));
@@ -4816,6 +4863,7 @@ var AbstractRepositoryCardGerator = (function (_super) {
     AbstractRepositoryCardGerator.prototype.createPopupInfoList = function () {
         var displayMapping = {
             "subscribers_count": true,
+            "open_issues_count": true,
             "branches_count": true,
             "contributors_count": true,
             "created_at": true,
@@ -4830,17 +4878,16 @@ var AbstractRepositoryCardGerator = (function (_super) {
             "pulls_count": true,
             "license": true,
         };
-        if (!this.isCreateChart()) {
+        if (!this.isDisplayChart()) {
             displayMapping["open_issues_count"] = true;
         }
         return this._createInfoList(displayMapping, this.infoSize);
     };
     AbstractRepositoryCardGerator.prototype.createDetailInfoList = function () {
-        if (!this.isCreateChart()) {
+        if (!this.isDisplayChart()) {
             return null;
         }
         var accordion = this.createElement("div", "ui accordion");
-        var itemCount = 0;
         if (this.getCardData("open_issues_count")) {
             var title = this.createElementWithChild("title", [
                 this.createElement("i", "dropdown icon"),
@@ -4852,7 +4899,6 @@ var AbstractRepositoryCardGerator = (function (_super) {
             canvas.id = CanvasId.ISSUES_CHART;
             canvas.height = this.pieChartHeight;
             accordion.appendChild(this.createContentElement([canvas]));
-            itemCount++;
         }
         if (Number(this.getCardData("languages_count")) > 1) {
             var title = this.createElementWithChild("title", [
@@ -4865,9 +4911,8 @@ var AbstractRepositoryCardGerator = (function (_super) {
             canvas.id = CanvasId.LANGUAGES_CHART;
             canvas.height = this.pieChartHeight;
             accordion.appendChild(this.createContentElement([canvas]));
-            itemCount++;
         }
-        if (itemCount === 0) {
+        if (accordion.children.length === 0) {
             return null;
         }
         return accordion;
@@ -4879,19 +4924,16 @@ var AbstractRepositoryCardGerator = (function (_super) {
         }
         var itemClassName = "item";
         var infoList = this.createElement("div", "ui " + size + " list");
-        var infoCount = 0;
         if (displayMapping["repo_homepage"]) {
             var element = this.createHomepageElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["wiki"]) {
             var element = this.createWikiElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["subscribers_count"]
@@ -4899,7 +4941,6 @@ var AbstractRepositoryCardGerator = (function (_super) {
             var element = this.createWatchersElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["open_issues_count"]
@@ -4907,7 +4948,6 @@ var AbstractRepositoryCardGerator = (function (_super) {
             var element = this.createIssuesElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["pulls_count"]
@@ -4915,7 +4955,6 @@ var AbstractRepositoryCardGerator = (function (_super) {
             var element = this.createPullsElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["branches_count"]
@@ -4923,7 +4962,6 @@ var AbstractRepositoryCardGerator = (function (_super) {
             var element = this.createBranchElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["contributors_count"]
@@ -4931,25 +4969,21 @@ var AbstractRepositoryCardGerator = (function (_super) {
             var element = this.createContributorsElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["license"]) {
             var element = this.createLicenseElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["created_at"]) {
             infoList.appendChild(this.createDateTimeElement("created_at", "Created at", "wait icon", itemClassName));
-            infoCount++;
         }
         if (displayMapping["updated_at"]) {
             infoList.appendChild(this.createDateTimeElement("updated_at", "Updated at", "history icon", itemClassName));
-            infoCount++;
         }
-        if (infoCount === 0) {
+        if (infoList.children.length === 0) {
             infoList.appendChild(this.createDateTimeElement("created_at", "Created at", "wait icon", "item"));
         }
         return infoList;
@@ -5055,7 +5089,7 @@ var AbstractRepositoryCardGerator = (function (_super) {
         return avatar;
     };
     AbstractRepositoryCardGerator.prototype.createTagLabel = function () {
-        var tagLabel = this.createAnchorElement(this.htmlUrl + "/releases", "ui " + this.getColor() + " " + this.versionLabelSize + " label");
+        var tagLabel = this.createAnchorElement(this.htmlUrl + "/releases", "ui " + this.releaseTagColor + " " + this.versionLabelSize + " label");
         tagLabel.title = "Latest tag";
         tagLabel.appendChild(this._doc.createTextNode(this.getCardData("latest_tag")));
         tagLabel.setAttribute("data-tooltip", this.getCardData("tags_count") + " releases");
@@ -15499,12 +15533,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var const_1 = __webpack_require__(1);
 var moment = __webpack_require__(0);
 var AbstractCardGerator = (function () {
-    function AbstractCardGerator(_doc, _cardData, _color, _emojiProcessor) {
+    function AbstractCardGerator(_doc, _cardData, _iframeWidth, _color, _emojiProcessor) {
         this._doc = _doc;
         this._cardData = _cardData;
+        this._iframeWidth = _iframeWidth;
         this._color = _color;
         this._emojiProcessor = _emojiProcessor;
-        this._color = this.sanitizeColor(this._color);
     }
     Object.defineProperty(AbstractCardGerator.prototype, "headerSize", {
         get: function () {
@@ -15534,10 +15568,48 @@ var AbstractCardGerator = (function () {
         enumerable: true,
         configurable: true
     });
-    AbstractCardGerator.prototype.getScript = function () {
-        throw Error("not implemented");
+    Object.defineProperty(AbstractCardGerator.prototype, "color", {
+        get: function () {
+            return this._color;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AbstractCardGerator.prototype, "iframeWidth", {
+        get: function () {
+            return this._iframeWidth;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(AbstractCardGerator.prototype, "cardWidth", {
+        get: function () {
+            return this.iframeWidth - const_1.Margin.FRAME * 2;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AbstractCardGerator.prototype.createCard = function (uniqueFrameNumber) {
+        var cardFrame = this._doc.createElement("iframe");
+        cardFrame.id = "__ghscard_iframe" + uniqueFrameNumber + "__";
+        cardFrame.scrolling = "no";
+        cardFrame.width = this.iframeWidth + "px";
+        cardFrame.style.visibility = "hidden";
+        cardFrame.style.border = "0px";
+        var iframeBody = this._doc.createElement("body");
+        iframeBody.appendChild(this.createCardElement());
+        iframeBody.appendChild(this.createScriptElement());
+        var html = this.createHeaderElement().outerHTML + iframeBody.outerHTML;
+        cardFrame.srcdoc = html;
+        return cardFrame;
     };
-    AbstractCardGerator.prototype.createCard = function () {
+    AbstractCardGerator.prototype.isDisplayChart = function () {
+        return false;
+    };
+    AbstractCardGerator.prototype.isDisplayCommitChart = function () {
+        return false;
+    };
+    AbstractCardGerator.prototype.createCardElement = function () {
         var card = this.createElement("div", "ui " + this.getColor() + " card");
         card.id = const_1.CARD_ELEMENT_ID;
         card.style.margin = const_1.Margin.CARD_CONTENT + "px";
@@ -15546,10 +15618,12 @@ var AbstractCardGerator = (function () {
         if (extraCardContent !== null) {
             card.appendChild(extraCardContent);
         }
-        console.log(card);
         return card;
     };
     AbstractCardGerator.prototype.getColor = function () {
+        throw Error("not implemented");
+    };
+    AbstractCardGerator.prototype.getScript = function () {
         throw Error("not implemented");
     };
     AbstractCardGerator.prototype.createCardHeader = function () {
@@ -15560,6 +15634,31 @@ var AbstractCardGerator = (function () {
     };
     AbstractCardGerator.prototype.createExtraCardContent = function () {
         throw Error("not implemented");
+    };
+    AbstractCardGerator.prototype.createHeaderElement = function () {
+        var header = this._doc.createElement("header");
+        header.appendChild(this.createScriptSrcElement(const_1.JsUrl.JQUERY));
+        header.appendChild(this.createStyleSheetLinkElement(this._doc, const_1.DEFAULT_SEMANTIC_UI_CSS_URL));
+        header.appendChild(this.createScriptSrcElement(const_1.JsUrl.SEMANTIC_UI));
+        if (this.isDisplayChart()) {
+            header.appendChild(this.createScriptSrcElement(const_1.JsUrl.MOMENT));
+            header.appendChild(this.createScriptSrcElement(const_1.JsUrl.CHART));
+            header.appendChild(this.createScriptSrcElement(const_1.JsUrl.PLEASE));
+        }
+        header.appendChild(this.createCssElement(this._doc, ".ui.card { width: " + this.cardWidth + "px; }"));
+        return header;
+    };
+    AbstractCardGerator.prototype.createCssElement = function (doc, cssText) {
+        var css = doc.createElement("style");
+        css.type = "text/css";
+        css.appendChild(doc.createTextNode(cssText));
+        return css;
+    };
+    AbstractCardGerator.prototype.createStyleSheetLinkElement = function (doc, href) {
+        var link = doc.createElement("link");
+        link.rel = "stylesheet";
+        link.href = href;
+        return link;
     };
     AbstractCardGerator.prototype.createElement = function (tagName, className) {
         var element = this._doc.createElement(tagName);
@@ -15643,6 +15742,25 @@ var AbstractCardGerator = (function () {
     AbstractCardGerator.prototype.createPopupInfoList = function () {
         throw Error("not implemented");
     };
+    AbstractCardGerator.prototype.createScriptElement = function () {
+        var scriptContent = [
+            "$(window).on(\"load\", function() {",
+            this.getScript(),
+            "});",
+        ].join("\n");
+        var scriptElement = this._doc.createElement("script");
+        scriptElement.innerHTML = scriptContent;
+        return scriptElement;
+    };
+    AbstractCardGerator.prototype.createScriptSrcElement = function (src, charset) {
+        if (charset === void 0) { charset = null; }
+        var script = this._doc.createElement("script");
+        script.src = src;
+        if (charset) {
+            script.charset = charset;
+        }
+        return script;
+    };
     AbstractCardGerator.prototype._createEmailElement = function (emailAddress, className) {
         if (!emailAddress) {
             return null;
@@ -15662,16 +15780,22 @@ var AbstractCardGerator = (function () {
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#39;");
     };
-    AbstractCardGerator.prototype.sanitizeColor = function (color) {
+    AbstractCardGerator.prototype.toUiColor = function (color) {
         var validColorArray = [
             "red", "orange", "yellow", "olive", "green",
             "teal", "blue", "violet", "purple", "pink",
             "brown", "grey", "black",
         ];
-        if (validColorArray.indexOf(color) >= 0) {
-            return color;
+        var defaultColor = "grey";
+        if (color == null) {
+            return defaultColor;
         }
-        return "";
+        color = color.toLowerCase();
+        if (validColorArray.indexOf(color) >= 0) {
+            return validColorArray[color];
+        }
+        console.warn("unexpected color: (" + color + ")");
+        return defaultColor;
     };
     return AbstractCardGerator;
 }());
@@ -15699,8 +15823,8 @@ var const_1 = __webpack_require__(1);
 var base_1 = __webpack_require__(6);
 var AbstractUserOrgCardGerator = (function (_super) {
     __extends(AbstractUserOrgCardGerator, _super);
-    function AbstractUserOrgCardGerator(doc, cardData, color, emojiProcessor) {
-        return _super.call(this, doc, cardData, color, emojiProcessor) || this;
+    function AbstractUserOrgCardGerator(doc, cardData, iframeWidth, color, emojiProcessor) {
+        return _super.call(this, doc, cardData, iframeWidth, color, emojiProcessor) || this;
     }
     Object.defineProperty(AbstractUserOrgCardGerator.prototype, "avatarColumnWide", {
         get: function () {
@@ -15746,7 +15870,7 @@ var AbstractUserOrgCardGerator = (function (_super) {
         ].join("\n");
     };
     AbstractUserOrgCardGerator.prototype.getColor = function () {
-        return this._color;
+        return this.toUiColor(this.color);
     };
     AbstractUserOrgCardGerator.prototype.createCardContent = function () {
         return this._createCardContent();
@@ -15873,44 +15997,37 @@ var AbstractUserOrgCardGerator = (function (_super) {
         }
         var itemClassName = "item";
         var infoList = this.createElement("div", "ui " + size + " list");
-        var infoCount = 0;
         if (displayMapping["company"]) {
             var element = this.createCompanyElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["location"]) {
             var element = this.createLocationElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["email"]) {
             var element = this.createEmailElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["blog"]) {
             var element = this.createBlogElement(itemClassName);
             if (element) {
                 infoList.appendChild(element);
-                infoCount++;
             }
         }
         if (displayMapping["created_at"]) {
             infoList.appendChild(this.createDateTimeElement("created_at", "Joined on", "wait icon", itemClassName));
-            infoCount++;
         }
         if (displayMapping["updated_at"]) {
             infoList.appendChild(this.createDateTimeElement("updated_at", "Updated at", "history icon", itemClassName));
-            infoCount++;
         }
-        if (infoCount === 0) {
+        if (infoList.children.length === 0) {
             infoList.appendChild(this.createDateTimeElement("created_at", "Joined on", "wait icon", itemClassName));
         }
         return infoList;
@@ -26275,131 +26392,36 @@ return zhTw;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var medium_1 = __webpack_require__(117);
-var small_1 = __webpack_require__(118);
-var tiny_1 = __webpack_require__(119);
-var medium_2 = __webpack_require__(120);
-var small_2 = __webpack_require__(121);
-var tiny_2 = __webpack_require__(122);
-var medium_3 = __webpack_require__(123);
-var small_3 = __webpack_require__(124);
-var tiny_3 = __webpack_require__(125);
 var const_1 = __webpack_require__(1);
 var emoji_1 = __webpack_require__(126);
+var factory_1 = __webpack_require__(127);
 var $ = __webpack_require__(5);
 var CardAttr;
 (function (CardAttr) {
-    CardAttr.WIDTH = "card-width";
-    CardAttr.STYLE = "card-style";
-    CardAttr.CHART = "chart-visibility";
-    CardAttr.FRAME_COLOR = "color";
+    var Display;
+    (function (Display) {
+        Display.CHART = "chart-visibility";
+        Display.TOPICS = "topics-visibility";
+    })(Display = CardAttr.Display || (CardAttr.Display = {}));
     CardAttr.EMOJI = "emoji";
+    CardAttr.FRAME_COLOR = "color";
+    CardAttr.STYLE = "card-style";
+    CardAttr.WIDTH = "card-width";
 })(CardAttr || (CardAttr = {}));
 var DEFAULT_CARD_WIDTH_MAPPING = {
-    "medium": 400,
-    "small": 360,
-    "tiny": 300,
+    "medium": 420,
+    "small": 380,
+    "tiny": 340,
 };
 var DEFAULT_CARD_STYLE = "medium";
-function createCardGenerator(iframeDocument, cardType, cardStyle, cardData, color, chartVisibility, emojiProcessor) {
-    switch (cardType) {
-        case "organization": {
-            switch (cardStyle) {
-                case "medium": {
-                    return new medium_1.MediumOrgCardGerator(iframeDocument, cardData, color, emojiProcessor);
-                }
-                case "small": {
-                    return new small_1.SmallOrgCardGerator(iframeDocument, cardData, color, emojiProcessor);
-                }
-                case "tiny": {
-                    return new tiny_1.TinyOrgCardGerator(iframeDocument, cardData, color, emojiProcessor);
-                }
-                default: {
-                    console.error("invalid card style: type=" + cardType + ", style=" + cardStyle);
-                }
-            }
-        }
-        case "repository": {
-            switch (cardStyle) {
-                case "medium": {
-                    return new medium_2.MediumRepoCardGerator(iframeDocument, cardData, color, chartVisibility, emojiProcessor);
-                }
-                case "small": {
-                    return new small_2.SmallRepoCardGerator(iframeDocument, cardData, color, chartVisibility, emojiProcessor);
-                }
-                case "tiny": {
-                    return new tiny_2.TinyRepoCardGerator(iframeDocument, cardData, color, chartVisibility, emojiProcessor);
-                }
-                default: {
-                    console.error("invalid card style: type=" + cardType + ", style=" + cardStyle);
-                }
-            }
-        }
-        case "user": {
-            switch (cardStyle) {
-                case "medium": {
-                    return new medium_3.MediumUserCardGerator(iframeDocument, cardData, color, emojiProcessor);
-                }
-                case "small": {
-                    return new small_3.SmallUserCardGerator(iframeDocument, cardData, color, emojiProcessor);
-                }
-                case "tiny": {
-                    return new tiny_3.TinyUserCardGerator(iframeDocument, cardData, color, emojiProcessor);
-                }
-                default: {
-                    console.error("invalid card style: type=" + cardType + ", style=" + cardStyle);
-                }
-            }
-        }
-        default: {
-            console.error("invalid card type: " + cardType);
-            return null;
-        }
-    }
-}
 var CardGeneratorManager = (function () {
     function CardGeneratorManager(_doc) {
         this._doc = _doc;
-        this.frameCount = 0;
     }
-    CardGeneratorManager.prototype.createScriptElement = function (doc, src, charset) {
-        if (charset === void 0) { charset = null; }
-        var script = doc.createElement("script");
-        script.src = src;
-        if (charset) {
-            script.charset = charset;
-        }
-        return script;
-    };
-    CardGeneratorManager.prototype.createStyleSheetLinkElement = function (doc, href) {
-        var link = doc.createElement("link");
-        link.rel = "stylesheet";
-        link.href = href;
-        return link;
-    };
-    CardGeneratorManager.prototype.createCssElement = function (doc, cssText) {
-        var css = doc.createElement("style");
-        css.type = "text/css";
-        css.appendChild(doc.createTextNode(cssText));
-        return css;
-    };
-    CardGeneratorManager.prototype.addHeaders = function (doc, iframeWidth, cardType) {
-        doc.head.appendChild(this.createScriptElement(doc, const_1.JsUrl.JQUERY, "utf-8"));
-        doc.head.appendChild(this.createStyleSheetLinkElement(doc, const_1.DEFAULT_SEMANTIC_UI_CSS_URL));
-        doc.head.appendChild(this.createScriptElement(doc, const_1.JsUrl.SEMANTIC_UI));
-        if (cardType === "repository") {
-            doc.head.appendChild(this.createScriptElement(doc, const_1.JsUrl.MOMENT));
-            doc.head.appendChild(this.createScriptElement(doc, const_1.JsUrl.CHART));
-            doc.head.appendChild(this.createScriptElement(doc, const_1.JsUrl.PLEASE));
-        }
-        {
-            var contentWidthPx = iframeWidth - const_1.Margin.FRAME * 2 + "px";
-            doc.head.appendChild(this.createCssElement(doc, ".ui.card { width: " + contentWidthPx + "; }"));
-        }
-    };
     CardGeneratorManager.prototype.generateCards = function () {
         var _this = this;
         console.debug(navigator.userAgent);
+        var frameCount = 0;
         Array.prototype.forEach.call(this._doc.getElementsByClassName("ghscard"), function (cardElement) {
             var dataSourcePath = cardElement.getAttribute("src");
             var cardStyle;
@@ -26410,61 +26432,25 @@ var CardGeneratorManager = (function () {
                 console.debug(CardAttr.STYLE + " attribute not found");
                 cardStyle = DEFAULT_CARD_STYLE;
             }
-            var iframeWidth = _this.getIframeWidth(cardElement.getAttribute(CardAttr.WIDTH), cardStyle);
             $.getJSON(dataSourcePath, function (cardData) {
+                console.info("--- creating a GitHub card from " + dataSourcePath + " ---");
                 console.debug(cardData);
-                var cardType = cardData["card_type"].toLowerCase();
-                if (typeof cardType === "undefined") {
-                    console.error("skip creating: card type not found in " + dataSourcePath);
+                var cardGenerator = factory_1.createCardGenerator(_this._doc, cardStyle, cardData, _this.getIframeWidth(cardElement.getAttribute(CardAttr.WIDTH), cardStyle), cardElement.getAttribute(CardAttr.FRAME_COLOR), cardElement.getAttribute(CardAttr.Display.CHART), cardElement.getAttribute(CardAttr.Display.TOPICS), emoji_1.EmojiProcessorFactory.create(cardElement.getAttribute(CardAttr.EMOJI), cardData["emojis"]));
+                if (cardGenerator == null) {
+                    console.error("skip invalid card data: " + dataSourcePath);
                     return;
                 }
-                console.info("creating a GitHub " + cardType + " card from " + dataSourcePath);
-                var iframeBuffer = _this._doc.createElement("iframe");
-                iframeBuffer.style.visibility = "hidden";
-                iframeBuffer.width = "0px";
-                iframeBuffer.height = "0px";
-                cardElement.parentNode.insertBefore(iframeBuffer, cardElement);
-                var iframeBufferDocument = iframeBuffer.contentWindow.document;
-                _this.addHeaders(iframeBufferDocument, iframeWidth, cardType);
-                var cardGenerator = createCardGenerator(iframeBufferDocument, cardType, cardStyle, cardData, cardElement.getAttribute(CardAttr.FRAME_COLOR), cardElement.getAttribute(CardAttr.CHART), emoji_1.EmojiProcessorFactory.create(cardElement.getAttribute(CardAttr.EMOJI), cardData["emojis"]));
-                iframeBufferDocument.body.appendChild(cardGenerator.createCard());
-                {
-                    var scriptContent = [
-                        "$(document).ready(function() {",
-                        cardGenerator.getScript(),
-                        "});",
-                    ].join("\n");
-                    var scriptElement = _this._doc.createElement("script");
-                    scriptElement.innerHTML = scriptContent;
-                    iframeBufferDocument.body.appendChild(scriptElement);
-                }
-                var cardFrame = _this._doc.createElement("iframe");
-                var isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") !== -1;
-                var isChrome = navigator.userAgent.toLowerCase().indexOf("chrome") !== -1;
+                var cardFrame = cardGenerator.createCard(frameCount);
+                frameCount++;
+                cardElement.parentNode.insertBefore(cardFrame, cardElement);
                 $(cardFrame).on("load", function () {
                     var card = cardFrame.contentWindow.document.getElementsByTagName("div")[0];
                     if (card === undefined) {
                         return;
                     }
-                    cardFrame.height = card.getBoundingClientRect().height + const_1.Margin.FRAME * 2 + "px";
+                    cardFrame.height = card.getBoundingClientRect().height + const_1.Margin.FRAME + "px";
                     cardFrame.style.visibility = "visible";
-                    if (iframeBuffer && !isChrome) {
-                        cardElement.parentNode.removeChild(iframeBuffer);
-                        iframeBuffer = null;
-                    }
                 });
-                cardFrame.style.visibility = "hidden";
-                cardElement.parentNode.insertBefore(cardFrame, cardElement);
-                _this.frameCount++;
-                cardFrame.id = "__ghscard_iframe" + _this.frameCount + "__";
-                _this.appendCardCss(cardFrame.id);
-                cardFrame.scrolling = "no";
-                cardFrame.width = iframeWidth + "px";
-                cardFrame.style.border = "0px";
-                var frameDocument = cardFrame.contentWindow.document;
-                frameDocument.open();
-                frameDocument.write(iframeBufferDocument.documentElement.innerHTML);
-                frameDocument.close();
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 console.error([
                     "failed to execute getJSON: " + textStatus,
@@ -26484,9 +26470,6 @@ var CardGeneratorManager = (function () {
             iframeWidth = Number(cardWidth);
         }
         return iframeWidth;
-    };
-    CardGeneratorManager.prototype.appendCardCss = function (cardId) {
-        this._doc.head.appendChild(this.createCssElement(this._doc, "#" + cardId + " .ui.card {\n                position: fixed;\n                height:100%;\n            }"));
     };
     return CardGeneratorManager;
 }());
@@ -26745,6 +26728,13 @@ var MediumRepoCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(MediumRepoCardGerator.prototype, "pieChartLegendFontSize", {
+        get: function () {
+            return const_1.ChartSize.Pie.Medium.LEGEND_FONT_SIZE;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(MediumRepoCardGerator.prototype, "chartTitleFontSize", {
         get: function () {
             return const_1.ChartSize.Line.Medium.TITLE_FONT_SIZE;
@@ -26759,12 +26749,6 @@ var MediumRepoCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    MediumRepoCardGerator.prototype.isCreateChart = function () {
-        if (this.chartVisibility === "hidden") {
-            return false;
-        }
-        return true;
-    };
     return MediumRepoCardGerator;
 }(base_repository_1.AbstractRepositoryCardGerator));
 exports.MediumRepoCardGerator = MediumRepoCardGerator;
@@ -26843,6 +26827,13 @@ var SmallRepoCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(SmallRepoCardGerator.prototype, "pieChartLegendFontSize", {
+        get: function () {
+            return const_1.ChartSize.Pie.Small.LEGEND_FONT_SIZE;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(SmallRepoCardGerator.prototype, "chartTitleFontSize", {
         get: function () {
             return const_1.ChartSize.Line.Small.TITLE_FONT_SIZE;
@@ -26857,12 +26848,6 @@ var SmallRepoCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    SmallRepoCardGerator.prototype.isCreateChart = function () {
-        if (this.chartVisibility === "hidden") {
-            return false;
-        }
-        return true;
-    };
     return SmallRepoCardGerator;
 }(base_repository_1.AbstractRepositoryCardGerator));
 exports.SmallRepoCardGerator = SmallRepoCardGerator;
@@ -26941,6 +26926,13 @@ var TinyRepoCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(TinyRepoCardGerator.prototype, "pieChartLegendFontSize", {
+        get: function () {
+            return const_1.ChartSize.Pie.Tiny.LEGEND_FONT_SIZE;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(TinyRepoCardGerator.prototype, "chartTitleFontSize", {
         get: function () {
             return const_1.ChartSize.Line.Tiny.TITLE_FONT_SIZE;
@@ -26955,8 +26947,8 @@ var TinyRepoCardGerator = (function (_super) {
         enumerable: true,
         configurable: true
     });
-    TinyRepoCardGerator.prototype.isCreateChart = function () {
-        if (this.chartVisibility === "visible") {
+    TinyRepoCardGerator.prototype.isDisplayChart = function () {
+        if (this.chartDisplay === "block") {
             return true;
         }
         return false;
@@ -27267,6 +27259,85 @@ exports.EmojiProcessorFactory = EmojiProcessorFactory;
 /* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var medium_1 = __webpack_require__(117);
+var small_1 = __webpack_require__(118);
+var tiny_1 = __webpack_require__(119);
+var medium_2 = __webpack_require__(120);
+var small_2 = __webpack_require__(121);
+var tiny_2 = __webpack_require__(122);
+var medium_3 = __webpack_require__(123);
+var small_3 = __webpack_require__(124);
+var tiny_3 = __webpack_require__(125);
+function createCardGenerator(doc, cardStyle, cardData, iframeWidth, color, chartDisplay, topicDisplay, emojiProcessor) {
+    var cardType = cardData["card_type"].toLowerCase();
+    switch (cardType) {
+        case "organization": {
+            switch (cardStyle) {
+                case "medium": {
+                    return new medium_1.MediumOrgCardGerator(doc, cardData, iframeWidth, color, emojiProcessor);
+                }
+                case "small": {
+                    return new small_1.SmallOrgCardGerator(doc, cardData, iframeWidth, color, emojiProcessor);
+                }
+                case "tiny": {
+                    return new tiny_1.TinyOrgCardGerator(doc, cardData, iframeWidth, color, emojiProcessor);
+                }
+                default: {
+                    console.error("invalid card style: type=" + cardType + ", style=" + cardStyle);
+                    return null;
+                }
+            }
+        }
+        case "repository": {
+            switch (cardStyle) {
+                case "medium": {
+                    return new medium_2.MediumRepoCardGerator(doc, cardData, iframeWidth, color, chartDisplay, topicDisplay, emojiProcessor);
+                }
+                case "small": {
+                    return new small_2.SmallRepoCardGerator(doc, cardData, iframeWidth, color, chartDisplay, topicDisplay, emojiProcessor);
+                }
+                case "tiny": {
+                    return new tiny_2.TinyRepoCardGerator(doc, cardData, iframeWidth, color, chartDisplay, topicDisplay, emojiProcessor);
+                }
+                default: {
+                    console.error("invalid card style: type=" + cardType + ", style=" + cardStyle);
+                    return null;
+                }
+            }
+        }
+        case "user": {
+            switch (cardStyle) {
+                case "medium": {
+                    return new medium_3.MediumUserCardGerator(doc, cardData, iframeWidth, color, emojiProcessor);
+                }
+                case "small": {
+                    return new small_3.SmallUserCardGerator(doc, cardData, iframeWidth, color, emojiProcessor);
+                }
+                case "tiny": {
+                    return new tiny_3.TinyUserCardGerator(doc, cardData, iframeWidth, color, emojiProcessor);
+                }
+                default: {
+                    console.error("invalid card style: type=" + cardType + ", style=" + cardStyle);
+                    return null;
+                }
+            }
+        }
+        default: {
+            console.error("invalid card type: " + cardType);
+            return null;
+        }
+    }
+}
+exports.createCardGenerator = createCardGenerator;
+//# sourceMappingURL=factory.js.map
+
+/***/ }),
+/* 128 */
+/***/ (function(module, exports, __webpack_require__) {
+
 var map = {
 	"./af": 8,
 	"./af.js": 8,
@@ -27499,11 +27570,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 127;
+webpackContext.id = 128;
 
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -27531,7 +27602,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
