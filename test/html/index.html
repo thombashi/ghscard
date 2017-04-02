@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ghscard testing</title>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css">
+</head>
+<body>
+    <h1 class='ui dividing header'>
+        User Cards
+    </h1>
+
+    <h2 class='ui header'>card-style: default</h2>
+    <div id="user" class="ghscard" src="data/kennethreitz.json"></div>
+
+    <h2 class='ui header'>card-style: medium</h2>
+    <div id="user" class="ghscard" src="data/kentcdodds.json" card-style="medium"></div>
+    <div id="user" class="ghscard" src="data/thombashi.json" card-style="medium"></div>
+
+    <h2 class='ui header'>card-style: small</h2>
+    <div id="user" class="ghscard" src="data/kentcdodds.json" card-style="small"></div>
+    <div id="user" class="ghscard" src="data/thombashi.json" card-style="small"></div>
+
+    <h2 class='ui header'>card-style: tiny</h2>
+    <div id="user" class="ghscard" src="data/kentcdodds.json" card-style="tiny"></div>
+    <div id="user" class="ghscard" src="data/thombashi.json" card-style="tiny"></div>
+
+
+    <h1 class='ui dividing header'>
+        Repository Cards
+    </h1>
+
+    <h2 class='ui dividing header'>card-style</h2>
+
+    <h3 class='ui header'>card-style: default</h3>
+    <div class="ghscard" src="data/Microsoft_TypeScript.json"></div>
+
+    <h3 class='ui header'>card-style: medium</h3>
+    <div class="ghscard" src="data/angular_angular.json" card-style="medium"></div>
+    <div class="ghscard" src="data/thombashi_null.json" card-style="medium"></div>
+
+    <h3 class='ui header'>card-style: small</h3>
+    <div class="ghscard" src="data/angular_angular.json" card-style="small"></div>
+    <div class="ghscard" src="data/thombashi_null.json" card-style="small"></div>
+
+    <h3 class='ui header'>card-style: tiny</h3>
+    <div class="ghscard" src="data/angular_angular.json" card-style="tiny"></div>
+    <div class="ghscard" src="data/thombashi_null.json" card-style="tiny"></div>
+
+
+    <h2 class='ui dividing header'>chart-display</h2>
+
+    <h3 class='ui header'>chart-display: none</h3>
+    <div class="ghscard" src="data/angular_angular.json" chart-display="none"></div>
+
+    <h3 class='ui header'>chart-display: block</h3>
+    <div class="ghscard" src="data/angular_angular.json" chart-display="block"></div>
+
+
+    <h2 class='ui dividing header'>topic-display</h2>
+
+    <h3 class='ui header'>topic-display: none</h3>
+    <div class="ghscard" src="data/angular_angular.json" topic-display="none"></div>
+
+    <h3 class='ui header'>topic-display: block</h3>
+    <div class="ghscard" src="data/angular_angular.json" topic-display="block"></div>
+
+
+    <h2 class='ui dividing header'>no-display</h2>
+    <div class="ghscard" src="data/angular_angular.json" chart-display="none" topic-display="none"></div>
+
+
+    <h1 class='ui dividing header'>
+        Organization Cards
+    </h1>
+
+    <h2 class='ui header'>card-style: medium</h2>
+    <div id="user" class="ghscard" src="data/angular.json"></div>
+
+    <h2 class='ui header'>card-style: small</h2>
+    <div id="user" class="ghscard" src="data/angular.json" card-style="small"></div>
+
+    <h2 class='ui header'>card-style: tiny</h2>
+    <div id="user" class="ghscard" src="data/angular.json" card-style="tiny"></div>
+
+    <!--
+    <div class="ghscard" src="data/pallets_flask.json"></div>
+    <div class="ghscard" src="data/pallets_flask.json" card-style="small" chart-display="block"></div>
+    <div class="ghscard" src="data/pallets_flask.json" card-style="tiny" chart-display="block"></div>
+    -->
+
+    <script src="ghscard.js"></script>
+</body>
+</html>

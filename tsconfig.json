@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "ES5",
+        "removeComments": true,
+        "outDir": "./js",
+        "sourceMap": true
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "files": [
+        "src/card/base.ts",
+        "src/card/interface.ts",
+        "src/card/repository/base_repository.ts",
+        "src/card/repository/medium.ts",
+        "src/card/repository/small.ts",
+        "src/card/repository/tiny.ts",
+        "src/card/user/base_user.ts",
+        "src/card/user/medium.ts",
+        "src/card/user/small.ts",
+        "src/card/user/tiny.ts",
+        "src/emoji.ts",
+        "src/factory.ts",
+        "src/main.ts",
+        "src/manager.ts",
+        "src/types.ts"
+    ]
+}
