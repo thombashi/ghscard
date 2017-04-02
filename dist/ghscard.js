@@ -4389,7 +4389,7 @@ var Margin;
     Margin.FRAME = 6;
     Margin.LABEL = 4;
 })(Margin = exports.Margin || (exports.Margin = {}));
-var CDN_PREFIX = "https://cdnjs.cloudflare.com/ajax/libs";
+var CDN_PREFIX = "//cdnjs.cloudflare.com/ajax/libs";
 var SEMANTIC_UI_VERSION = "2.2.9";
 var JsUrl;
 (function (JsUrl) {
@@ -4516,7 +4516,7 @@ var AbstractOrgCardGerator = (function (_super) {
             items.appendChild(item);
         }
         if (Number(this.getCardData("public_members_count")) > 0) {
-            var item = this.createAnchorElement("https://github.com/orgs/" + this.getCardData("id") + "/people", "item");
+            var item = this.createAnchorElement("//github.com/orgs/" + this.getCardData("id") + "/people", "item");
             item.appendChild(this._doc.createTextNode("People"));
             item.appendChild(this.createLabelElement(this.getCardData("public_members_count"), this.infoSize));
             items.appendChild(item);
@@ -4989,7 +4989,7 @@ var AbstractRepositoryCardGerator = (function (_super) {
         return infoList;
     };
     AbstractRepositoryCardGerator.prototype.createTopicLabelElement = function (topic, size) {
-        var label = this.createAnchorElement("https://github.com/search?q=topic%3A" + topic + "&type=Repositories", "ui blue horizontal basic " + size + " label");
+        var label = this.createAnchorElement("//github.com/search?q=topic%3A" + topic + "&type=Repositories", "ui blue horizontal basic " + size + " label");
         label.appendChild(this._doc.createTextNode(topic));
         label.title = "topic: " + topic;
         return label;
@@ -5265,7 +5265,7 @@ var AbstractUserCardGerator = (function (_super) {
             items.appendChild(item);
         }
         if (Number(this.publicGists) > 0) {
-            var item = this.createAnchorElement("https://gist.github.com/" + this.getCardData("id"), "item");
+            var item = this.createAnchorElement("//gist.github.com/" + this.getCardData("id"), "item");
             item.appendChild(this._doc.createTextNode("Gists"));
             item.appendChild(this.createLabelElement(this.publicGists, this.infoSize));
             items.appendChild(item);
