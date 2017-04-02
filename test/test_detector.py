@@ -18,6 +18,10 @@ from cli._const import CardType
 from cli._detector import GithubIdDetector
 
 
+def monkey_get_organization(a, b):
+    raise UnknownObjectException("dummy", "dummy")
+
+
 logger = logbook.Logger("test")
 
 
@@ -45,7 +49,10 @@ class Test_GithubIdDetector_id(object):
         ["thombashi/ghscard", "thombashi/ghscard"],
         [" thombashi / ghscard ", "thombashi/ghscard"],
     ])
-    def test_normal(self, value, expected):
+    def test_normal(self, monkeypatch, value, expected):
+        monkeypatch.setattr(
+            github.Github, "get_organization", monkey_get_organization)
+
         detector = GithubIdDetector(
             value, logger, pygh_client=github.Github(None))
 
@@ -61,9 +68,6 @@ class Test_GithubIdDetector_is_user(object):
         ["/thombashi/", True],
     ])
     def test_normal(self, monkeypatch, value, expected):
-        def monkey_get_organization(a, b):
-            raise UnknownObjectException("dummy", "dummy")
-
         monkeypatch.setattr(
             github.Github, "get_organization", monkey_get_organization)
 
@@ -110,7 +114,10 @@ class Test_GithubIdDetector_get_id_type(object):
         ["thombashi", CardType.USER],
         ["thombashi/ghscard", CardType.REPOSITORY],
     ])
-    def test_normal(self, value, expected):
+    def test_normal(self, monkeypatch, value, expected):
+        monkeypatch.setattr(
+            github.Github, "get_organization", monkey_get_organization)
+
         detector = GithubIdDetector(
             value, logger, pygh_client=github.Github(None))
 
