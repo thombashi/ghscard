@@ -5274,22 +5274,19 @@ var AbstractUserCardGerator = (function (_super) {
     };
     AbstractUserCardGerator.prototype.createOrganizations = function () {
         var _this = this;
-        var organizationCount = 0;
-        var images = this.createElement("div", "ui mini rounded images");
+        var orgList = this.createElement("div", "ui mini rounded images");
         Array.prototype.forEach.call(this.getCardData("organizations"), function (organizationData) {
             var orgLink = _this.createAnchorElement(organizationData["html_url"], "ui image");
             orgLink.setAttribute("data-content", organizationData["name"]);
             orgLink.setAttribute("data-position", "top center");
             orgLink.setAttribute("data-variation", "inverted mini");
-            var image = _this.createImageElement(organizationData["avatar_url"]);
-            orgLink.appendChild(image);
-            images.appendChild(orgLink);
-            organizationCount++;
+            orgLink.appendChild(_this.createImageElement(organizationData["avatar_url"]));
+            orgList.appendChild(orgLink);
         });
-        if (organizationCount === 0) {
+        if (orgList.children.length === 0) {
             return null;
         }
-        return images;
+        return orgList;
     };
     return AbstractUserCardGerator;
 }(base_user_org_1.AbstractUserOrgCardGerator));
@@ -26400,8 +26397,8 @@ var CardAttr;
 (function (CardAttr) {
     var Display;
     (function (Display) {
-        Display.CHART = "chart-visibility";
-        Display.TOPICS = "topics-visibility";
+        Display.CHART = "chart-display";
+        Display.TOPICS = "topic-display";
     })(Display = CardAttr.Display || (CardAttr.Display = {}));
     CardAttr.EMOJI = "emoji";
     CardAttr.FRAME_COLOR = "color";
@@ -27273,6 +27270,11 @@ var small_3 = __webpack_require__(124);
 var tiny_3 = __webpack_require__(125);
 function createCardGenerator(doc, cardStyle, cardData, iframeWidth, color, chartDisplay, topicDisplay, emojiProcessor) {
     var cardType = cardData["card_type"].toLowerCase();
+    console.debug([
+        "createCardGenerator:",
+        "  chartDisplay: " + chartDisplay,
+        "  topicDisplay: " + topicDisplay,
+    ]);
     switch (cardType) {
         case "organization": {
             switch (cardStyle) {
