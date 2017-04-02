@@ -24,14 +24,13 @@ def write_quickstart(maker):
     maker.set_indent_level(0)
     maker.write_file(intro_root.joinpath("quickstart.txt"))
 
-    """
+    maker.inc_indent_level()
     maker.write_chapter("For more information")
     maker.write_line_list([
         "More examples are available at ",
-        "http://{:s}.rtfd.io/en/latest/pages/reference/index.html".format(
+        "http://{:s}.rtfd.io/en/latest/pages/usage/index.html".format(
             PROJECT_NAME),
     ])
-    """
 
 
 def main():
@@ -52,8 +51,9 @@ def main():
 
     maker.write_file(
         maker.doc_page_root_dir_path.joinpath("installation.rst"))
+    maker.write_file(
+        maker.doc_page_root_dir_path.joinpath("environment.rst"))
 
-    maker.set_indent_level(0)
     maker.write_chapter("Documentation")
     maker.write_line_list([
         "http://{:s}.rtfd.io/".format(PROJECT_NAME),

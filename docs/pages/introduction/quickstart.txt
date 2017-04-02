@@ -15,10 +15,15 @@ Generate card data files
 ----------------------------------
 Execute ``ghscard gen`` command to generate a GitHub user/organization/repository card data file.
 
-.. code-block:: pycon
+::
 
-    ghscard gen thombashi -o data
-    [INFO] ghscard gen: written repository data to 'data/thombashi.json'
+    $ ghscard gen thombashi -o data
+    [INFO] ghscard gen: written user data to 'data/thombashi.json'
+
+::
+
+    $ ghscard gen Microsoft/TypeScript -o data
+    [INFO] ghscard gen: written repository data to 'data/Microsoft_TypeScript.json'
 
 
 Add widget to a HTML file
@@ -29,15 +34,24 @@ Add widget to a HTML file
     <!doctype html>
     <html>
     <body>
-        <div class='ghscard' src='data/thombashi.json'></div>
-
-        <script src="//rawgit.com/thombashi/ghscard/master/dist/ghscard.min.js"></script>
+        <table border="0">
+            <tr>
+                <td>
+                    <div class='ghscard' src='data/thombashi.json'></div>
+                </td>
+                <td>
+                    <div class="ghscard" src="data/Microsoft_TypeScript.json"></div>
+                </td>
+            </tr>
+        </table>
+        
+        <script src='//rawgit.com/thombashi/ghscard/master/dist/ghscard.min.js'></script>
     </body>
     </html>
 
 This HTML will be displayed as follows:
 
 .. image:: ss/quickstart.png
-    :width: 300px
-    :alt: Link to an example page
+    :width: 600px
+    :alt: Click to navigate to the HTML page
     :target: //thombashi.github.io/ghscard/quickstart/

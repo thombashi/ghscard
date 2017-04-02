@@ -9,8 +9,8 @@ User/Organization Cards
 
     .. code::
 
-        ghscard gen thombashi -o data
-        [INFO] ghscard gen: written repository data to 'data/thombashi.json'
+        $ ghscard gen thombashi -o data
+        [INFO] ghscard gen: written user data to 'data/thombashi.json'
 
 2. HTML tags
     .. code-block:: html
@@ -22,7 +22,7 @@ User/Organization Cards
 3. Result
     .. raw:: html
 
-        <iframe src="//thombashi.github.io/ghscard/quickstart/" width="440" height="510" style="border: 0px;">
+        <iframe src="//thombashi.github.io/ghscard/examples/user.html" width="440" height="510" style="border: 0px;">
         </iframe>
             
 
@@ -70,14 +70,18 @@ Card size and display format will change according to ``card-style`` attribute.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Charts on repository cards can be changed visible or hidden by ``chart-display`` attribute value.
 
+.. table:: ``chart-display`` attribute
+
     =======================  ================================================
-    ``chart-display`` value  Meaning
+    Value                    Meaning
     =======================  ================================================
     ``block``                Charts will be displayed on cards.
     ``none``                 Charts will be NOT displayed on cards.
     =======================  ================================================
 
 Default value differed by ``card-style`` attribute:
+
+.. table:: Default value of ``chart-display``
 
     =======================  ================================================
     ``card-style`` value     Default value
@@ -95,8 +99,10 @@ Default value differed by ``card-style`` attribute:
 Topic labels repository cards can be changed visible or hidden by ``topic-display`` attribute value.
 Defaults to ``block``.
 
+.. table:: ``topic-display`` attribute
+
     =======================  ================================================
-    ``topic-display`` value  Meaning
+    Value                    Meaning
     =======================  ================================================
     ``block``                Topic labels will be displayed on cards.
     ``none``                 Topic labels will be NOT displayed on cards.
