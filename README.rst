@@ -12,9 +12,6 @@ Summary
 
 A JavaScript widget to generate GitHub user/repository/organization cards for static web pages (like GitHub pages).
 
-Not executed GitHub API
-avoid GitHub API rate limitation.
-
 Quick Start
 ================
 
@@ -32,10 +29,15 @@ Generate card data files
 ----------------------------------
 Execute ``ghscard gen`` command to generate a GitHub user/organization/repository card data file.
 
-.. code:: pycon
+::
 
-    ghscard gen thombashi -o data
-    [INFO] ghscard gen: written repository data to 'data/thombashi.json'
+    $ ghscard gen thombashi -o data
+    [INFO] ghscard gen: written user data to 'data/thombashi.json'
+
+::
+
+    $ ghscard gen Microsoft/TypeScript -o data
+    [INFO] ghscard gen: written repository data to 'data/Microsoft_TypeScript.json'
 
 
 Add widget to a HTML file
@@ -46,18 +48,33 @@ Add widget to a HTML file
     <!doctype html>
     <html>
     <body>
-        <div class='ghscard' src='data/thombashi.json'></div>
+        <table border="0">
+            <tr>
+                <td>
+                    <div class='ghscard' src='data/thombashi.json'></div>
+                </td>
+                <td>
+                    <div class="ghscard" src="data/Microsoft_TypeScript.json"></div>
+                </td>
+            </tr>
+        </table>
 
-        <script src="//rawgit.com/thombashi/ghscard/master/dist/ghscard.min.js"></script>
+        <script src='//rawgit.com/thombashi/ghscard/master/dist/ghscard.min.js'></script>
     </body>
     </html>
 
 This HTML will be displayed as follows:
 
 .. image:: ss/quickstart.png
-    :width: 300px
-    :alt: Link to an example page
+    :width: 600px
+    :alt: Click to navigate to the HTML page
     :target: //thombashi.github.io/ghscard/quickstart/
+
+For more information
+--------------------
+
+More examples are available at 
+http://ghscard.rtfd.io/en/latest/pages/usage/index.html
 
 Demo
 ====
@@ -80,6 +97,18 @@ Python 2.7+ or 3.3+
 - `requests <//python-requests.org/>`__
 - `typepy <//github.com/thombashi/typepy>`__
 - `six <//pypi.python.org/pypi/six/>`__
+
+Tested environment
+=======================
+
+.. table:: Tested Web Browsers
+
+    =======================  ===========================
+    Web browser              Version
+    =======================  ===========================
+    ``Google Chrome``        ``57.0``
+    ``Mozilla Firefox``      ``52.0``
+    =======================  ===========================
 
 Documentation
 =============
