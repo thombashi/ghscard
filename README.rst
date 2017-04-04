@@ -12,6 +12,12 @@ Summary
 
 A JavaScript widget to generate GitHub user/repository/organization cards for static web pages (like GitHub pages).
 
+Demo
+====
+
+﻿- `Popular Repositories on GitHub <https://thombashi.github.io/ghscard/demo/>`__
+- https://thombashi.github.io/
+
 Quick Start
 ================
 
@@ -76,12 +82,6 @@ For more information
 More examples are available at 
 http://ghscard.rtfd.io/en/latest/pages/usage/index.html
 
-Demo
-====
-
-﻿- `Popular Repositories on GitHub <https://thombashi.github.io/ghscard/demo/>`__
-- https://thombashi.github.io/
-
 Dependencies
 ============
 
@@ -111,7 +111,7 @@ Tested environment
     =======================  ===========================
 
 Documentation
-=============
+-------------
 
 http://ghscard.rtfd.io/
 

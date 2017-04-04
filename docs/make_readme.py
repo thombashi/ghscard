@@ -43,11 +43,11 @@ def main():
     maker.write_chapter("Summary")
     maker.write_file(intro_root.joinpath("summary.txt"))
 
-    write_quickstart(maker)
-
     maker.set_indent_level(0)
     maker.write_chapter("Demo")
     maker.write_file(intro_root.joinpath("demo.txt"))
+
+    write_quickstart(maker)
 
     maker.write_file(
         maker.doc_page_root_dir_path.joinpath("installation.rst"))
