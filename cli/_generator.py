@@ -73,7 +73,6 @@ class CardGenerator(object):
                     self.__data_fetcher.type, self.__data_fetcher.id, e.status, message))
             return errno.ENODATA
 
-        #card_data_text = json.dumps(card_data, indent=4)
         card_data_text = json.dumps(card_data)
 
         self.__logger.debug("fetched card data: {}".format(card_data_text))
