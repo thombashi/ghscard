@@ -120,7 +120,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
         for i in range(RETRY_COUNT):
             try:
                 card_data["participation"] = repo.get_stats_participation().all
-            except AttributeError as e:
+            except AttributeError:
                 self._logger.warn(
                     "failed to get '{}' participation stats. retrying in 5 seconds".format(self.id))
                 card_data["participation"] = []

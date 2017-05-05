@@ -16,7 +16,6 @@ import click
 import github
 from github.GithubException import (
     BadCredentialsException,
-    RateLimitExceededException,
     UnknownObjectException,
 )
 from pathvalidate import sanitize_filename
@@ -70,7 +69,8 @@ class CardGenerator(object):
                 message = e.data.message
             self.__logger.error(
                 "failed to get GitHub data: type={}, id={}, status={}, message={}".format(
-                    self.__data_fetcher.type, self.__data_fetcher.id, e.status, message))
+                    self.__data_fetcher.type, self.__data_fetcher.id, e.status,
+                    message))
             return errno.ENODATA
 
         card_data_text = json.dumps(card_data)
