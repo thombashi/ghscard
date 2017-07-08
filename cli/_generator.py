@@ -11,6 +11,7 @@ import errno
 import io
 import json
 import os.path
+import socket
 
 import click
 import github
@@ -58,6 +59,9 @@ class CardGenerator(object):
                     self.__logger,
                     "fetch {} {}".format(github_id, self.__data_fetcher.type)):
                 card_data = self.__data_fetcher.fetch()
+        except socket.error as e:
+            self.__logger.error(e)
+            return errno.ECONNRESET
         except BadCredentialsException as e:
             self.__logger.error("invalid GitHub API public access token")
             return errno.EBADRQC
