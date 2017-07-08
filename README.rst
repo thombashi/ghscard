@@ -46,35 +46,37 @@ Execute ``ghscard gen`` command to generate a GitHub user/organization/repositor
     [INFO] ghscard gen: written repository data to 'data/Microsoft_TypeScript.json'
 
 
-Add widget to a HTML file
+Add widget to an HTML file
 ----------------------------------
 
-.. code:: html
+:Example:
+    .. code:: html
 
-    <!doctype html>
-    <html>
-    <body>
-        <table border="0">
-            <tr>
-                <td>
-                    <div class='ghscard' src='data/thombashi.json'></div>
-                </td>
-                <td>
-                    <div class="ghscard" src="data/Microsoft_TypeScript.json"></div>
-                </td>
-            </tr>
-        </table>
+        <!doctype html>
+        <html>
+        <body>
+            <table border="0">
+                <tr>
+                    <td>
+                        <div class='ghscard' src='data/thombashi.json'></div>
+                    </td>
+                    <td>
+                        <div class="ghscard" src="data/Microsoft_TypeScript.json"></div>
+                    </td>
+                </tr>
+            </table>
 
-        <script src='//rawgit.com/thombashi/ghscard/master/dist/ghscard.min.js'></script>
-    </body>
-    </html>
+            <script src='//rawgit.com/thombashi/ghscard/master/dist/ghscard.min.js'></script>
+        </body>
+        </html>
 
 This HTML will be displayed as follows:
 
-.. image:: ss/quickstart.png
-    :width: 600px
-    :alt: Click to navigate to the HTML page
-    :target: //thombashi.github.io/ghscard/quickstart/
+:Output:
+    .. image:: ss/quickstart.png
+        :width: 600px
+        :alt: Click to navigate to the HTML page
+        :target: //thombashi.github.io/ghscard/quickstart/
 
 For more information
 --------------------
@@ -106,8 +108,8 @@ Tested environment
     =======================  ===========================
     Web browser              Version
     =======================  ===========================
-    ``Google Chrome``        ``57.0``
-    ``Mozilla Firefox``      ``52.0``
+    ``Google Chrome``        ``57.0`` or newer
+    ``Mozilla Firefox``      ``52.0`` or newer
     =======================  ===========================
 
 Documentation
