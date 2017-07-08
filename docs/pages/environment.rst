@@ -6,6 +6,6 @@ Tested environment
     =======================  ===========================
     Web browser              Version
     =======================  ===========================
-    ``Google Chrome``        ``57.0``
-    ``Mozilla Firefox``      ``52.0``
+    ``Google Chrome``        ``57.0`` or newer
+    ``Mozilla Firefox``      ``52.0`` or newer
     =======================  ===========================

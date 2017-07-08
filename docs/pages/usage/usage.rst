@@ -1,10 +1,10 @@
 Usage
 =============
 
-User/Organization Cards
+Create User/Organization Cards
 ------------------------------------
 
-1. Generate card data
+1. Generate a card data file
     Execute ``ghscard gen <user-name or organization-name>``.
 
     .. code::
@@ -12,7 +12,7 @@ User/Organization Cards
         $ ghscard gen thombashi -o data
         [INFO] ghscard gen: written user data to 'data/thombashi.json'
 
-2. HTML tags
+2. Add HTML tags to the HTML
     .. code-block:: html
 
         <div class='ghscard' src='data/thombashi.json'></div>
@@ -26,10 +26,9 @@ User/Organization Cards
         </iframe>
             
 
-Repository Cards
--------------------
-
-1. Generate card data
+Create Repository Cards
+--------------------------------------
+1. Generate a card data file
     Execute ``ghscard gen <user name>/<repository name>``.
 
     .. code::
@@ -37,7 +36,7 @@ Repository Cards
         $ ghscard gen Microsoft/TypeScript -o data
         [INFO] ghscard gen: written repository data to 'data/Microsoft_TypeScript.json'
 
-2. HTML tags
+2. Add HTML tags to the HTML
     .. code-block:: html
     
         <div class="ghscard" src="data/Microsoft_TypeScript.json"></div>
@@ -56,7 +55,7 @@ Card Configurations
 
 ``card-style`` Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Card size and display format will change according to ``card-style`` attribute.
+Card size and display format change according to ``card-style`` attribute.
 ``card-style`` attribute takes one of the following values:
 
 - ``medium`` `(default)`
@@ -75,8 +74,8 @@ Charts on repository cards can be changed visible or hidden by ``chart-display``
     =======================  ================================================
     Value                    Meaning
     =======================  ================================================
-    ``block``                Charts will be displayed on cards.
-    ``none``                 Charts will be NOT displayed on cards.
+    ``block``                Charts are displayed on cards.
+    ``none``                 Charts are NOT displayed on cards.
     =======================  ================================================
 
 Default value differed by ``card-style`` attribute:
@@ -104,8 +103,8 @@ Defaults to ``block``.
     =======================  ================================================
     Value                    Meaning
     =======================  ================================================
-    ``block``                Topic labels will be displayed on cards.
-    ``none``                 Topic labels will be NOT displayed on cards.
+    ``block``                Topic labels are displayed on cards.
+    ``none``                 Topic labels are NOT displayed on cards.
     =======================  ================================================
 
 `Examples <//thombashi.github.io/ghscard/examples/topic-display.html>`__
