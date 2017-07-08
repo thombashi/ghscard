@@ -55,11 +55,6 @@ CONFIG_ITEM_LIST = [
     ),
 ]
 
-"""
-GitHub API access token:
-https://github.com/settings/tokens/new
-"""
-
 
 class Context(object):
     LOG_LEVEL = "LOG_LEVEL"
