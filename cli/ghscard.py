@@ -80,8 +80,8 @@ def configure(ctx):
     """
     Create a configuration file which includes GitHub API public access token.
 
-    The value you provide for the GitHub API public access token will be
-    written to the configuration file (~/.ghscard).
+    The value you provide for the GitHub API public access token written to
+    the configuration file (~/.ghscard).
 
     Example:
 
