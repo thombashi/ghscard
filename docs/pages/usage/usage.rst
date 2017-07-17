@@ -3,7 +3,6 @@ Usage
 
 Create User/Organization Cards
 ------------------------------------
-
 1. Generate a card data file
     Execute ``ghscard gen <user-name or organization-name>``.
 
@@ -12,7 +11,7 @@ Create User/Organization Cards
         $ ghscard gen thombashi -o data
         [INFO] ghscard gen: written user data to 'data/thombashi.json'
 
-2. Add HTML tags to the HTML
+2. Add HTML tags to a HTML file
     .. code-block:: html
 
         <div class='ghscard' src='data/thombashi.json'></div>
@@ -36,7 +35,7 @@ Create Repository Cards
         $ ghscard gen Microsoft/TypeScript -o data
         [INFO] ghscard gen: written repository data to 'data/Microsoft_TypeScript.json'
 
-2. Add HTML tags to the HTML
+2. Add HTML tags to a HTML file
     .. code-block:: html
     
         <div class="ghscard" src="data/Microsoft_TypeScript.json"></div>
@@ -74,8 +73,8 @@ Charts on repository cards can be changed visible or hidden by ``chart-display``
     =======================  ================================================
     Value                    Meaning
     =======================  ================================================
-    ``block``                Charts are displayed on cards.
-    ``none``                 Charts are NOT displayed on cards.
+    ``block``                Display charts on cards.
+    ``none``                 NOT display charts on cards.
     =======================  ================================================
 
 Default value differed by ``card-style`` attribute:
@@ -103,8 +102,8 @@ Defaults to ``block``.
     =======================  ================================================
     Value                    Meaning
     =======================  ================================================
-    ``block``                Topic labels are displayed on cards.
-    ``none``                 Topic labels are NOT displayed on cards.
+    ``block``                Display topic labels on cards.
+    ``none``                 NOT display topic labels on cards.
     =======================  ================================================
 
 `Examples <//thombashi.github.io/ghscard/examples/topic-display.html>`__

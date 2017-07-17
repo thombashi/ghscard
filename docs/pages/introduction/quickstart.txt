@@ -50,7 +50,7 @@ Add widget to an HTML file
         </body>
         </html>
 
-This HTML will be displayed as follows:
+This HTML rendered as follows:
 
 :Output:
     .. image:: ss/quickstart.png
