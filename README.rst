@@ -10,7 +10,7 @@ ghscard
 Summary
 -------
 
-A JavaScript widget to generate GitHub user/repository/organization cards for static web pages (like GitHub pages).
+A JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).
 
 Demo
 ====
@@ -70,7 +70,7 @@ Add widget to an HTML file
         </body>
         </html>
 
-This HTML will be displayed as follows:
+This HTML rendered as follows:
 
 :Output:
     .. image:: ss/quickstart.png
