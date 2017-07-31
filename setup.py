@@ -31,7 +31,10 @@ with open(os.path.join(REQUIREMENT_DIR, "requirements.txt")) as f:
     install_requires = [line.strip() for line in f if line.strip()]
 
 with open(os.path.join(REQUIREMENT_DIR, "test_requirements.txt")) as f:
-    tests_require = [line.strip() for line in f if line.strip()]
+    tests_requires = [line.strip() for line in f if line.strip()]
+
+with open(os.path.join(REQUIREMENT_DIR, "docs_requirements.txt")) as f:
+    docs_requires = [line.strip() for line in f if line.strip()]
 
 needs_pytest = set(["pytest", "test", "ptr"]).intersection(sys.argv)
 pytest_runner = ["pytest-runner"] if needs_pytest else []
@@ -52,8 +55,14 @@ setuptools.setup(
     license="MIT License",
     long_description=long_description,
     packages=setuptools.find_packages(exclude=["test*"]),
-    setup_requires=[] + pytest_runner,
-    tests_require=tests_require,
+
+    setup_requires=pytest_runner,
+    tests_require=tests_requires,
+    extras_require={
+        "test": tests_requires,
+        "docs": docs_requires,
+    },
+    python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*',
 
     classifiers=[
         "Development Status :: 3 - Alpha",
