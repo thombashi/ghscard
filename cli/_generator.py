@@ -55,9 +55,8 @@ class CardGenerator(object):
         self.__set_github_id(github_id)
 
         try:
-            with stopwatch(
-                    self.__logger,
-                    "fetch {} {}".format(github_id, self.__data_fetcher.type)):
+            with stopwatch(self.__logger, "fetch {} {}".format(
+                    github_id, self.__data_fetcher.type)):
                 card_data = self.__data_fetcher.fetch()
         except socket.error as e:
             self.__logger.error(e)
