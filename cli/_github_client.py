@@ -44,8 +44,7 @@ class GitHubClient(object):
 
         self.__repos = self.get(
             "/repos/{:s}".format(self.__github_id),
-            headers={"accept": "application/vnd.github.drax-preview+json"},
-        )
+            headers={"accept": "application/vnd.github.drax-preview+json"})
         # get license: https://developer.github.com/v3/licenses/
 
         return self.__repos

@@ -46,13 +46,11 @@ CONFIG_ITEM_LIST = [
         name=AppConfigKey.GITHUB_API_ACCESS_TOKEN,
         initial_value=None,
         prompt_text="GitHub API Personal Access Token",
-        default_display_style=DefaultDisplayStyle.PART_VISIBLE
-    ),
+        default_display_style=DefaultDisplayStyle.PART_VISIBLE),
     ConfigItem(
         name=AppConfigKey.OUTPUT_DIR,
         prompt_text="Output Directory Path",
-        initial_value=".",
-    ),
+        initial_value="."),
 ]
 
 

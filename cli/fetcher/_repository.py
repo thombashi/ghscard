@@ -153,8 +153,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
     def __get_topics(self):
         values = self._ghc_client.get(
             "/repos/{:s}".format(self.id),
-            headers={"accept": "application/vnd.github.mercy-preview+json"},
-        )
+            headers={"accept": "application/vnd.github.mercy-preview+json"})
         # get topics: https://developer.github.com/v3/repos/
 
         return values.get("topics")
