@@ -176,7 +176,8 @@ class GitHubClient(object):
                         subtotal_count = len(
                             getattr(self, method_name)(page))
                     except IOError as e:
-                        self._logger.debug(e)
+                        self._logger.debug(
+                            "{:s}: {}".format(e.__class__.__name__, e))
                         total_count = None
                         break
 

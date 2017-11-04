@@ -59,7 +59,7 @@ class CardGenerator(object):
                     github_id, self.__data_fetcher.type)):
                 card_data = self.__data_fetcher.fetch()
         except socket.error as e:
-            self.__logger.error(e)
+            self.__logger.error("{:s}: {}".format(e.__class__.__name__, e))
             return errno.ECONNRESET
         except BadCredentialsException as e:
             self.__logger.error("invalid GitHub API public access token")
@@ -71,9 +71,10 @@ class CardGenerator(object):
             else:
                 message = e.data.message
             self.__logger.error(
-                "failed to get GitHub data: type={}, id={}, status={}, message={}".format(
-                    self.__data_fetcher.type, self.__data_fetcher.id, e.status,
-                    message))
+                "{:s} failed to get GitHub data: type={}, id={}, status={}, "
+                "message={}".format(
+                    e.__class__.__name__, self.__data_fetcher.type,
+                    self.__data_fetcher.id, e.status, message))
             return errno.ENODATA
 
         card_data_text = json.dumps(card_data)
@@ -86,7 +87,8 @@ class CardGenerator(object):
             click.echo(card_data_text)
             return 0
         except OSError as e:
-            self.__logger.error(e)
+            self.__logger.error("{:s}: {}".format(e.__class__.__name__, e))
+
             return e.args[0]
 
         output_path = "{:s}.json".format(os.path.join(
@@ -97,7 +99,7 @@ class CardGenerator(object):
             with io.open(output_path, "w", encoding="utf-8") as f:
                 f.write(card_data_text + "\n")
         except IOError as e:
-            self.__logger.error(e)
+            self.__logger.error("{:s}: {}".format(e.__class__.__name__, e))
             return e.args[0]
 
         self.__logger.info("written {:s} data to '{:s}'".format(
