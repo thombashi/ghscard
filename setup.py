@@ -43,7 +43,7 @@ PROJECT_NAME = "ghscard"
 
 setuptools.setup(
     name=PROJECT_NAME,
-    version="0.0.4",
+    version="0.0.5",
     url="https://github.com/thombashi/{:s}".format(PROJECT_NAME),
 
     author="Tsuyoshi Hombashi",
@@ -83,5 +83,4 @@ setuptools.setup(
         "console_scripts": [
             "ghscard=cli.ghscard:cmd",
         ],
-    }
-)
+    })
