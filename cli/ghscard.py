@@ -140,6 +140,8 @@ def gen(ctx, id, api_token, output_dir):
     for gh_id in id:
         try:
             return_code_list.append(generator.generate_card(gh_id))
+        except KeyboardInterrupt:
+            sys.exit(errno.EINTR)
         except RateLimitExceededException as e:
             logger.error(e.data.get("message"))
             sys.exit(errno.ENOSR)

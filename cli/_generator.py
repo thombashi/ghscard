@@ -64,6 +64,9 @@ class CardGenerator(object):
         except BadCredentialsException as e:
             self.__logger.error("invalid GitHub API public access token")
             return errno.EBADRQC
+        except KeyboardInterrupt:
+            self._pool.terminate()
+            raise
         except UnknownObjectException as e:
             if e.status == 404:
                 message = "'{}' {}".format(
