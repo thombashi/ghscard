@@ -108,11 +108,8 @@ class GitHubClient(object):
                     ".* list is too large to list .* via the API", message):
                 raise IOError(message)
 
-            if all([
-                    response.status_code == 403,
-                    re.search("^API rate limit exceeded for ", message),
-            ]):
                 raise RateLimitExceededException(message)
+            if response.status_code == 403 and re.search("^API rate limit exceeded for ", message):
 
         return response_json
 
