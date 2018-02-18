@@ -1,8 +1,8 @@
 appconfigpy>=0.0.3
 click>=0.6.7
-logbook>=1.1.0
-pathvalidate>=0.16.2
-PyGithub>=1.35
+logbook>=1.0.1
+pathvalidate>=0.16.3
+PyGithub>=1.36
 requests>=2.18.4
-typepy>=0.0.20
+typepy>=0.0.21
 six
