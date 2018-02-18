@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 output_dir="data"
 base_command="ghscard gen"
@@ -6,9 +6,9 @@ targets=(
     "thombashi"
     "kentcdodds"
     "kennethreitz"
-    
+
     "angular"
-    
+
     "angular/angular"
     "pallets/flask"
     "Microsoft/TypeScript"
