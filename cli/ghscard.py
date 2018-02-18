@@ -10,25 +10,16 @@ from __future__ import absolute_import
 import errno
 import sys
 
-from appconfigpy import (
-    DefaultDisplayStyle,
-    ConfigItem,
-    ConfigManager,
-)
 import appconfigpy
 import click
-from github.GithubException import RateLimitExceededException
 import logbook
 import typepy
+from appconfigpy import ConfigItem, ConfigManager, DefaultDisplayStyle
+from github.GithubException import RateLimitExceededException
 
-from ._const import (
-    AppConfigKey,
-    PROGRAM_NAME,
-    PROGRAM_VERSION,
-)
+from ._const import PROGRAM_NAME, PROGRAM_VERSION, AppConfigKey
 from ._generator import CardGenerator
 from ._logger import get_logger
-
 
 QUIET_LOG_LEVEL = logbook.NOTSET
 CONTEXT_SETTINGS = dict(

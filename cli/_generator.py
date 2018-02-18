@@ -4,8 +4,7 @@
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
+from __future__ import absolute_import, unicode_literals
 
 import errno
 import io
@@ -15,26 +14,15 @@ import socket
 
 import click
 import github
-from github.GithubException import (
-    BadCredentialsException,
-    UnknownObjectException,
-)
-from pathvalidate import sanitize_filename
 import typepy
+from github.GithubException import BadCredentialsException, UnknownObjectException
+from pathvalidate import sanitize_filename
 
-from ._const import (
-    AppConfigKey,
-    CommonCardKey,
-    MAX_PER_PAGE,
-)
+from ._const import MAX_PER_PAGE, AppConfigKey, CommonCardKey
 from ._detector import GithubIdDetector
 from ._github_client import GitHubClient
 from ._stopwatch import stopwatch
-from .fetcher import (
-    RepositoryCardDataFetcher,
-    UserCardDataFetcher,
-    OrganizationCardDataFetcher,
-)
+from .fetcher import OrganizationCardDataFetcher, RepositoryCardDataFetcher, UserCardDataFetcher
 
 
 class CardGenerator(object):

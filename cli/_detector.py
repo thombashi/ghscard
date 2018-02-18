@@ -4,13 +4,10 @@
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
+from __future__ import absolute_import, unicode_literals
 
-from github.GithubException import (
-    UnknownObjectException,
-)
 import typepy
+from github.GithubException import UnknownObjectException
 
 from ._const import CardType
 
