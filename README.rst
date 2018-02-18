@@ -1,6 +1,5 @@
 ghscard
-=======
-
+=========
 .. image:: https://img.shields.io/travis/thombashi/ghscard/master.svg?label=Linux
     :target: https://travis-ci.org/thombashi/ghscard
 
@@ -8,13 +7,11 @@ ghscard
    :target: https://github.com/thombashi/ghscard
 
 Summary
--------
-
+---------
 A JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).
 
 Demo
-====
-
+======
 ﻿- `Popular Repositories on GitHub <https://thombashi.github.io/ghscard/demo/>`__
 - https://thombashi.github.io/
 
@@ -50,7 +47,7 @@ Add widget to an HTML file
 ----------------------------------
 
 :Example:
-    .. code:: html
+    .. code-block:: html
 
         <!doctype html>
         <html>
@@ -79,8 +76,7 @@ This HTML rendered as follows:
         :target: //thombashi.github.io/ghscard/quickstart/
 
 For more information
---------------------
-
+----------------------
 More examples are available at 
 http://ghscard.rtfd.io/en/latest/pages/usage/index.html
 
@@ -89,7 +85,7 @@ Dependencies
 
 CLI Tool Dependencies
 ----------------------
-Python 2.7+ or 3.3+
+Python 2.7+ or 3.4+
 
 - `appconfigpy <//github.com/thombashi/appconfigpy>`__
 - `click <//github.com/pallets/click>`__
@@ -113,7 +109,6 @@ Tested environment
     =======================  ===========================
 
 Documentation
--------------
-
+---------------
 http://ghscard.rtfd.io/
 
