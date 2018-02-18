@@ -43,7 +43,7 @@ PROJECT_NAME = "ghscard"
 
 setuptools.setup(
     name=PROJECT_NAME,
-    version="0.0.5",
+    version="0.0.6",
     url="https://github.com/thombashi/{:s}".format(PROJECT_NAME),
 
     author="Tsuyoshi Hombashi",
