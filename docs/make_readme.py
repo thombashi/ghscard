@@ -10,8 +10,8 @@ from __future__ import unicode_literals
 import os
 import sys
 
-from path import Path
 import readmemaker
+from path import Path
 
 
 PROJECT_NAME = "ghscard"

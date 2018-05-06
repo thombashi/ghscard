@@ -4,16 +4,14 @@
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
-from __future__ import print_function
-from __future__ import unicode_literals
+from __future__ import print_function, unicode_literals
 
 import github
-from github.GithubException import UnknownObjectException
 import logbook
 import pytest
-
 from cli._const import CardType
 from cli._detector import GithubIdDetector
+from github.GithubException import UnknownObjectException
 
 
 def monkey_get_organization(a, b):
