@@ -6,6 +6,7 @@
 
 from __future__ import absolute_import, unicode_literals
 
+
 PROGRAM_NAME = "ghscard"
 PROGRAM_VERSION = "0.0.1"
 

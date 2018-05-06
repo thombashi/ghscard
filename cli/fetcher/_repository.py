@@ -4,26 +4,16 @@
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
+from __future__ import absolute_import, unicode_literals
 
 import random
 import time
 
 import typepy
 
-from .._const import (
-    DATETIME_FORMAT,
-    RETRY_COUNT,
-    CardType,
-    CommonCardKey,
-    Result,
-)
+from .._const import DATETIME_FORMAT, RETRY_COUNT, CardType, CommonCardKey, Result
 from ._base import AbstractCardDataFetcher
-from ._common import (
-    dump_organization,
-    to_chart_data,
-)
+from ._common import dump_organization, to_chart_data
 
 
 def ghc_client_thread_helper(ghc_client):

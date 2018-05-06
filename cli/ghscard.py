@@ -21,6 +21,7 @@ from ._const import PROGRAM_NAME, PROGRAM_VERSION, AppConfigKey
 from ._generator import CardGenerator
 from ._logger import get_logger
 
+
 QUIET_LOG_LEVEL = logbook.NOTSET
 CONTEXT_SETTINGS = dict(
     help_option_names=["-h", "--help"],

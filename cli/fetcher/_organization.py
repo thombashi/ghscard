@@ -4,14 +4,9 @@
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
+from __future__ import absolute_import, unicode_literals
 
-from .._const import (
-    DATETIME_FORMAT,
-    CardType,
-    CommonCardKey,
-)
+from .._const import DATETIME_FORMAT, CardType, CommonCardKey
 from ._base import AbstractCardDataFetcher
 
 
