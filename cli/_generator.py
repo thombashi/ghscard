@@ -29,8 +29,7 @@ class CardGenerator(object):
 
     def __init__(self, logger, app_config):
         self.__logger = logger
-        self.__access_token = app_config.get(
-            AppConfigKey.GITHUB_API_ACCESS_TOKEN)
+        self.__access_token = app_config.get(AppConfigKey.GITHUB_API_ACCESS_TOKEN)
         self.__output_dir = app_config.get(AppConfigKey.OUTPUT_DIR)
 
         if typepy.is_not_null_string(self.__access_token):
@@ -57,8 +56,7 @@ class CardGenerator(object):
             raise
         except UnknownObjectException as e:
             if e.status == 404:
-                message = "'{}' {}".format(
-                    self.__data_fetcher.id, e.data.get("message"))
+                message = "'{}' {}".format(self.__data_fetcher.id, e.data.get("message"))
             else:
                 message = e.data.message
             self.__logger.error(
@@ -129,7 +127,6 @@ class CardGenerator(object):
         if os.path.isdir(self.__output_dir):
             return
 
-        self.__logger.debug(
-            "creating directory: {}".format(self.__output_dir))
+        self.__logger.debug("creating directory: {}".format(self.__output_dir))
 
         os.makedirs(self.__output_dir)

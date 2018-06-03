@@ -104,8 +104,7 @@ class GitHubClient(object):
             return response_json
 
         if message:
-            if re.search(
-                    ".* list is too large to list .* via the API", message):
+            if re.search(".* list is too large to list .* via the API", message):
                 raise IOError(message)
 
             if response.status_code == 403 and re.search("^API rate limit exceeded for ", message):
@@ -125,31 +124,25 @@ class GitHubClient(object):
 
     def _get_branches(self, page):
         # https://developer.github.com/v3/repos/branches/
-        return self.get_page(
-            "/repos/{:s}/branches".format(self.__github_id), page=page)
+        return self.get_page("/repos/{:s}/branches".format(self.__github_id), page=page)
 
     def _get_contributors(self, page):
-        return self.get_page(
-            "/repos/{:s}/contributors".format(self.__github_id), page=page)
+        return self.get_page("/repos/{:s}/contributors".format(self.__github_id), page=page)
 
     def _get_pulls(self, page):
         # https://developer.github.com/v3/pulls/
-        return self.get_page(
-            "/repos/{:s}/pulls".format(self.__github_id), page=page)
+        return self.get_page("/repos/{:s}/pulls".format(self.__github_id), page=page)
 
     def _get_tags(self, page):
         # https://developer.github.com/v3/git/tags/
-        return self.get_page(
-            "/repos/{:s}/tags".format(self.__github_id), page=page)
+        return self.get_page("/repos/{:s}/tags".format(self.__github_id), page=page)
 
     def _get_releases(self, page):
         # https://developer.github.com/v3/repos/releases/
-        return self.get_page(
-            "/repos/{:s}/releases".format(self.__github_id), page=page)
+        return self.get_page("/repos/{:s}/releases".format(self.__github_id), page=page)
 
     def _get_starred(self, page):
-        return self.get_page(
-            "/users/{:s}/starred".format(self.__github_id), page=page)
+        return self.get_page("/users/{:s}/starred".format(self.__github_id), page=page)
 
     def __get_count(self, param_name):
         attr_template = "__{:s}"
@@ -170,8 +163,7 @@ class GitHubClient(object):
                 method_name = method_template.format(param_name)
                 with stopwatch(self._logger, "{:s} page {:d}".format(method_name, page)):
                     try:
-                        subtotal_count = len(
-                            getattr(self, method_name)(page))
+                        subtotal_count = len(getattr(self, method_name)(page))
                     except IOError as e:
                         self._logger.debug(
                             "{:s}: {}".format(e.__class__.__name__, e))

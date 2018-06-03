@@ -16,8 +16,7 @@ from ._const import DATETIME_FORMAT
 def stopwatch(logger, name):
     start_time = datetime.datetime.now()
 
-    logger.debug("start {:s}: {:s}".format(
-        name, start_time.strftime(DATETIME_FORMAT)))
+    logger.debug("start {:s}: {:s}".format(name, start_time.strftime(DATETIME_FORMAT)))
 
     try:
         yield

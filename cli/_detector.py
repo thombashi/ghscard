@@ -77,8 +77,7 @@ class GithubIdDetector(object):
     @staticmethod
     def __validate_user_name(user_name):
         if typepy.is_null_string(user_name):
-            raise ValueError(
-                "user/organization name must be a not empty string")
+            raise ValueError("user/organization name must be a not empty string")
 
     @staticmethod
     def __validate_repo_name(repo_name):

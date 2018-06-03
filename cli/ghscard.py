@@ -60,8 +60,7 @@ class Context(object):
     help=u"suppress execution log messages.")
 @click.pass_context
 def cmd(ctx, log_level):
-    ctx.obj[Context.LOG_LEVEL] = (
-        logbook.INFO if log_level is None else log_level)
+    ctx.obj[Context.LOG_LEVEL] = logbook.INFO if log_level is None else log_level
 
 
 @cmd.command()

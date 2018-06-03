@@ -22,10 +22,8 @@ ENCODING = "utf8"
 with io.open("README.rst", encoding=ENCODING) as f:
     long_description = f.read()
 
-with io.open(
-        os.path.join("docs", "pages", "introduction", "summary.txt"),
-        encoding=ENCODING) as f:
-    summary = f.read()
+with io.open(os.path.join("docs", "pages", "introduction", "summary.txt"), encoding=ENCODING) as f:
+    summary = f.read().strip()
 
 with open(os.path.join(REQUIREMENT_DIR, "requirements.txt")) as f:
     install_requires = [line.strip() for line in f if line.strip()]
