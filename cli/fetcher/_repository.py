@@ -63,12 +63,9 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
         self._logger.debug("fetching repository data: id={}".format(self.id))
 
         thread_list = [
-            self._pool.apply_async(
-                ghc_client_thread_helper, args=[self._ghc_client]),
-            self._pool.apply_async(
-                get_contributors_count_helper, args=[self._ghc_client]),
-            self._pool.apply_async(
-                get_tags_count_helper, args=(self._ghc_client,)),
+            self._pool.apply_async(ghc_client_thread_helper, args=[self._ghc_client]),
+            self._pool.apply_async(get_contributors_count_helper, args=[self._ghc_client]),
+            self._pool.apply_async(get_tags_count_helper, args=[self._ghc_client]),
         ]
 
         card_data = super(RepositoryCardDataFetcher, self).fetch()
@@ -79,15 +76,12 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
 
         card_data[CommonCardKey.AVATAR_URL] = repo.owner.avatar_url
         card_data[CommonCardKey.CARD_TYPE] = CardType.REPOSITORY
-        card_data[CommonCardKey.CREATED_AT] = repo.created_at.strftime(
-            DATETIME_FORMAT)
+        card_data[CommonCardKey.CREATED_AT] = repo.created_at.strftime(DATETIME_FORMAT)
         card_data[CommonCardKey.DESCRIPTION] = repo.description
-        card_data[CommonCardKey.EMOJIS] = self._get_emoji_mapping(
-            repo.description)
+        card_data[CommonCardKey.EMOJIS] = self._get_emoji_mapping(repo.description)
         card_data[CommonCardKey.HTML_URL] = repo.html_url
         card_data[CommonCardKey.NAME] = repo.name
-        card_data[CommonCardKey.UPDATED_AT] = repo.updated_at.strftime(
-            DATETIME_FORMAT)
+        card_data[CommonCardKey.UPDATED_AT] = repo.updated_at.strftime(DATETIME_FORMAT)
 
         languages = repo.get_languages()
 
@@ -95,8 +89,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
         card_data["has_issues"] = repo.has_issues
         card_data["has_wiki"] = repo.has_wiki
         card_data["language"] = repo.language
-        card_data["languages"] = to_chart_data(
-            languages, aggregate_threshold=4)
+        card_data["languages"] = to_chart_data(languages, aggregate_threshold=4)
         card_data["languages_count"] = len(languages)
         card_data["owner_name"] = repo.owner.name
         card_data["owner_html_url"] = repo.owner.html_url

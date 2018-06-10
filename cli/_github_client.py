@@ -109,8 +109,7 @@ class GitHubClient(object):
                 raise IOError(message)
 
             if response.status_code == 403 and re.search("^API rate limit exceeded for ", message):
-                raise RateLimitExceededException(
-                    status=response.status, data=message)
+                raise RateLimitExceededException(status=response.status, data=message)
 
         return response_json
 

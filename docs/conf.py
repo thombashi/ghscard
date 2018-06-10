@@ -148,6 +148,3 @@ texinfo_documents = [
      author, 'ghscard', 'One line description of project.',
      'Miscellaneous'),
 ]
-
-
-

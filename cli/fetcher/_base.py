@@ -46,8 +46,7 @@ class AbstractCardDataFetcher(object):
     def fetch(self):
         return {
             CommonCardKey.ID: self.id,
-            CommonCardKey.FETCHD_AT: datetime.datetime.now().strftime(
-                DATETIME_FORMAT),
+            CommonCardKey.FETCHD_AT: datetime.datetime.now().strftime(DATETIME_FORMAT),
             CommonCardKey.VERSION: CARD_DATA_VERSION,
             CommonCardKey.RESULT: Result.SUCCESS,
         }
