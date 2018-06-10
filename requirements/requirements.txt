@@ -3,6 +3,7 @@ click>=0.6.7
 logbook>=1.0.1
 pathvalidate>=0.16.3
 PyGithub>=1.36
+msgfy>=0.0.2
 requests>=2.18.4
 typepy>=0.0.21
 six

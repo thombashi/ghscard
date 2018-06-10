@@ -8,6 +8,7 @@ from __future__ import absolute_import, unicode_literals
 
 import re
 
+import msgfy
 import typepy
 from github.GithubException import RateLimitExceededException
 
@@ -165,8 +166,7 @@ class GitHubClient(object):
                     try:
                         subtotal_count = len(getattr(self, method_name)(page))
                     except IOError as e:
-                        self._logger.debug(
-                            "{:s}: {}".format(e.__class__.__name__, e))
+                        self._logger.debug(msgfy.to_debug_message(e))
                         total_count = None
                         break
 

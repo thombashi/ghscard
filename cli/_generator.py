@@ -14,6 +14,7 @@ import socket
 
 import click
 import github
+import msgfy
 import typepy
 from github.GithubException import BadCredentialsException, UnknownObjectException
 from pathvalidate import sanitize_filename
@@ -46,7 +47,7 @@ class CardGenerator(object):
                     github_id, self.__data_fetcher.type)):
                 card_data = self.__data_fetcher.fetch()
         except socket.error as e:
-            self.__logger.error("{:s}: {}".format(e.__class__.__name__, e))
+            self.__logger.error(msgfy.to_error_message(e))
             return errno.ECONNRESET
         except BadCredentialsException as e:
             self.__logger.error("invalid GitHub API public access token")
@@ -76,7 +77,7 @@ class CardGenerator(object):
             click.echo(card_data_text)
             return 0
         except OSError as e:
-            self.__logger.error("{:s}: {}".format(e.__class__.__name__, e))
+            self.__logger.error(msgfy.to_error_message(e))
 
             return e.args[0]
 
@@ -88,7 +89,7 @@ class CardGenerator(object):
             with io.open(output_path, "w", encoding="utf-8") as f:
                 f.write(card_data_text + "\n")
         except IOError as e:
-            self.__logger.error("{:s}: {}".format(e.__class__.__name__, e))
+            self.__logger.error(msgfy.to_error_message(e))
             return e.args[0]
 
         self.__logger.info("written {:s} data to '{:s}'".format(
