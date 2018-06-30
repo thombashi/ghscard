@@ -47,12 +47,9 @@ class UserCardDataFetcher(AbstractCardDataFetcher):
         user = self._pygh_client.get_user(self.id)
 
         thread_list = [
-            self._pool.apply_async(
-                ghc_starred_count_helper, args=[self._ghc_client]),
-            self._pool.apply_async(
-                ghc_organizations_helper, args=[user]),
-            self._pool.apply_async(
-                ghc_languages_helper, args=[user]),
+            self._pool.apply_async(ghc_starred_count_helper, args=[self._ghc_client]),
+            self._pool.apply_async(ghc_organizations_helper, args=[user]),
+            self._pool.apply_async(ghc_languages_helper, args=[user]),
         ]
 
         # this will raise UnknownObjectException when failed to get data
@@ -60,14 +57,12 @@ class UserCardDataFetcher(AbstractCardDataFetcher):
 
         card_data[CommonCardKey.AVATAR_URL] = user.avatar_url
         card_data[CommonCardKey.CARD_TYPE] = CardType.USER
-        card_data[CommonCardKey.CREATED_AT] = user.created_at.strftime(
-            DATETIME_FORMAT)
+        card_data[CommonCardKey.CREATED_AT] = user.created_at.strftime(DATETIME_FORMAT)
         card_data[CommonCardKey.DESCRIPTION] = user.bio
         card_data[CommonCardKey.EMOJIS] = self._get_emoji_mapping(user.bio)
         card_data[CommonCardKey.HTML_URL] = user.html_url
         card_data[CommonCardKey.NAME] = self.id
-        card_data[CommonCardKey.UPDATED_AT] = user.updated_at.strftime(
-            DATETIME_FORMAT)
+        card_data[CommonCardKey.UPDATED_AT] = user.updated_at.strftime(DATETIME_FORMAT)
         card_data["blog"] = user.blog
         card_data["company"] = user.company
         card_data["email"] = user.email
