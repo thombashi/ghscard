@@ -7,11 +7,9 @@
 
 from __future__ import unicode_literals
 
-import os
 import sys
 
 import readmemaker
-from path import Path
 
 
 PROJECT_NAME = "ghscard"
@@ -19,48 +17,39 @@ OUTPUT_DIR = ".."
 
 
 def write_quickstart(maker):
-    intro_root = Path(os.path.join("pages", "introduction"))
-
     maker.set_indent_level(0)
-    maker.write_file(intro_root.joinpath("quickstart.txt"))
+    maker.write_introduction_file("quickstart.txt")
 
     maker.inc_indent_level()
     maker.write_chapter("For more information")
-    maker.write_line_list([
-        "More examples are available at ",
-        "http://{:s}.rtfd.io/en/latest/pages/usage/index.html".format(
-            PROJECT_NAME),
-    ])
+    maker.write_line_list(
+        [
+            "More examples are available at ",
+            "http://{:s}.rtfd.io/en/latest/pages/usage/index.html".format(PROJECT_NAME),
+        ]
+    )
 
 
 def main():
-    maker = readmemaker.ReadmeMaker(PROJECT_NAME, OUTPUT_DIR)
-    intro_root = Path(os.path.join("pages", "introduction"))
+    maker = readmemaker.ReadmeMaker(PROJECT_NAME, OUTPUT_DIR, is_make_toc=True)
 
-    maker.write_file(intro_root.joinpath("badges.txt"))
-
-    maker.inc_indent_level()
     maker.write_chapter("Summary")
-    maker.write_file(intro_root.joinpath("summary.txt"))
+    maker.write_introduction_file("summary.txt")
+    maker.write_introduction_file("badges.txt")
 
-    maker.set_indent_level(0)
     maker.write_chapter("Demo")
-    maker.write_file(intro_root.joinpath("demo.txt"))
+    maker.write_introduction_file("demo.txt")
 
     write_quickstart(maker)
 
-    maker.write_file(
-        maker.doc_page_root_dir_path.joinpath("installation.rst"))
-    maker.write_file(
-        maker.doc_page_root_dir_path.joinpath("environment.rst"))
+    maker.write_file(maker.doc_page_root_dir_path.joinpath("installation.rst"))
+    maker.write_file(maker.doc_page_root_dir_path.joinpath("environment.rst"))
 
     maker.write_chapter("Documentation")
-    maker.write_line_list([
-        "http://{:s}.rtfd.io/".format(PROJECT_NAME),
-    ])
+    maker.write_line_list(["http://{:s}.rtfd.io/".format(PROJECT_NAME)])
 
     return 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

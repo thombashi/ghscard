@@ -8,6 +8,7 @@ Python 2.7+ or 3.4+
 - `appconfigpy <//github.com/thombashi/appconfigpy>`__
 - `click <//github.com/pallets/click>`__
 - `logbook <//logbook.readthedocs.io/en/stable/>`__
+- `msgfy <https://github.com/thombashi/msgfy>`__
 - `pathvalidate <//github.com/thombashi/pathvalidate>`__
 - `PyGithub <//pygithub.github.io/PyGithub/v1/index.html>`__
 - `requests <//python-requests.org/>`__
