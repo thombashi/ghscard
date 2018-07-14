@@ -8,7 +8,6 @@ from __future__ import absolute_import, unicode_literals
 
 
 PROGRAM_NAME = "ghscard"
-PROGRAM_VERSION = "0.0.1"
 
 CARD_DATA_VERSION = 2
 DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S%z"

@@ -17,7 +17,8 @@ import typepy
 from appconfigpy import ConfigItem, ConfigManager, DefaultDisplayStyle
 from github.GithubException import RateLimitExceededException
 
-from ._const import PROGRAM_NAME, PROGRAM_VERSION, AppConfigKey
+from .__version__ import __version__
+from ._const import PROGRAM_NAME, AppConfigKey
 from ._generator import CardGenerator
 from ._logger import get_logger
 
@@ -51,7 +52,7 @@ class Context(object):
 
 
 @click.group(context_settings=CONTEXT_SETTINGS)
-@click.version_option(version=PROGRAM_VERSION)
+@click.version_option(version=__version__)
 @click.option(
     "--debug", "log_level", flag_value=logbook.DEBUG,
     help=u"for debug print.")
