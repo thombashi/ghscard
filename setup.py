@@ -21,6 +21,17 @@ REPOSITORY_URL = "https://github.com/thombashi/{:s}".format(MODULE_NAME)
 REQUIREMENT_DIR = "requirements"
 ENCODING = "utf8"
 
+pkg_info = {}
+
+
+def get_release_command_class():
+    try:
+        from releasecmd import ReleaseCommand
+    except ImportError:
+        return {}
+
+    return {"release": ReleaseCommand}
+
 
 with open(os.path.join("cli", "__version__.py")) as f:
     exec(f.read(), pkg_info)
@@ -62,6 +73,7 @@ setuptools.setup(
     setup_requires=pytest_runner,
     tests_require=tests_requires,
     extras_require={
+        "release": "releasecmd>=0.0.10",
         "test": tests_requires,
         "docs": docs_requires,
     },
@@ -86,4 +98,5 @@ setuptools.setup(
         "console_scripts": [
             "ghscard=cli.ghscard:cmd",
         ],
-    })
+    },
+    cmdclass=get_release_command_class())
