@@ -16,8 +16,14 @@ import sys
 import setuptools
 
 
+MODULE_NAME = "ghscard"
+REPOSITORY_URL = "https://github.com/thombashi/{:s}".format(MODULE_NAME)
 REQUIREMENT_DIR = "requirements"
 ENCODING = "utf8"
+
+
+with open(os.path.join("cli", "__version__.py")) as f:
+    exec(f.read(), pkg_info)
 
 with io.open("README.rst", encoding=ENCODING) as f:
     long_description = f.read()
@@ -37,20 +43,19 @@ with open(os.path.join(REQUIREMENT_DIR, "docs_requirements.txt")) as f:
 needs_pytest = set(["pytest", "test", "ptr"]).intersection(sys.argv)
 pytest_runner = ["pytest-runner"] if needs_pytest else []
 
-PROJECT_NAME = "ghscard"
 
 setuptools.setup(
-    name=PROJECT_NAME,
-    version="0.0.6",
-    url="https://github.com/thombashi/{:s}".format(PROJECT_NAME),
+    name=MODULE_NAME,
+    version=pkg_info["__version__"],
+    url=REPOSITORY_URL,
 
-    author="Tsuyoshi Hombashi",
-    author_email="tsuyoshi.hombashi@gmail.com",
+    author=pkg_info["__author__"],
+    author_email=pkg_info["__email__"],
     description=summary,
     include_package_data=True,
     install_requires=install_requires,
     keywords=["GitHub", "JavaScript", "Widget"],
-    license="MIT License",
+    license=pkg_info["__license__"],
     long_description=long_description,
     packages=setuptools.find_packages(exclude=["test*"]),
 
