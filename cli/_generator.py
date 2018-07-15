@@ -27,7 +27,6 @@ from .fetcher import OrganizationCardDataFetcher, RepositoryCardDataFetcher, Use
 
 
 class CardGenerator(object):
-
     def __init__(self, logger, app_config):
         self.__logger = logger
         self.__access_token = app_config.get(AppConfigKey.GITHUB_API_ACCESS_TOKEN)
@@ -36,15 +35,15 @@ class CardGenerator(object):
         if typepy.is_not_null_string(self.__access_token):
             logger.debug("access token found in the configuration file")
 
-        self.__pygh_client = github.Github(
-            self.__access_token, per_page=MAX_PER_PAGE)
+        self.__pygh_client = github.Github(self.__access_token, per_page=MAX_PER_PAGE)
 
     def generate_card(self, github_id):
         self.__set_github_id(github_id)
 
         try:
-            with stopwatch(self.__logger, "fetch {} {}".format(
-                    github_id, self.__data_fetcher.type)):
+            with stopwatch(
+                self.__logger, "fetch {} {}".format(github_id, self.__data_fetcher.type)
+            ):
                 card_data = self.__data_fetcher.fetch()
         except socket.error as e:
             self.__logger.error(msgfy.to_error_message(e))
@@ -63,8 +62,13 @@ class CardGenerator(object):
             self.__logger.error(
                 "{:s} failed to get GitHub data: type={}, id={}, status={}, "
                 "message={}".format(
-                    e.__class__.__name__, self.__data_fetcher.type,
-                    self.__data_fetcher.id, e.status, message))
+                    e.__class__.__name__,
+                    self.__data_fetcher.type,
+                    self.__data_fetcher.id,
+                    e.status,
+                    message,
+                )
+            )
             return errno.ENODATA
 
         card_data_text = json.dumps(card_data)
@@ -81,9 +85,9 @@ class CardGenerator(object):
 
             return e.args[0]
 
-        output_path = "{:s}.json".format(os.path.join(
-            self.__output_dir,
-            sanitize_filename(card_data[CommonCardKey.ID], "_")))
+        output_path = "{:s}.json".format(
+            os.path.join(self.__output_dir, sanitize_filename(card_data[CommonCardKey.ID], "_"))
+        )
 
         try:
             with io.open(output_path, "w", encoding="utf-8") as f:
@@ -92,8 +96,9 @@ class CardGenerator(object):
             self.__logger.error(msgfy.to_error_message(e))
             return e.args[0]
 
-        self.__logger.info("written {:s} data to '{:s}'".format(
-            self.__detector.get_id_type().lower(), output_path))
+        self.__logger.info(
+            "written {:s} data to '{:s}'".format(self.__detector.get_id_type().lower(), output_path)
+        )
 
         return 0
 
@@ -112,17 +117,19 @@ class CardGenerator(object):
     def __set_github_id(self, github_id):
         self.__github_id = github_id
         self.__detector = GithubIdDetector(
-            self.__github_id, self.__logger, pygh_client=self.__pygh_client)
+            self.__github_id, self.__logger, pygh_client=self.__pygh_client
+        )
         self.__data_fetcher = self.__create_data_fetcher()
 
     def __create_data_fetcher(self):
         return self.__get_data_fetcher_class()(
             pygh_client=self.__pygh_client,
             ghc_client=GitHubClient(
-                logger=self.__logger, github_id=self.__detector.id,
-                access_token=self.__access_token),
+                logger=self.__logger, github_id=self.__detector.id, access_token=self.__access_token
+            ),
             id=self.__detector.id,
-            logger=self.__logger)
+            logger=self.__logger,
+        )
 
     def __make_output_dir(self):
         if os.path.isdir(self.__output_dir):

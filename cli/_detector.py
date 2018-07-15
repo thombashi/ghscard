@@ -13,7 +13,6 @@ from ._const import CardType
 
 
 class GithubIdDetector(object):
-
     @property
     def id(self):
         return self.__id
@@ -54,7 +53,8 @@ class GithubIdDetector(object):
             raise ValueError(
                 "invalid format for a GitHub id: "
                 "expected='<user name>' or '<user name>/<repo name>', "
-                "actual='{}'".format(id))
+                "actual='{}'".format(id)
+            )
 
         if len(id_item_list) == 2:
             user_name, repo_name = id_item_list

@@ -21,5 +21,6 @@ def stopwatch(logger, name):
     try:
         yield
     finally:
-        logger.debug("complete {:s}: time={} [sec]".format(
-            name, datetime.datetime.now() - start_time))
+        logger.debug(
+            "complete {:s}: time={} [sec]".format(name, datetime.datetime.now() - start_time)
+        )

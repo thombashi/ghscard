@@ -24,14 +24,10 @@ from ._logger import get_logger
 
 
 QUIET_LOG_LEVEL = logbook.NOTSET
-CONTEXT_SETTINGS = dict(
-    help_option_names=["-h", "--help"],
-    obj={},
-)
+CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"], obj={})
 
 logbook.StderrHandler(
-    level=logbook.DEBUG,
-    format_string="[{record.level_name}] {record.channel}: {record.message}"
+    level=logbook.DEBUG, format_string="[{record.level_name}] {record.channel}: {record.message}"
 ).push_application()
 
 CONFIG_ITEM_LIST = [
@@ -39,11 +35,11 @@ CONFIG_ITEM_LIST = [
         name=AppConfigKey.GITHUB_API_ACCESS_TOKEN,
         initial_value=None,
         prompt_text="GitHub API Personal Access Token",
-        default_display_style=DefaultDisplayStyle.PART_VISIBLE),
+        default_display_style=DefaultDisplayStyle.PART_VISIBLE,
+    ),
     ConfigItem(
-        name=AppConfigKey.OUTPUT_DIR,
-        prompt_text="Output Directory Path",
-        initial_value="."),
+        name=AppConfigKey.OUTPUT_DIR, prompt_text="Output Directory Path", initial_value="."
+    ),
 ]
 
 
@@ -53,12 +49,10 @@ class Context(object):
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.version_option(version=__version__)
+@click.option("--debug", "log_level", flag_value=logbook.DEBUG, help=u"for debug print.")
 @click.option(
-    "--debug", "log_level", flag_value=logbook.DEBUG,
-    help=u"for debug print.")
-@click.option(
-    "--quiet", "log_level", flag_value=QUIET_LOG_LEVEL,
-    help=u"suppress execution log messages.")
+    "--quiet", "log_level", flag_value=QUIET_LOG_LEVEL, help=u"suppress execution log messages."
+)
 @click.pass_context
 def cmd(ctx, log_level):
     ctx.obj[Context.LOG_LEVEL] = logbook.INFO if log_level is None else log_level
@@ -83,20 +77,21 @@ def configure(ctx):
 
     appconfigpy.set_log_level(ctx.obj[Context.LOG_LEVEL])
 
-    app_config_manager = ConfigManager(
-        config_name=PROGRAM_NAME, config_item_list=CONFIG_ITEM_LIST)
+    app_config_manager = ConfigManager(config_name=PROGRAM_NAME, config_item_list=CONFIG_ITEM_LIST)
 
     sys.exit(app_config_manager.configure())
 
 
 @cmd.command()
 @click.argument("id", type=str, nargs=-1)
+@click.option("--api-token", default=None, help=u"GitHub API access token.")
 @click.option(
-    "--api-token", default=None,
-    help=u"GitHub API access token.")
-@click.option(
-    "-o", "--output-dir", metavar="PATH", default=None,
-    help=u"Output path of the SQLite database file.")
+    "-o",
+    "--output-dir",
+    metavar="PATH",
+    default=None,
+    help=u"Output path of the SQLite database file.",
+)
 @click.pass_context
 def gen(ctx, id, api_token, output_dir):
     """
@@ -112,8 +107,7 @@ def gen(ctx, id, api_token, output_dir):
     logger = get_logger(log_level, u"{:s} gen".format(PROGRAM_NAME))
     appconfigpy.set_log_level(log_level)
 
-    app_config = ConfigManager(
-        config_name=PROGRAM_NAME, config_item_list=CONFIG_ITEM_LIST).load()
+    app_config = ConfigManager(config_name=PROGRAM_NAME, config_item_list=CONFIG_ITEM_LIST).load()
 
     if typepy.is_not_null_string(output_dir):
         app_config[AppConfigKey.OUTPUT_DIR] = output_dir
@@ -124,7 +118,8 @@ def gen(ctx, id, api_token, output_dir):
     if not id:
         logger.error(
             u"command requires at least one argument: "
-            u"<user-name> or <user-name>/<repository-name>")
+            u"<user-name> or <user-name>/<repository-name>"
+        )
         sys.exit(errno.EINVAL)
 
     return_code_list = []

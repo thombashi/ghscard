@@ -11,7 +11,6 @@ from ._base import AbstractCardDataFetcher
 
 
 class OrganizationCardDataFetcher(AbstractCardDataFetcher):
-
     @property
     def type(self):
         return CardType.ORGANIZATION

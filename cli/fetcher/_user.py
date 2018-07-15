@@ -16,15 +16,13 @@ def ghc_starred_count_helper(ghc_client):
 
 
 def ghc_organizations_helper(user):
-    return {"organizations": [
-        dump_organization(organization) for organization in user.get_orgs()]}
+    return {"organizations": [dump_organization(organization) for organization in user.get_orgs()]}
 
 
 def ghc_languages_helper(user):
     language_mapping = {}
     for repo in user.get_repos():
-        language_mapping[repo.language] = language_mapping.get(
-            repo.language, 0) + 1
+        language_mapping[repo.language] = language_mapping.get(repo.language, 0) + 1
 
     try:
         del language_mapping[None]
@@ -35,7 +33,6 @@ def ghc_languages_helper(user):
 
 
 class UserCardDataFetcher(AbstractCardDataFetcher):
-
     @property
     def type(self):
         return CardType.USER

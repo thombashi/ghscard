@@ -48,13 +48,10 @@ def get_open_issues_helper(repo):
         else:
             issue_counter += Counter(label_name_list)
 
-    return {
-        "open_issues": to_chart_data(issue_counter, aggregate_threshold=7),
-    }
+    return {"open_issues": to_chart_data(issue_counter, aggregate_threshold=7)}
 
 
 class RepositoryCardDataFetcher(AbstractCardDataFetcher):
-
     @property
     def type(self):
         return CardType.REPOSITORY
@@ -71,8 +68,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
         card_data = super(RepositoryCardDataFetcher, self).fetch()
         repo = self._pygh_client.get_repo(self.id)
 
-        thread_list.append(self._pool.apply_async(
-            get_open_issues_helper, args=[repo]))
+        thread_list.append(self._pool.apply_async(get_open_issues_helper, args=[repo]))
 
         card_data[CommonCardKey.AVATAR_URL] = repo.owner.avatar_url
         card_data[CommonCardKey.CARD_TYPE] = CardType.REPOSITORY
@@ -95,8 +91,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
         card_data["owner_html_url"] = repo.owner.html_url
         card_data["open_issues_count"] = repo.open_issues_count
         card_data["organization"] = dump_organization(repo.organization)
-        card_data["repo_homepage"] = (
-            None if typepy.is_null_string(repo.homepage) else repo.homepage)
+        card_data["repo_homepage"] = None if typepy.is_null_string(repo.homepage) else repo.homepage
         card_data["stargazers_count"] = repo.stargazers_count
         card_data["topics"] = self.__get_topics()
 
@@ -104,8 +99,10 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
             try:
                 card_data["participation"] = repo.get_stats_participation().all
             except AttributeError:
+                max_sleep_secs = 2 ** i
                 self._logger.warn(
-                    "failed to get '{}' participation stats. retrying in 5 seconds".format(self.id))
+                    "failed to get '{}' participation stats. retrying in 5 seconds".format(self.id)
+                )
                 card_data["participation"] = []
                 time.sleep(random.random())
                 continue
@@ -136,7 +133,8 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
     def __get_topics(self):
         values = self._ghc_client.get(
             "/repos/{:s}".format(self.id),
-            headers={"accept": "application/vnd.github.mercy-preview+json"})
+            headers={"accept": "application/vnd.github.mercy-preview+json"},
+        )
         # get topics: https://developer.github.com/v3/repos/
 
         return values.get("topics")

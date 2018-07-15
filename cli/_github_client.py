@@ -18,7 +18,6 @@ from ._stopwatch import stopwatch
 
 
 class GitHubClient(object):
-
     @property
     def emojis(self):
         if self.__emojis:
@@ -44,7 +43,8 @@ class GitHubClient(object):
 
         self.__repos = self.get(
             "/repos/{:s}".format(self.__github_id),
-            headers={"accept": "application/vnd.github.drax-preview+json"})
+            headers={"accept": "application/vnd.github.drax-preview+json"},
+        )
         # get license: https://developer.github.com/v3/licenses/
 
         return self.__repos
@@ -114,13 +114,7 @@ class GitHubClient(object):
         return response_json
 
     def get_page(self, operation, page):
-        return self.get(
-            operation,
-            params={
-                "per_page": str(MAX_PER_PAGE),
-                "page": page,
-            }
-        )
+        return self.get(operation, params={"per_page": str(MAX_PER_PAGE), "page": page})
 
     def _get_branches(self, page):
         # https://developer.github.com/v3/repos/branches/

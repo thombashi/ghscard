@@ -28,17 +28,13 @@ def dump_organization(organization):
 
 def to_chart_data(label_count_mapping, aggregate_threshold):
     if not label_count_mapping:
-        return {
-            "labels": [],
-            "data": [],
-        }
+        return {"labels": [], "data": []}
 
     label_name_list = []
     label_count_list = []
     others_count = None
 
-    for i, kv in enumerate(sorted(
-            label_count_mapping.items(), key=lambda x: x[1], reverse=True)):
+    for i, kv in enumerate(sorted(label_count_mapping.items(), key=lambda x: x[1], reverse=True)):
         key, value = kv
 
         if (i + 1) > aggregate_threshold:
@@ -56,7 +52,4 @@ def to_chart_data(label_count_mapping, aggregate_threshold):
         label_name_list.append("others")
         label_count_list.append(others_count)
 
-    return {
-        "labels": label_name_list,
-        "data": label_count_list,
-    }
+    return {"labels": label_name_list, "data": label_count_list}

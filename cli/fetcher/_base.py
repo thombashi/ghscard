@@ -18,13 +18,12 @@ from .._error import ApiStatusError
 
 @six.add_metaclass(abc.ABCMeta)
 class AbstractCardDataFetcher(object):
-
     @property
     def access_token(self):
         return self.__access_token
 
     @abc.abstractproperty
-    def type(self):   # pragma: no cover
+    def type(self):  # pragma: no cover
         pass
 
     @property
