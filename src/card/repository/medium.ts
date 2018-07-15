@@ -1,7 +1,6 @@
-import {ChartSize} from "../../const";
-import {UiSize} from "../../types";
-import {AbstractRepositoryCardGerator} from "./base_repository";
-
+import { ChartSize } from "../../const";
+import { UiSize } from "../../types";
+import { AbstractRepositoryCardGerator } from "./base_repository";
 
 export class MediumRepoCardGerator extends AbstractRepositoryCardGerator {
     protected get headerSize(): UiSize {
@@ -44,4 +43,3 @@ export class MediumRepoCardGerator extends AbstractRepositoryCardGerator {
         return ChartSize.Line.Medium.TICK_FONT_SIZE;
     }
 }
-

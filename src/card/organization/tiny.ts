@@ -1,6 +1,5 @@
-import {UiSize} from "../../types";
-import {AbstractOrgCardGerator} from "./base_organization";
-
+import { UiSize } from "../../types";
+import { AbstractOrgCardGerator } from "./base_organization";
 
 export class TinyOrgCardGerator extends AbstractOrgCardGerator {
     protected get headerSize(): UiSize {
@@ -20,12 +19,15 @@ export class TinyOrgCardGerator extends AbstractOrgCardGerator {
     }
 
     protected createPopupInfoList(): HTMLElement {
-        return this._createInfoList({
-            "email": true,
-            "blog": true,
-            "created_at": true,
-            "updated_at": true,
-        }, this.popupSize);
+        return this._createInfoList(
+            {
+                email: true,
+                blog: true,
+                created_at: true,
+                updated_at: true,
+            },
+            this.popupSize
+        );
     }
 
     protected createCardContent(): HTMLElement {

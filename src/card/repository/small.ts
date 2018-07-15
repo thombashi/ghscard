@@ -1,7 +1,6 @@
-import {ChartSize} from "../../const";
-import {UiSize} from "../../types";
-import {AbstractRepositoryCardGerator} from "./base_repository";
-
+import { ChartSize } from "../../const";
+import { UiSize } from "../../types";
+import { AbstractRepositoryCardGerator } from "./base_repository";
 
 export class SmallRepoCardGerator extends AbstractRepositoryCardGerator {
     protected get headerSize(): UiSize {

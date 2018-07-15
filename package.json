@@ -31,6 +31,7 @@
     "jquery": "^3.3.1",
     "moment": "^2.22.2",
     "npm-watch": "^0.3.0",
+    "prettier": "^1.13.7",
     "rimraf": "^2.6.2",
     "tslint": "^5.10.0",
     "typescript": "^2.9.2",

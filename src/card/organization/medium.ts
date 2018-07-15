@@ -1,6 +1,5 @@
-import {UiSize} from "../../types";
-import {AbstractOrgCardGerator} from "./base_organization";
-
+import { UiSize } from "../../types";
+import { AbstractOrgCardGerator } from "./base_organization";
 
 export class MediumOrgCardGerator extends AbstractOrgCardGerator {
     protected get headerSize(): UiSize {

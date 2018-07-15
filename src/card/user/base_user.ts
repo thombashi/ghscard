@@ -1,8 +1,7 @@
-import {AVATAR_ELEMENT_ID} from "../../const";
-import {EmojiProcessorInterface} from "../../emoji";
-import {UiSize, UserCardDataKey} from "../../types";
-import {AbstractUserOrgCardGerator} from "../base_user_org";
-
+import { AVATAR_ELEMENT_ID } from "../../const";
+import { EmojiProcessorInterface } from "../../emoji";
+import { UiSize, UserCardDataKey } from "../../types";
+import { AbstractUserOrgCardGerator } from "../base_user_org";
 
 export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
     protected get statsColumnWide(): string {
@@ -27,7 +26,9 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
 
     protected createCardHeader(): HTMLElement {
         let header = this.createAnchorElement(
-            this.htmlUrl, `ui ${this.headerSize} dividing header`);
+            this.htmlUrl,
+            `ui ${this.headerSize} dividing header`
+        );
 
         if (this.getCardData("profile_name")) {
             header.appendChild(this._doc.createTextNode(this.getCardData("profile_name")));
@@ -116,7 +117,9 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
 
         if (Number(this.publicGists) > 0) {
             let item = this.createAnchorElement(
-                `//gist.github.com/${this.getCardData("id")}`, "item");
+                `//gist.github.com/${this.getCardData("id")}`,
+                "item"
+            );
             item.appendChild(this._doc.createTextNode("Gists"));
             item.appendChild(this.createLabelElement(this.publicGists, this.infoSize));
 
@@ -129,9 +132,8 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
     protected createOrganizations(): HTMLElement {
         let orgList = this.createElement("div", "ui mini rounded images");
 
-        Array.prototype.forEach.call(this.getCardData("organizations"), (organizationData) => {
-            let orgLink = this.createAnchorElement(
-                organizationData["html_url"], "ui image");
+        Array.prototype.forEach.call(this.getCardData("organizations"), organizationData => {
+            let orgLink = this.createAnchorElement(organizationData["html_url"], "ui image");
             orgLink.setAttribute("data-content", organizationData["name"]);
             orgLink.setAttribute("data-position", "top center");
             orgLink.setAttribute("data-variation", "inverted mini");

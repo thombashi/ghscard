@@ -1,7 +1,6 @@
-import {ChartSize} from "../../const";
-import {UiSize} from "../../types";
-import {AbstractRepositoryCardGerator} from "./base_repository";
-
+import { ChartSize } from "../../const";
+import { UiSize } from "../../types";
+import { AbstractRepositoryCardGerator } from "./base_repository";
 
 export class TinyRepoCardGerator extends AbstractRepositoryCardGerator {
     protected get headerSize(): UiSize {
@@ -57,11 +56,14 @@ export class TinyRepoCardGerator extends AbstractRepositoryCardGerator {
     }
 
     protected createPopupInfoList(): HTMLElement {
-        return this._createInfoList({
-            "repo_homepage": true,
-            "wiki": true,
-            "license": true,
-            "created_at": true,
-        }, this.popupSize);
+        return this._createInfoList(
+            {
+                repo_homepage: true,
+                wiki: true,
+                license: true,
+                created_at: true,
+            },
+            this.popupSize
+        );
     }
 }

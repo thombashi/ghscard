@@ -15,12 +15,10 @@ export namespace JsUrl {
     export const JQUERY = `${CDN_PREFIX}/jquery/3.3.1/jquery.min.js`;
     export const MOMENT = `${CDN_PREFIX}/moment.js/2.22.2/moment.min.js`;
     export const PLEASE = `${CDN_PREFIX}/pleasejs/0.4.2/Please.min.js`;
-    export const SEMANTIC_UI: string = (
-        `${CDN_PREFIX}/semantic-ui/${SEMANTIC_UI_VERSION}/semantic.min.js`);
+    export const SEMANTIC_UI: string = `${CDN_PREFIX}/semantic-ui/${SEMANTIC_UI_VERSION}/semantic.min.js`;
 }
 
-export const DEFAULT_SEMANTIC_UI_CSS_URL: string = (
-    `${CDN_PREFIX}/semantic-ui/${SEMANTIC_UI_VERSION}/semantic.min.css`);
+export const DEFAULT_SEMANTIC_UI_CSS_URL: string = `${CDN_PREFIX}/semantic-ui/${SEMANTIC_UI_VERSION}/semantic.min.css`;
 
 export namespace Emoji {
     export const WIDTH = 16;

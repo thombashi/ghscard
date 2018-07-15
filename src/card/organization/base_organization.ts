@@ -1,5 +1,4 @@
-import {AbstractUserOrgCardGerator} from "../base_user_org";
-
+import { AbstractUserOrgCardGerator } from "../base_user_org";
 
 export class AbstractOrgCardGerator extends AbstractUserOrgCardGerator {
     protected get statsColumnWide(): string {
@@ -8,7 +7,9 @@ export class AbstractOrgCardGerator extends AbstractUserOrgCardGerator {
 
     protected createCardHeader(): HTMLElement {
         let header = this.createAnchorElement(
-            this.htmlUrl, `ui ${this.headerSize} dividing header`);
+            this.htmlUrl,
+            `ui ${this.headerSize} dividing header`
+        );
 
         if (this.getCardData("name")) {
             header.appendChild(this._doc.createTextNode(this.getCardData("name")));
@@ -44,10 +45,13 @@ export class AbstractOrgCardGerator extends AbstractUserOrgCardGerator {
 
         if (Number(this.getCardData("public_members_count")) > 0) {
             let item = this.createAnchorElement(
-                `//github.com/orgs/${this.getCardData("id")}/people`, "item");
+                `//github.com/orgs/${this.getCardData("id")}/people`,
+                "item"
+            );
             item.appendChild(this._doc.createTextNode("People"));
-            item.appendChild(this.createLabelElement(
-                this.getCardData("public_members_count"), this.infoSize));
+            item.appendChild(
+                this.createLabelElement(this.getCardData("public_members_count"), this.infoSize)
+            );
 
             items.appendChild(item);
         }

@@ -1,6 +1,5 @@
-import {UiSize} from "../../types";
-import {AbstractUserCardGerator} from "./base_user";
-
+import { UiSize } from "../../types";
+import { AbstractUserCardGerator } from "./base_user";
 
 export class MediumUserCardGerator extends AbstractUserCardGerator {
     protected get headerSize(): UiSize {
@@ -19,4 +18,3 @@ export class MediumUserCardGerator extends AbstractUserCardGerator {
         return "nine";
     }
 }
-

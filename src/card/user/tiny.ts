@@ -1,6 +1,5 @@
-import {UiSize} from "../../types";
-import {AbstractUserCardGerator} from "./base_user";
-
+import { UiSize } from "../../types";
+import { AbstractUserCardGerator } from "./base_user";
 
 export class TinyUserCardGerator extends AbstractUserCardGerator {
     protected get headerSize(): UiSize {
@@ -21,18 +20,21 @@ export class TinyUserCardGerator extends AbstractUserCardGerator {
 
     protected createUserInfoList(): HTMLElement {
         return this._createInfoList({
-            "company": true,
-            "location": true,
+            company: true,
+            location: true,
         });
     }
 
     protected createPopupInfoList(): HTMLElement {
-        return this._createInfoList({
-            "email": true,
-            "blog": true,
-            "created_at": true,
-            "updated_at": true,
-        }, this.popupSize);
+        return this._createInfoList(
+            {
+                email: true,
+                blog: true,
+                created_at: true,
+                updated_at: true,
+            },
+            this.popupSize
+        );
     }
 
     protected createCardContent(): HTMLElement {

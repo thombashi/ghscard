@@ -1,16 +1,15 @@
-import {CardGeratorInterface} from "./card/interface";
-import {AVATAR_ELEMENT_ID, DEFAULT_SEMANTIC_UI_CSS_URL, Margin, JsUrl} from "./const";
-import {EmojiProcessorFactory} from "./emoji";
-import {createCardGenerator} from "./factory";
-import {CardStyle} from "./types";
+import { CardGeratorInterface } from "./card/interface";
+import { AVATAR_ELEMENT_ID, DEFAULT_SEMANTIC_UI_CSS_URL, Margin, JsUrl } from "./const";
+import { EmojiProcessorFactory } from "./emoji";
+import { createCardGenerator } from "./factory";
+import { CardStyle } from "./types";
 
 import * as $ from "jquery";
 
-
 namespace CardAttr {
     export namespace Display {
-        export const CHART = "chart-display";  // only for repository
-        export const TOPICS = "topic-display";  // only for repository
+        export const CHART = "chart-display"; // only for repository
+        export const TOPICS = "topic-display"; // only for repository
     }
 
     export const EMOJI = "emoji";
@@ -20,45 +19,46 @@ namespace CardAttr {
 }
 
 const DEFAULT_CARD_WIDTH_MAPPING = {
-    "medium": 420,
-    "small": 380,
-    "tiny": 340,
+    medium: 420,
+    small: 380,
+    tiny: 340,
 };
 const DEFAULT_CARD_STYLE: CardStyle = "medium";
 
-
 export class CardGeneratorManager {
-    constructor(private _doc: Document) {
-    }
+    constructor(private _doc: Document) {}
 
     public generateCards(): void {
         console.debug(navigator.userAgent);
         let frameCount = 0;
 
-        Array.prototype.forEach.call(this._doc.getElementsByClassName("ghscard"), (cardElement) => {
+        Array.prototype.forEach.call(this._doc.getElementsByClassName("ghscard"), cardElement => {
             const dataSourcePath: string = cardElement.getAttribute("src");
             let cardStyle: CardStyle;
 
             if (cardElement.getAttribute(CardAttr.STYLE) !== null) {
                 cardStyle = cardElement.getAttribute(CardAttr.STYLE);
-            }
-            else {
+            } else {
                 console.debug(`${CardAttr.STYLE} attribute not found`);
                 cardStyle = DEFAULT_CARD_STYLE;
             }
 
-            $.getJSON(dataSourcePath, (cardData) => {
+            $.getJSON(dataSourcePath, cardData => {
                 console.info(`--- creating a GitHub card from ${dataSourcePath} ---`);
                 console.debug(cardData);
 
                 const cardGenerator: CardGeratorInterface = createCardGenerator(
-                    this._doc, cardStyle, cardData,
+                    this._doc,
+                    cardStyle,
+                    cardData,
                     this.getIframeWidth(cardElement.getAttribute(CardAttr.WIDTH), cardStyle),
                     cardElement.getAttribute(CardAttr.FRAME_COLOR),
                     cardElement.getAttribute(CardAttr.Display.CHART),
                     cardElement.getAttribute(CardAttr.Display.TOPICS),
                     EmojiProcessorFactory.create(
-                        cardElement.getAttribute(CardAttr.EMOJI), cardData["emojis"])
+                        cardElement.getAttribute(CardAttr.EMOJI),
+                        cardData["emojis"]
+                    )
                 );
 
                 if (cardGenerator == null) {
@@ -82,12 +82,14 @@ export class CardGeneratorManager {
                     cardFrame.style.visibility = "visible";
                 });
             }).fail((jqXHR, textStatus, errorThrown) => {
-                console.error([
-                    `failed to execute getJSON: ${textStatus}`,
-                    `path: ${dataSourcePath}`,
-                    `error: ${errorThrown}`,
-                    `response：${jqXHR.responseText}`,
-                ].join("\n"));
+                console.error(
+                    [
+                        `failed to execute getJSON: ${textStatus}`,
+                        `path: ${dataSourcePath}`,
+                        `error: ${errorThrown}`,
+                        `response：${jqXHR.responseText}`,
+                    ].join("\n")
+                );
             });
         });
     }
@@ -97,8 +99,7 @@ export class CardGeneratorManager {
 
         if (cardWidth === null) {
             iframeWidth = DEFAULT_CARD_WIDTH_MAPPING[cardStyle];
-        }
-        else {
+        } else {
             iframeWidth = Number(cardWidth);
         }
 

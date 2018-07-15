@@ -1,8 +1,7 @@
-import {AVATAR_ELEMENT_ID} from "../const";
-import {EmojiProcessorInterface} from "../emoji";
-import {UiColor, UiSize, UserOrgCardDataKey} from "../types";
-import {AbstractCardGerator} from "./base";
-
+import { AVATAR_ELEMENT_ID } from "../const";
+import { EmojiProcessorInterface } from "../emoji";
+import { UiColor, UiSize, UserOrgCardDataKey } from "../types";
+import { AbstractCardGerator } from "./base";
 
 export class AbstractUserOrgCardGerator extends AbstractCardGerator {
     protected get avatarColumnWide(): string {
@@ -22,10 +21,12 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
     }
 
     constructor(
-            doc: Document, cardData: Object,
-            iframeWidth: number,
-            color: string,
-            emojiProcessor: EmojiProcessorInterface) {
+        doc: Document,
+        cardData: Object,
+        iframeWidth: number,
+        color: string,
+        emojiProcessor: EmojiProcessorInterface
+    ) {
         super(doc, cardData, iframeWidth, color, emojiProcessor);
     }
 
@@ -64,7 +65,9 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
 
             {
                 let avatarColumn = this.createElement(
-                    "div", `${this.avatarColumnWide} wide center aligned column`);
+                    "div",
+                    `${this.avatarColumnWide} wide center aligned column`
+                );
                 avatarColumn.appendChild(this.createAvatar());
                 avatarColumn.appendChild(this.createPopup());
                 grid.appendChild(avatarColumn);
@@ -72,7 +75,9 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
 
             {
                 let statsColumn = this.createElement(
-                    "div", `${this.statsColumnWide} wide left aligned column`);
+                    "div",
+                    `${this.statsColumnWide} wide left aligned column`
+                );
                 const statsElement = this.createStatisticsElement();
 
                 if (statsElement) {
@@ -88,8 +93,9 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
         {
             const descriptionElement = this.createDescription(this.getCardData("description"));
             if (descriptionElement) {
-                content.appendChild(this.createElementWithChild(
-                    segmentClassName, [descriptionElement]));
+                content.appendChild(
+                    this.createElementWithChild(segmentClassName, [descriptionElement])
+                );
             }
         }
 
@@ -112,15 +118,16 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
 
             {
                 let avatarColumn = this.createElement(
-                    "div", `${this.avatarColumnWide} wide center aligned column`);
+                    "div",
+                    `${this.avatarColumnWide} wide center aligned column`
+                );
                 avatarColumn.appendChild(this.createAvatar());
                 avatarColumn.appendChild(this.createPopup());
                 grid.appendChild(avatarColumn);
             }
 
             {
-                let userInfoColumn = this.createElement(
-                    "div", `nine wide left aligned column`);
+                let userInfoColumn = this.createElement("div", `nine wide left aligned column`);
                 userInfoColumn.appendChild(this.createUserInfoList());
                 grid.appendChild(userInfoColumn);
             }
@@ -150,17 +157,22 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
 
     protected createAvatar(): HTMLElement {
         let avatar = this.createImageElement(
-            this.getCardData("avatar_url"), "ui medium rounded image");
+            this.getCardData("avatar_url"),
+            "ui medium rounded image"
+        );
         avatar.id = AVATAR_ELEMENT_ID;
 
         return avatar;
     }
 
     protected createPopupInfoList(): HTMLElement {
-        return this._createInfoList({
-            "created_at": true,
-            "updated_at": true,
-        }, this.popupSize);
+        return this._createInfoList(
+            {
+                created_at: true,
+                updated_at: true,
+            },
+            this.popupSize
+        );
     }
 
     protected createCompanyElement(className: string): HTMLElement {
@@ -173,9 +185,9 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
         let company = this.createElement("div", className);
         company.title = "Company";
         company.appendChild(this.createElement("i", "users icon"));
-        company.appendChild(this.createContentElement(
-            [this._doc.createTextNode(this.escapeHtml(companyName))]
-        ));
+        company.appendChild(
+            this.createContentElement([this._doc.createTextNode(this.escapeHtml(companyName))])
+        );
 
         return company;
     }
@@ -190,9 +202,9 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
         let location = this.createElement("div", className);
         location.title = "Location";
         location.appendChild(this.createElement("i", "marker icon"));
-        location.appendChild(this.createContentElement(
-            [this._doc.createTextNode(this.escapeHtml(locationName))]
-        ));
+        location.appendChild(
+            this.createContentElement([this._doc.createTextNode(this.escapeHtml(locationName))])
+        );
 
         return location;
     }
@@ -208,7 +220,9 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
         blogLink.appendChild(this._doc.createTextNode(this.escapeHtml(url)));
 
         return this.createElementWithChild(className, [
-            this.createElement("i", "linkify icon"), blogLink]);
+            this.createElement("i", "linkify icon"),
+            blogLink,
+        ]);
     }
 
     protected createEmailElement(className: string): HTMLElement {
@@ -252,18 +266,26 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
         }
 
         if (displayMapping["created_at"]) {
-            infoList.appendChild(this.createDateTimeElement(
-                "created_at", "Joined on", "wait icon", itemClassName));
+            infoList.appendChild(
+                this.createDateTimeElement("created_at", "Joined on", "wait icon", itemClassName)
+            );
         }
 
         if (displayMapping["updated_at"]) {
-            infoList.appendChild(this.createDateTimeElement(
-                "updated_at", "Updated at", "history icon", itemClassName));
+            infoList.appendChild(
+                this.createDateTimeElement(
+                    "updated_at",
+                    "Updated at",
+                    "history icon",
+                    itemClassName
+                )
+            );
         }
 
         if (infoList.children.length === 0) {
             infoList.appendChild(
-                this.createDateTimeElement("created_at", "Joined on", "wait icon", itemClassName));
+                this.createDateTimeElement("created_at", "Joined on", "wait icon", itemClassName)
+            );
         }
 
         return infoList;
@@ -271,10 +293,10 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
 
     protected createUserInfoList(): HTMLElement {
         return this._createInfoList({
-            "company": true,
-            "location": true,
-            "email": true,
-            "blog": true,
+            company: true,
+            location: true,
+            email: true,
+            blog: true,
         });
     }
 }

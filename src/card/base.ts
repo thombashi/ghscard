@@ -1,10 +1,9 @@
-import {CARD_ELEMENT_ID, Margin, DEFAULT_SEMANTIC_UI_CSS_URL, JsUrl} from "../const";
-import {EmojiProcessorInterface} from "../emoji";
-import {DateTimeKey, UiColor, UiSize} from "../types";
-import {CardGeratorInterface} from "./interface";
+import { CARD_ELEMENT_ID, Margin, DEFAULT_SEMANTIC_UI_CSS_URL, JsUrl } from "../const";
+import { EmojiProcessorInterface } from "../emoji";
+import { DateTimeKey, UiColor, UiSize } from "../types";
+import { CardGeratorInterface } from "./interface";
 
 import * as moment from "moment";
-
 
 export class AbstractCardGerator implements CardGeratorInterface {
     protected get headerSize(): UiSize {
@@ -40,8 +39,8 @@ export class AbstractCardGerator implements CardGeratorInterface {
         protected _cardData: Object,
         private _iframeWidth: number,
         private _color: string,
-        protected _emojiProcessor: EmojiProcessorInterface) {
-    }
+        protected _emojiProcessor: EmojiProcessorInterface
+    ) {}
 
     public createCard(uniqueFrameNumber: number): HTMLIFrameElement {
         let cardFrame = this._doc.createElement("iframe");
@@ -110,7 +109,8 @@ export class AbstractCardGerator implements CardGeratorInterface {
         let header = this._doc.createElement("header");
         header.appendChild(this.createScriptSrcElement(JsUrl.JQUERY));
         header.appendChild(
-            this.createStyleSheetLinkElement(this._doc, DEFAULT_SEMANTIC_UI_CSS_URL));
+            this.createStyleSheetLinkElement(this._doc, DEFAULT_SEMANTIC_UI_CSS_URL)
+        );
         header.appendChild(this.createScriptSrcElement(JsUrl.SEMANTIC_UI));
 
         if (this.isDisplayChart()) {
@@ -119,8 +119,9 @@ export class AbstractCardGerator implements CardGeratorInterface {
             header.appendChild(this.createScriptSrcElement(JsUrl.PLEASE));
         }
 
-        header.appendChild(this.createCssElement(
-            this._doc, `.ui.card { width: ${this.cardWidth}px; }`));
+        header.appendChild(
+            this.createCssElement(this._doc, `.ui.card { width: ${this.cardWidth}px; }`)
+        );
 
         return header;
     }
@@ -181,7 +182,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     protected createElementWithChild<T>(className: string, childNodeArray: Array<T>): HTMLElement {
         let element = this.createElement("div", className);
 
-        Array.prototype.forEach.call(childNodeArray, (childNode) => {
+        Array.prototype.forEach.call(childNodeArray, childNode => {
             if (childNode) {
                 element.appendChild(childNode);
             }
@@ -193,7 +194,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     protected createContentElement<T>(childNodeArray: Array<T>): HTMLElement {
         let content = this.createElement("div", "content");
 
-        Array.prototype.forEach.call(childNodeArray, (childNode) => {
+        Array.prototype.forEach.call(childNodeArray, childNode => {
             if (childNode) {
                 content.appendChild(childNode);
             }
@@ -215,15 +216,17 @@ export class AbstractCardGerator implements CardGeratorInterface {
         }
 
         let descElement = this.createElement("div", "description");
-        descElement.innerHTML = this._emojiProcessor.processEmoji(
-            this.escapeHtml(text));
+        descElement.innerHTML = this._emojiProcessor.processEmoji(this.escapeHtml(text));
 
         return descElement;
     }
 
     protected createDateTimeElement(
-            key: DateTimeKey, prefix: string, iconName: string, className: string
-            ): HTMLElement {
+        key: DateTimeKey,
+        prefix: string,
+        iconName: string,
+        className: string
+    ): HTMLElement {
         const datetime_value = this._cardData[key];
         if (!datetime_value) {
             return null;
@@ -231,8 +234,13 @@ export class AbstractCardGerator implements CardGeratorInterface {
 
         let datetimeElement: HTMLElement = this.createElement("div", className);
         datetimeElement.appendChild(this.createElement("i", iconName));
-        datetimeElement.appendChild(this.createContentElement([
-            this._doc.createTextNode(`${prefix} ${moment(datetime_value).format("YYYY-MM-DD")}`)]));
+        datetimeElement.appendChild(
+            this.createContentElement([
+                this._doc.createTextNode(
+                    `${prefix} ${moment(datetime_value).format("YYYY-MM-DD")}`
+                ),
+            ])
+        );
 
         return datetimeElement;
     }
@@ -249,11 +257,9 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     private createScriptElement(): HTMLElement {
-        const scriptContent = [
-            `$(window).on("load", function() {`,
-            this.getScript(),
-            `});`,
-        ].join("\n");
+        const scriptContent = [`$(window).on("load", function() {`, this.getScript(), `});`].join(
+            "\n"
+        );
 
         let scriptElement = this._doc.createElement("script");
         scriptElement.innerHTML = scriptContent;
@@ -289,7 +295,8 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     protected escapeHtml(text: string) {
-        return text.replace(/&/g, "&amp;")
+        return text
+            .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
             .replace(/"/g, "&quot;")
@@ -298,9 +305,19 @@ export class AbstractCardGerator implements CardGeratorInterface {
 
     protected toUiColor(color: string): UiColor {
         const validColorArray = [
-            "red", "orange", "yellow", "olive", "green",
-            "teal", "blue", "violet", "purple", "pink",
-            "brown", "grey", "black",
+            "red",
+            "orange",
+            "yellow",
+            "olive",
+            "green",
+            "teal",
+            "blue",
+            "violet",
+            "purple",
+            "pink",
+            "brown",
+            "grey",
+            "black",
         ];
         const defaultColor = "grey";
 
