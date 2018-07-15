@@ -1,14 +1,17 @@
-ghscard
+**ghscard**
+
+.. contents:: Table of Contents
+   :depth: 2
+
+Summary
 =========
+A JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).
+
 .. image:: https://img.shields.io/travis/thombashi/ghscard/master.svg?label=Linux
     :target: https://travis-ci.org/thombashi/ghscard
 
 .. image:: https://img.shields.io/github/stars/thombashi/ghstaticcard.svg?style=social&label=Star
    :target: https://github.com/thombashi/ghscard
-
-Summary
----------
-A JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).
 
 Demo
 ======
@@ -90,6 +93,7 @@ Python 2.7+ or 3.4+
 - `appconfigpy <//github.com/thombashi/appconfigpy>`__
 - `click <//github.com/pallets/click>`__
 - `logbook <//logbook.readthedocs.io/en/stable/>`__
+- `msgfy <https://github.com/thombashi/msgfy>`__
 - `pathvalidate <//github.com/thombashi/pathvalidate>`__
 - `PyGithub <//pygithub.github.io/PyGithub/v1/index.html>`__
 - `requests <//python-requests.org/>`__
