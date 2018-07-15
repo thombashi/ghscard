@@ -36,57 +36,51 @@ def emoji_parser():
 
 
 class Test_Emoji_constructor(object):
-
-    @pytest.mark.parametrize(["value", "expected"], [
-        [None, ValueError],
-    ])
+    @pytest.mark.parametrize(["value", "expected"], [[None, ValueError]])
     def test_exception(self, emoji_parser, value, expected):
         with pytest.raises(expected):
             EmojiParser(value)
 
 
 class Test_Emoji_parse(object):
-
-    @pytest.mark.parametrize(["value", "expected"], [
-        [":+1:", ["+1"]],
-        ["a:-1:b", ["-1"]],
-        ["a:-1:b:accept:c", ["-1", "accept"]],
-
-        ["", []],
-        [":", []],
-        [":+1", []],
-    ])
+    @pytest.mark.parametrize(
+        ["value", "expected"],
+        [
+            [":+1:", ["+1"]],
+            ["a:-1:b", ["-1"]],
+            ["a:-1:b:accept:c", ["-1", "accept"]],
+            ["", []],
+            [":", []],
+            [":+1", []],
+        ],
+    )
     def test_normal(self, emoji_parser, value, expected):
         assert emoji_parser.parse(value) == expected
 
-    @pytest.mark.parametrize(["value", "expected"], [
-        [None, ValueError],
-        [1, ValueError],
-    ])
+    @pytest.mark.parametrize(["value", "expected"], [[None, ValueError], [1, ValueError]])
     def test_exception(self, emoji_parser, value, expected):
         with pytest.raises(expected):
             emoji_parser.parse(value)
 
 
 class Test_Emoji_get_url(object):
-
-    @pytest.mark.parametrize(["value", "expected"], [
+    @pytest.mark.parametrize(
+        ["value", "expected"],
         [
-            "1st_place_medal",
-            "https://assets-cdn.github.com/images/icons/emoji/unicode/1f947.png?v7"
+            [
+                "1st_place_medal",
+                "https://assets-cdn.github.com/images/icons/emoji/unicode/1f947.png?v7",
+            ],
+            [
+                ":1st_place_medal:",
+                "https://assets-cdn.github.com/images/icons/emoji/unicode/1f947.png?v7",
+            ],
         ],
-        [
-            ":1st_place_medal:",
-            "https://assets-cdn.github.com/images/icons/emoji/unicode/1f947.png?v7"
-        ],
-    ])
+    )
     def test_normal(self, emoji_parser, value, expected):
         assert emoji_parser.get_url(value) == expected
 
-    @pytest.mark.parametrize(["value", "expected"], [
-        [None, ValueError],
-        [1, ValueError],
-    ])
+    @pytest.mark.parametrize(["value", "expected"], [[None, ValueError], [1, ValueError]])
     def test_exception(self, emoji_parser, value, expected):
         with pytest.raises(expected):
             emoji_parser.get_url(value)
