@@ -1,43 +1,43 @@
 {
-  "name": "ghscard",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "watch": {
-    "build": {
-      "patterns": [
-        "src"
-      ],
-      "extensions": "ts"
-    }
-  },
-  "scripts": {
-    "build": "rimraf dist/* && tsc && webpack",
-    "lint": "tslint src/*.ts",
-    "package": "npm run build && uglifyjs dist/ghscard.js --compress drop_console=true -o dist/ghscard.min.js",
-    "watch": "npm-watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/thombashi/ghscard.git"
-  },
-  "keywords": [
-    "github"
-  ],
-  "author": "Tsuyoshi Hombashi",
-  "license": "MIT",
-  "homepage": "https://github.com/thombashi/ghscard",
-  "devDependencies": {
-    "jquery": "^3.3.1",
-    "moment": "^2.22.2",
-    "npm-watch": "^0.3.0",
-    "prettier": "^1.13.7",
-    "rimraf": "^2.6.2",
-    "tslint": "^5.10.0",
-    "typescript": "^2.9.2",
-    "uglify-js": "^3.4.4",
-    "webpack": "^4.16.0",
-    "webpack-cli": "^3.0.8"
-  },
-  "dependencies": {}
+    "name": "ghscard",
+    "version": "0.0.7",
+    "description": "",
+    "main": "index.js",
+    "watch": {
+        "build": {
+            "patterns": [
+                "src"
+            ],
+            "extensions": "ts"
+        }
+    },
+    "scripts": {
+        "build": "rimraf dist/* && tsc && webpack",
+        "lint": "tslint src/*.ts",
+        "package": "npm run build && uglifyjs dist/ghscard.js --compress drop_console=true -o dist/ghscard.min.js",
+        "watch": "npm-watch"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/thombashi/ghscard.git"
+    },
+    "keywords": [
+        "github"
+    ],
+    "author": "Tsuyoshi Hombashi",
+    "license": "MIT",
+    "homepage": "https://github.com/thombashi/ghscard",
+    "devDependencies": {
+        "jquery": "^3.3.1",
+        "moment": "^2.22.2",
+        "npm-watch": "^0.3.0",
+        "prettier": "^1.13.7",
+        "rimraf": "^2.6.2",
+        "tslint": "^5.10.0",
+        "typescript": "^2.9.2",
+        "uglify-js": "^3.4.4",
+        "webpack": "^4.16.0",
+        "webpack-cli": "^3.0.8"
+    },
+    "dependencies": {}
 }
