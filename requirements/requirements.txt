@@ -1,5 +1,6 @@
 appconfigpy>=0.0.4
 click>=0.6.7
+colorama>=0.3.9
 logbook>=1.0.1
 msgfy>=0.0.2
 pathvalidate>=0.20.0

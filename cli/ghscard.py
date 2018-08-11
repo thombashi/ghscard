@@ -13,6 +13,7 @@ import sys
 import appconfigpy
 import click
 import logbook
+import logbook.more
 import typepy
 from appconfigpy import ConfigItem, ConfigManager, DefaultDisplayStyle
 from github.GithubException import RateLimitExceededException
@@ -25,11 +26,6 @@ from ._logger import get_logger
 
 QUIET_LOG_LEVEL = logbook.NOTSET
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"], obj={})
-
-logbook.StderrHandler(
-    level=logbook.DEBUG, format_string="[{record.level_name}] {record.channel}: {record.message}"
-).push_application()
-
 CONFIG_ITEM_LIST = [
     ConfigItem(
         name=AppConfigKey.GITHUB_API_ACCESS_TOKEN,
@@ -41,6 +37,10 @@ CONFIG_ITEM_LIST = [
         name=AppConfigKey.OUTPUT_DIR, prompt_text="Output Directory Path", initial_value="."
     ),
 ]
+
+logbook.more.ColorizedStderrHandler(
+    level=logbook.DEBUG, format_string="[{record.level_name}] {record.channel}: {record.message}"
+).push_application()
 
 
 class Context(object):
