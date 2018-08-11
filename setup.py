@@ -73,7 +73,7 @@ setuptools.setup(
     setup_requires=pytest_runner,
     tests_require=tests_requires,
     extras_require={
-        "release": "releasecmd>=0.0.10",
+        "release": "releasecmd>=0.0.11",
         "test": tests_requires,
         "docs": docs_requires,
     },
