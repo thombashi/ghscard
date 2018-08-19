@@ -69,6 +69,10 @@ setuptools.setup(
     license=pkg_info["__license__"],
     long_description=long_description,
     packages=setuptools.find_packages(exclude=["test*"]),
+    project_urls={
+        "Documentation": "https://{:s}.rtfd.io/".format(MODULE_NAME),
+        "Tracker": "{:s}/issues".format(REPOSITORY_URL),
+    },
 
     setup_requires=pytest_runner,
     tests_require=tests_requires,
