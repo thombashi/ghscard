@@ -81,7 +81,7 @@ This HTML rendered as follows:
 For more information
 ----------------------
 More examples are available at 
-http://ghscard.rtfd.io/en/latest/pages/usage/index.html
+https://ghscard.rtfd.io/en/latest/pages/usage/index.html
 
 Dependencies
 ============
@@ -114,5 +114,5 @@ Tested environment
 
 Documentation
 ---------------
-http://ghscard.rtfd.io/
+https://ghscard.rtfd.io/
 
