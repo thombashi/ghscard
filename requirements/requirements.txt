@@ -1,10 +1,10 @@
-appconfigpy>=0.0.5
+appconfigpy>=0.0.6
 click>=0.6.7
 colorama>=0.3.9
 logbook>=1.0.1
-msgfy>=0.0.2
+msgfy>=0.0.3
 pathvalidate>=0.21.1
 PyGithub>=1.40
 requests>=2.19.1
-typepy>=0.2.0
+typepy>=0.2.1
 six
