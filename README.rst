@@ -10,7 +10,7 @@ A JavaScript widget to generate interactive GitHub user/repository/organization 
 .. image:: https://img.shields.io/travis/thombashi/ghscard/master.svg?label=Linux
     :target: https://travis-ci.org/thombashi/ghscard
 
-.. image:: https://img.shields.io/github/stars/thombashi/ghstaticcard.svg?style=social&label=Star
+.. image:: https://img.shields.io/github/stars/thombashi/ghscard.svg?style=social&label=Star
    :target: https://github.com/thombashi/ghscard
 
 Demo
