@@ -15,7 +15,7 @@ A JavaScript widget to generate interactive GitHub user/repository/organization 
 
 Demo
 ======
-﻿- `Popular Repositories on GitHub <https://thombashi.github.io/ghscard/demo/>`__
+- `Popular Repositories on GitHub <https://thombashi.github.io/ghscard/demo/>`__
 - https://thombashi.github.io/
 
 Quick Start
@@ -23,8 +23,8 @@ Quick Start
 
 CLI Tool Installation
 ----------------------------------
-Install ``ghscard`` CLI tool from `PyPI <//pypi.python.org/pypi>`__ via
-`pip <//pip.pypa.io/en/stable/installing/>`__ (Python package manager) command.
+Install ``ghscard`` CLI tool from `PyPI <https://pypi.python.org/pypi>`__ via
+`pip <https://pip.pypa.io/en/stable/installing/>`__ (Python package manager) command.
 
 ::
 
@@ -90,15 +90,15 @@ CLI Tool Dependencies
 ----------------------
 Python 2.7+ or 3.4+
 
-- `appconfigpy <//github.com/thombashi/appconfigpy>`__
-- `click <//github.com/pallets/click>`__
-- `logbook <//logbook.readthedocs.io/en/stable/>`__
+- `appconfigpy <https://github.com/thombashi/appconfigpy>`__
+- `click <https://github.com/pallets/click>`__
+- `logbook <https://logbook.readthedocs.io/en/stable/>`__
 - `msgfy <https://github.com/thombashi/msgfy>`__
-- `pathvalidate <//github.com/thombashi/pathvalidate>`__
-- `PyGithub <//pygithub.github.io/PyGithub/v1/index.html>`__
-- `requests <//python-requests.org/>`__
-- `typepy <//github.com/thombashi/typepy>`__
-- `six <//pypi.python.org/pypi/six/>`__
+- `pathvalidate <https://github.com/thombashi/pathvalidate>`__
+- `PyGithub <https://pygithub.readthedocs.io/en/latest/>`__
+- `requests <https://python-requests.org/>`__
+- `typepy <https://github.com/thombashi/typepy>`__
+- `six <https://pypi.python.org/pypi/six/>`__
 
 Tested environment
 =======================
