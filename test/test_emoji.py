@@ -7,7 +7,7 @@
 from __future__ import print_function, unicode_literals
 
 import pytest
-from cli._emoji import EmojiParser
+from ghscard._emoji import EmojiParser
 
 
 emojis = {

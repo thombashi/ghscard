@@ -9,8 +9,8 @@ from __future__ import print_function, unicode_literals
 import github
 import logbook
 import pytest
-from cli._const import CardType
-from cli._detector import GithubIdDetector
+from ghscard._const import CardType
+from ghscard._detector import GithubIdDetector
 from github.GithubException import UnknownObjectException
 
 
