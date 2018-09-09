@@ -8,7 +8,6 @@ from __future__ import absolute_import, unicode_literals
 
 import errno
 import io
-import json
 import os.path
 import socket
 
@@ -24,6 +23,12 @@ from ._detector import GithubIdDetector
 from ._github_client import GitHubClient
 from ._stopwatch import stopwatch
 from .fetcher import OrganizationCardDataFetcher, RepositoryCardDataFetcher, UserCardDataFetcher
+
+
+try:
+    import simplejson as json
+except ImportError:
+    import json
 
 
 class CardGenerator(object):
