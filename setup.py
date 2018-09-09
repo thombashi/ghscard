@@ -1,12 +1,5 @@
 # encoding: utf-8
 
-"""
-.. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
-
-winrandom
-winrandom-ctypes
-"""
-
 from __future__ import unicode_literals
 
 import io
@@ -33,7 +26,7 @@ def get_release_command_class():
     return {"release": ReleaseCommand}
 
 
-with open(os.path.join("cli", "__version__.py")) as f:
+with open(os.path.join(MODULE_NAME, "__version__.py")) as f:
     exec(f.read(), pkg_info)
 
 with io.open("README.rst", encoding=ENCODING) as f:
@@ -77,9 +70,9 @@ setuptools.setup(
     setup_requires=pytest_runner,
     tests_require=tests_requires,
     extras_require={
+        "docs": docs_requires,
         "release": "releasecmd>=0.0.12",
         "test": tests_requires,
-        "docs": docs_requires,
     },
     python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*',
 
@@ -100,7 +93,7 @@ setuptools.setup(
     ],
     entry_points={
         "console_scripts": [
-            "ghscard=cli.ghscard:cmd",
+            "ghscard=ghscard.ghscard:cmd",
         ],
     },
     cmdclass=get_release_command_class())
