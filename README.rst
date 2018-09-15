@@ -15,7 +15,7 @@ A JavaScript widget to generate interactive GitHub user/repository/organization 
 
 Demo
 ======
-- `Popular Repositories on GitHub <https://thombashi.github.io/ghscard/demo/>`__
+﻿- `Popular Repositories on GitHub <https://thombashi.github.io/ghscard/demo/>`__
 - https://thombashi.github.io/
 
 Quick Start
@@ -23,8 +23,8 @@ Quick Start
 
 CLI Tool Installation
 ----------------------------------
-Install ``ghscard`` CLI tool from `PyPI <https://pypi.python.org/pypi>`__ via
-`pip <https://pip.pypa.io/en/stable/installing/>`__ (Python package manager) command.
+Install ``ghscard`` CLI tool from `PyPI <//pypi.python.org/pypi>`__ via
+`pip <//pip.pypa.io/en/stable/installing/>`__ (Python package manager) command.
 
 ::
 
@@ -96,9 +96,9 @@ Python 2.7+ or 3.4+
 - `msgfy <https://github.com/thombashi/msgfy>`__
 - `pathvalidate <https://github.com/thombashi/pathvalidate>`__
 - `PyGithub <https://pygithub.readthedocs.io/en/latest/>`__
-- `requests <https://python-requests.org/>`__
+- `requests <http://python-requests.org/>`__
 - `typepy <https://github.com/thombashi/typepy>`__
-- `six <https://pypi.python.org/pypi/six/>`__
+- `six <https://pypi.org/project/six/>`__
 
 Tested environment
 =======================
