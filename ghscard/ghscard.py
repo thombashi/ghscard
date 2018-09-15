@@ -48,7 +48,7 @@ class Context(object):
 
 
 @click.group(context_settings=CONTEXT_SETTINGS)
-@click.version_option(version=__version__)
+@click.version_option(version=__version__, message=u"%(prog)s %(version)s")
 @click.option("--debug", "log_level", flag_value=logbook.DEBUG, help=u"for debug print.")
 @click.option(
     "--quiet", "log_level", flag_value=QUIET_LOG_LEVEL, help=u"suppress execution log messages."
