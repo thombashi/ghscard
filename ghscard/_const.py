@@ -18,6 +18,7 @@ RETRY_COUNT = 3
 class AppConfigKey(object):
     GITHUB_API_ACCESS_TOKEN = "github_api_personal_access_token"
     OUTPUT_DIR = "output_dir"
+    INDENT = "indent"
 
 
 class CardType(object):

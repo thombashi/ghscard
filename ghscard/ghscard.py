@@ -36,6 +36,7 @@ CONFIG_ITEM_LIST = [
     ConfigItem(
         name=AppConfigKey.OUTPUT_DIR, prompt_text="Output Directory Path", initial_value="."
     ),
+    ConfigItem(name=AppConfigKey.INDENT, prompt_text="Indent Size", initial_value=4),
 ]
 
 logbook.more.ColorizedStderrHandler(

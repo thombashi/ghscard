@@ -36,6 +36,7 @@ class CardGenerator(object):
         self.__logger = logger
         self.__access_token = app_config.get(AppConfigKey.GITHUB_API_ACCESS_TOKEN)
         self.__output_dir = app_config.get(AppConfigKey.OUTPUT_DIR)
+        self.__indent = app_config.get(AppConfigKey.INDENT)
 
         if typepy.is_not_null_string(self.__access_token):
             logger.debug("access token found in the configuration file")
@@ -76,7 +77,7 @@ class CardGenerator(object):
             )
             return errno.ENODATA
 
-        card_data_text = json.dumps(card_data)
+        card_data_text = json.dumps(card_data, indent=self.__indent)
 
         self.__logger.debug("fetched card data: {}".format(card_data_text))
 
