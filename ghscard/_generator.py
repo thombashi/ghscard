@@ -16,8 +16,10 @@ import github
 import msgfy
 import typepy
 from github.GithubException import BadCredentialsException, UnknownObjectException
+from path import Path
 from pathvalidate import sanitize_filename
 
+from ._cache import CacheManager, CacheTime
 from ._const import MAX_PER_PAGE, AppConfigKey
 from ._detector import GithubIdDetector
 from ._github_client import GitHubClient
@@ -35,8 +37,9 @@ class CardGenerator(object):
     def __init__(self, logger, app_config):
         self.__logger = logger
         self.__access_token = app_config.get(AppConfigKey.GITHUB_API_ACCESS_TOKEN)
-        self.__output_dir = app_config.get(AppConfigKey.OUTPUT_DIR)
+        self.__output_dir = Path(app_config.get(AppConfigKey.OUTPUT_DIR))
         self.__indent = app_config.get(AppConfigKey.INDENT)
+        self.__cache_manager = CacheManager(logger, CacheTime(24 * (60 ** 2)))
         self.__data_fetcher = None
 
         if typepy.is_not_null_string(self.__access_token):
@@ -46,6 +49,13 @@ class CardGenerator(object):
 
     def generate_card(self, github_id):
         self.__set_github_id(github_id)
+
+        output_path = self.__output_dir.joinpath(
+            "{:s}.json".format(sanitize_filename(github_id, "_"))
+        )
+        if self.__cache_manager.is_cache_available(output_path):
+            self.__logger.notice("skip: valid card data already exist: {}".format(output_path))
+            return 0
 
         try:
             with stopwatch(
@@ -91,10 +101,6 @@ class CardGenerator(object):
             self.__logger.error(msgfy.to_error_message(e))
 
             return e.args[0]
-
-        output_path = "{:s}.json".format(
-            os.path.join(self.__output_dir, sanitize_filename(card_data[CommonCardKey.ID], "_"))
-        )
 
         try:
             with io.open(output_path, "w", encoding="utf-8") as f:
