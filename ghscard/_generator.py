@@ -18,7 +18,7 @@ import typepy
 from github.GithubException import BadCredentialsException, UnknownObjectException
 from pathvalidate import sanitize_filename
 
-from ._const import MAX_PER_PAGE, AppConfigKey, CommonCardKey
+from ._const import MAX_PER_PAGE, AppConfigKey
 from ._detector import GithubIdDetector
 from ._github_client import GitHubClient
 from ._stopwatch import stopwatch
