@@ -11,7 +11,7 @@ import re
 
 class EmojiParser(object):
 
-    __re_emoji = re.compile(":[\+a-zA-Z0-9_-]+:")
+    __re_emoji = re.compile(r":[\+a-zA-Z0-9_-]+:")
 
     def __init__(self, emoji_kv_mapping):
         if not emoji_kv_mapping:
