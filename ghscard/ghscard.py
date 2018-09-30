@@ -5,7 +5,7 @@
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
-from __future__ import absolute_import
+from __future__ import absolute_import, unicode_literals
 
 import errno
 import sys
@@ -48,10 +48,10 @@ class Context(object):
 
 
 @click.group(context_settings=CONTEXT_SETTINGS)
-@click.version_option(version=__version__, message=u"%(prog)s %(version)s")
-@click.option("--debug", "log_level", flag_value=logbook.DEBUG, help=u"for debug print.")
+@click.version_option(version=__version__, message="%(prog)s %(version)s")
+@click.option("--debug", "log_level", flag_value=logbook.DEBUG, help="for debug print.")
 @click.option(
-    "--quiet", "log_level", flag_value=QUIET_LOG_LEVEL, help=u"suppress execution log messages."
+    "--quiet", "log_level", flag_value=QUIET_LOG_LEVEL, help="suppress execution log messages."
 )
 @click.pass_context
 def cmd(ctx, log_level):
@@ -84,13 +84,13 @@ def configure(ctx):
 
 @cmd.command()
 @click.argument("id", type=str, nargs=-1)
-@click.option("--api-token", default=None, help=u"GitHub API access token.")
+@click.option("--api-token", default=None, help="GitHub API access token.")
 @click.option(
     "-o",
     "--output-dir",
     metavar="PATH",
     default=None,
-    help=u"Output path of the SQLite database file.",
+    help="Output path of the SQLite database file.",
 )
 @click.pass_context
 def gen(ctx, id, api_token, output_dir):
@@ -104,7 +104,7 @@ def gen(ctx, id, api_token, output_dir):
     """
 
     log_level = ctx.obj[Context.LOG_LEVEL]
-    logger = get_logger(log_level, u"{:s} gen".format(PROGRAM_NAME))
+    logger = get_logger(log_level, "{:s} gen".format(PROGRAM_NAME))
     appconfigpy.set_log_level(log_level)
 
     app_config = ConfigManager(config_name=PROGRAM_NAME, config_item_list=CONFIG_ITEM_LIST).load()
@@ -117,8 +117,8 @@ def gen(ctx, id, api_token, output_dir):
 
     if not id:
         logger.error(
-            u"command requires at least one argument: "
-            u"<user-name> or <user-name>/<repository-name>"
+            "command requires at least one argument: "
+            "<user-name> or <user-name>/<repository-name>"
         )
         sys.exit(errno.EINVAL)
 
