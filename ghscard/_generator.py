@@ -59,7 +59,7 @@ class CardGenerator(object):
             self.__logger.error("invalid GitHub API public access token")
             return errno.EBADRQC
         except KeyboardInterrupt:
-            self._pool.terminate()
+            self.terminate()
             raise
         except UnknownObjectException as e:
             if e.status == 404:
@@ -108,6 +108,9 @@ class CardGenerator(object):
         )
 
         return 0
+
+    def terminate(self):
+        self.__data_fetcher.terminate()
 
     def __get_data_fetcher_class(self):
         if self.__detector.is_repository():

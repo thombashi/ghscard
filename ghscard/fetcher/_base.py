@@ -46,6 +46,9 @@ class AbstractCardDataFetcher(object):
             CommonCardKey.RESULT: Result.SUCCESS,
         }
 
+    def terminate(self):
+        self._pool.terminate()
+
     def _get_emoji_mapping(self, text):
         try:
             emoji_list = self._ghc_client.emoji_parser.parse(text)
