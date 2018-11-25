@@ -65,7 +65,7 @@ class CardGenerator(object):
         except socket.error as e:
             self.__logger.error(msgfy.to_error_message(e))
             return errno.ECONNRESET
-        except BadCredentialsException as e:
+        except BadCredentialsException:
             self.__logger.error("invalid GitHub API public access token")
             return errno.EBADRQC
         except KeyboardInterrupt:
