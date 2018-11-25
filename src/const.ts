@@ -8,10 +8,10 @@ export namespace Margin {
 }
 
 const CDN_PREFIX = "//cdnjs.cloudflare.com/ajax/libs";
-const SEMANTIC_UI_VERSION = "2.3.3";
+const SEMANTIC_UI_VERSION = "2.4.1";
 
 export namespace JsUrl {
-    export const CHART = `${CDN_PREFIX}/Chart.js/2.7.2/Chart.min.js`;
+    export const CHART = `${CDN_PREFIX}/Chart.js/2.7.3/Chart.min.js`;
     export const JQUERY = `${CDN_PREFIX}/jquery/3.3.1/jquery.min.js`;
     export const MOMENT = `${CDN_PREFIX}/moment.js/2.22.2/moment.min.js`;
     export const PLEASE = `${CDN_PREFIX}/pleasejs/0.4.2/Please.min.js`;
