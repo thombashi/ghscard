@@ -15,7 +15,7 @@ A JavaScript widget to generate interactive GitHub user/repository/organization 
 
 Demo
 ======
-﻿- `Popular Repositories on GitHub <https://thombashi.github.io/ghscard/demo/>`__
+- `Popular Repositories on GitHub <https://thombashi.github.io/ghscard/demo/>`__
 - https://thombashi.github.io/
 
 Quick Start
