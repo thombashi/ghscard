@@ -34,4 +34,4 @@ readme:
 .PHONY: release
 release:
 	@python setup.py release
-	@rm -rf dist/
+	@rm -rf dist/*.whl
