@@ -3,8 +3,10 @@ BUILD_DIR := _build
 
 .PHONY: build
 build:
-	@python setup.py build && rm -rf build/
+	@make clean
+	@python setup.py build
 	@npm run-script package
+	@rm -rf build/
 
 .PHONY: upgrade
 upgrade:
