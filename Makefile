@@ -25,7 +25,7 @@ docs:
 fmt:
 	@black $(CURDIR)
 	@isort --apply --recursive
-	@./node_modules/.bin/prettier --tab-width 4 --print-width 100 --trailing-comma es5 ./src/**/* --write
+	@./node_modules/.bin/prettier --tab-width 4 --print-width 100 --trailing-comma es5 --write "**/*.ts"
 
 .PHONY: readme
 readme:
