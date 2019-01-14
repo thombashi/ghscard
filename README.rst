@@ -1,17 +1,18 @@
-**ghscard**
-
-.. contents:: Table of Contents
+.. contents:: **ghscard**
+   :backlinks: top
    :depth: 2
 
 Summary
 =========
 A JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).
 
-.. image:: https://img.shields.io/travis/thombashi/ghscard/master.svg?label=Linux
+.. image:: https://img.shields.io/travis/thombashi/ghscard/master.svg?label=Linux%20CI
     :target: https://travis-ci.org/thombashi/ghscard
+    :alt: Linux CI status
 
 .. image:: https://img.shields.io/github/stars/thombashi/ghscard.svg?style=social&label=Star
-   :target: https://github.com/thombashi/ghscard
+    :target: https://github.com/thombashi/ghscard
+    :alt: GitHub stars
 
 Demo
 ======
