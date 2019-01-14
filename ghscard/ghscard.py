@@ -110,16 +110,16 @@ def gen(ctx, id, api_token, output_dir):
     appconfigpy.set_log_level(log_level)
 
     try:
-        app_config = ConfigManager(PROGRAM_NAME, CONFIG_ITEM_LIST).load()
+        app_configs = ConfigManager(PROGRAM_NAME, CONFIG_ITEM_LIST).load()
     except ValueError as e:
         logger.debug(msgfy.to_debug_message(e))
-        app_config = {}
+        app_configs = {}
 
     if typepy.is_not_null_string(output_dir):
-        app_config[AppConfigKey.OUTPUT_DIR] = output_dir
+        app_configs[AppConfigKey.OUTPUT_DIR] = output_dir
 
     if typepy.is_not_null_string(api_token):
-        app_config[AppConfigKey.GITHUB_API_ACCESS_TOKEN] = api_token
+        app_configs[AppConfigKey.GITHUB_API_ACCESS_TOKEN] = api_token
 
     if not id:
         logger.error(
@@ -129,7 +129,7 @@ def gen(ctx, id, api_token, output_dir):
         sys.exit(errno.EINVAL)
 
     return_code_list = []
-    generator = CardGenerator(logger, app_config)
+    generator = CardGenerator(logger, app_configs)
     for gh_id in id:
         try:
             return_code_list.append(generator.generate_card(gh_id))
