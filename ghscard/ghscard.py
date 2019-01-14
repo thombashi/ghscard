@@ -14,6 +14,7 @@ import appconfigpy
 import click
 import logbook
 import logbook.more
+import msgfy
 import typepy
 from appconfigpy import ConfigItem, ConfigManager, DefaultDisplayStyle
 from github.GithubException import RateLimitExceededException
@@ -78,9 +79,9 @@ def configure(ctx):
 
     appconfigpy.set_log_level(ctx.obj[Context.LOG_LEVEL])
 
-    app_config_manager = ConfigManager(config_name=PROGRAM_NAME, config_item_list=CONFIG_ITEM_LIST)
+    app_config_mgr = ConfigManager(PROGRAM_NAME, CONFIG_ITEM_LIST)
 
-    sys.exit(app_config_manager.configure())
+    sys.exit(app_config_mgr.configure())
 
 
 @cmd.command()
@@ -108,7 +109,11 @@ def gen(ctx, id, api_token, output_dir):
     logger = get_logger(log_level, "{:s} gen".format(PROGRAM_NAME))
     appconfigpy.set_log_level(log_level)
 
-    app_config = ConfigManager(config_name=PROGRAM_NAME, config_item_list=CONFIG_ITEM_LIST).load()
+    try:
+        app_config = ConfigManager(PROGRAM_NAME, CONFIG_ITEM_LIST).load()
+    except ValueError as e:
+        logger.debug(msgfy.to_debug_message(e))
+        app_config = {}
 
     if typepy.is_not_null_string(output_dir):
         app_config[AppConfigKey.OUTPUT_DIR] = output_dir
