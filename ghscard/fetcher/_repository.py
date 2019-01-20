@@ -39,14 +39,14 @@ def get_open_issues_helper(repo):
     issue_counter = None
 
     for issue in repo.get_issues():
-        label_name_list = [label.name for label in issue.labels]
-        if not label_name_list:
-            label_name_list = ["not set"]
+        label_names = [label.name for label in issue.labels]
+        if not label_names:
+            label_names = ["not set"]
 
         if issue_counter is None:
-            issue_counter = Counter(label_name_list)
+            issue_counter = Counter(label_names)
         else:
-            issue_counter += Counter(label_name_list)
+            issue_counter += Counter(label_names)
 
     return {"open_issues": to_chart_data(issue_counter, aggregate_threshold=7)}
 
