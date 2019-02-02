@@ -9,6 +9,7 @@ build:
 	@make clean
 	@npm run-script package
 	@python setup.py build
+	@twine check dist/*
 	@rm -rf build/
 
 .PHONY: upgrade

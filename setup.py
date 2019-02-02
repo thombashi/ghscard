@@ -71,6 +71,7 @@ setuptools.setup(
     setup_requires=pytest_runner,
     tests_require=tests_requires,
     extras_require={
+        "build": ["twine", "wheel"],
         "docs": docs_requires,
         "release": ["releasecmd>=0.0.12,<0.1.0"],
         "test": tests_requires,
