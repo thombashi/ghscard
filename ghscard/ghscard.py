@@ -136,7 +136,7 @@ def gen(ctx, id, api_token, output_dir):
         except KeyboardInterrupt:
             sys.exit(errno.EINTR)
         except RateLimitExceededException as e:
-            logger.error(e.data.get("message"))
+            logger.error(e)
             sys.exit(errno.ENOSR)
 
     if any(return_code_list):
