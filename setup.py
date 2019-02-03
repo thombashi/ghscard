@@ -73,7 +73,7 @@ setuptools.setup(
     extras_require={
         "build": ["twine", "wheel"],
         "docs": docs_requires,
-        "release": ["releasecmd>=0.0.12,<0.1.0"],
+        "release": ["releasecmd>=0.0.18,<0.1.0"],
         "test": tests_requires,
     },
     python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*',
