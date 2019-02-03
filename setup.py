@@ -76,10 +76,11 @@ setuptools.setup(
         "release": ["releasecmd>=0.0.18,<0.1.0"],
         "test": tests_requires,
     },
-    python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*',
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
 
     classifiers=[
         "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
         "Intended Audience :: Information Technology",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
