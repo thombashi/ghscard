@@ -4,7 +4,7 @@
 
 Summary
 =========
-A JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).
+`ghscard <https://github.com/thombashi/ghscard>`__ is a JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).
 
 .. image:: https://img.shields.io/travis/thombashi/ghscard/master.svg?label=Linux%20CI
     :target: https://travis-ci.org/thombashi/ghscard
