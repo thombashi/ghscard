@@ -1,1 +1,1 @@
-A JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).
+ghscard is a JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).
