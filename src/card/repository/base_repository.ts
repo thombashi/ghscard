@@ -263,7 +263,7 @@ if (commitsCanvas) {
             scales:{
                 xAxes: [{
                     type: 'time',
-                    time: { format: 'MM/YYYY', tooltipFormat: 'YYYY wo [week]' },
+                    time: { parser: 'MM/YYYY', tooltipFormat: 'YYYY wo [week]' },
                     gridLines: { display: false },
                     ticks: { minRotation: 25, fontSize: ${this.chartTickFontSize} },
                 }],
