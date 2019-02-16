@@ -1,7 +1,7 @@
 {
     "name": "ghscard",
     "version": "0.1.3",
-    "description": "",
+    "description": "ghscard is a JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).",
     "main": "index.js",
     "watch": {
         "build": {
@@ -22,10 +22,14 @@
         "url": "git+https://github.com/thombashi/ghscard.git"
     },
     "keywords": [
-        "github"
+        "github",
+        "card"
     ],
-    "author": "Tsuyoshi Hombashi",
+    "author": "Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com> (https://github.com/thombashi)",
     "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/thombashi/ghscard/issues"
+    },
     "homepage": "https://github.com/thombashi/ghscard",
     "devDependencies": {
         "jquery": "^3.3.1",
