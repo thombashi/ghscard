@@ -11,6 +11,7 @@ build:
 	@twine check dist/*.whl
 	@twine check dist/*.tar.gz
 	@python setup.py clean --all
+	ls -lh dist/*
 
 .PHONY: upgrade
 upgrade:
@@ -50,4 +51,4 @@ readme:
 .PHONY: release
 release:
 	@python setup.py release --sign
-	@rm -rf dist/*.whl
+	@make clean
