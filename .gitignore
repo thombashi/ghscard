@@ -200,6 +200,7 @@ dmypy.json
 .pyre/
 
 #### User Settings ####
+_sandbox/
 js/
 test/html/data/
 
