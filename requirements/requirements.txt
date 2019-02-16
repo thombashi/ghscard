@@ -2,10 +2,10 @@ appconfigpy>=0.3.0,<1.0.0
 click>=7.0,<8.0
 colorama>=0.4.1,<1.0.0
 Logbook>=1.1.0,<2.0.0
-DateTimeRange>=0.5.3,<1.0.0
+DateTimeRange>=0.5.5,<1.0.0
 msgfy>=0.0.5,<0.1.0
 path.py
-pathvalidate>=0.24.0,<1.0.0
+pathvalidate>=0.24.1,<1.0.0
 PyGithub>=1.43.5,<2.0.0
 requests>=2.21.0,<3.0.0
 typepy>=0.4.0,<1.0.0
