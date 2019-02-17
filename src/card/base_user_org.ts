@@ -41,7 +41,7 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
     protected getScript(): string {
         return [
             `$('#${AVATAR_ELEMENT_ID}.ui.image').popup({`,
-            `  on: 'click',`,
+            `  on: 'hover',`,
             `  inline: true`,
             `});`,
             `$('.ui.images .image').popup();`,

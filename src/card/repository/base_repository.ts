@@ -130,7 +130,7 @@ export class AbstractRepositoryCardGerator extends AbstractCardGerator {
     protected getScript(): string {
         const popupScript = [
             `$('#${AVATAR_ELEMENT_ID}.ui.image').popup({`,
-            `on: 'click',`,
+            `on: 'hover',`,
             `inline: true,`,
             `});`,
         ].join("\n");
