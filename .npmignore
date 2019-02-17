@@ -94,7 +94,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -207,6 +206,9 @@ test/html/data/
 
 
 ###############################
+dist/*.whl
+dist/*.tar.gz
+dist/ghscard.js.map
 docs/
 ghscard/
 requirements/
