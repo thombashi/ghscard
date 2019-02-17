@@ -46,14 +46,22 @@ Add widget to an HTML file
                 </tr>
             </table>
             
-            <script src='//rawgit.com/thombashi/ghscard/master/dist/ghscard.min.js'></script>
+            <script src='//cdn.jsdelivr.net/gh/thombashi/ghscard@master/dist/ghscard.min.js'></script>
         </body>
         </html>
 
-This HTML rendered as follows:
+The above HTML rendered as follows:
 
 :Output:
     .. image:: ss/quickstart.png
         :width: 600px
         :alt: Click to navigate to the HTML page
         :target: //thombashi.github.io/ghscard/quickstart/
+
+CDN
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Version specific
+    - ``https://cdn.jsdelivr.net/npm/ghscard@<version>/dist/ghscard.min.js``
+    - e.g. https://cdn.jsdelivr.net/npm/ghscard@0.2.1/dist/ghscard.min.js
+- Latest version
+    - https://cdn.jsdelivr.net/gh/thombashi/ghscard@master/dist/ghscard.min.js

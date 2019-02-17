@@ -16,7 +16,7 @@ Create User/Organization Cards
 
         <div class='ghscard' src='data/thombashi.json'></div>
 
-        <script src="//rawgit.com/thombashi/ghscard/master/dist/ghscard.min.js"></script>
+        <script src="//cdn.jsdelivr.net/gh/thombashi/ghscard@master/dist/ghscard.min.js"></script>
 
 3. Result
     .. raw:: html
@@ -40,7 +40,7 @@ Create Repository Cards
     
         <div class="ghscard" src="data/Microsoft_TypeScript.json"></div>
 
-        <script src="//rawgit.com/thombashi/ghscard/master/dist/ghscard.min.js"></script>
+        <script src="//cdn.jsdelivr.net/gh/thombashi/ghscard@master/dist/ghscard.min.js"></script>
 
 3. Result
     .. raw:: html
