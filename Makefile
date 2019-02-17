@@ -12,6 +12,7 @@ build:
 	@twine check dist/*.tar.gz
 	@python setup.py clean --all
 	ls -lh dist/*
+	@cp dist/ghscard.js test/html/
 
 .PHONY: upgrade
 upgrade:
