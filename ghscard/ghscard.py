@@ -85,7 +85,7 @@ def configure(ctx):
 
 
 @cmd.command()
-@click.argument("id", type=str, nargs=-1)
+@click.argument("github_id_list", type=str, nargs=-1)
 @click.option("--api-token", default=None, help="GitHub API access token.")
 @click.option(
     "-o",
@@ -95,7 +95,7 @@ def configure(ctx):
     help="Output path of the SQLite database file.",
 )
 @click.pass_context
-def gen(ctx, id, api_token, output_dir):
+def gen(ctx, github_id_list, api_token, output_dir):
     """
     Generate a GitHub user/repository card data file.
     ID need to either <user name> or <user name>/<repository name>.
@@ -121,7 +121,7 @@ def gen(ctx, id, api_token, output_dir):
     if typepy.is_not_null_string(api_token):
         app_configs[AppConfigKey.GITHUB_API_ACCESS_TOKEN] = api_token
 
-    if not id:
+    if not github_id_list:
         logger.error(
             "command requires at least one argument: "
             "<user-name> or <user-name>/<repository-name>"
@@ -130,7 +130,7 @@ def gen(ctx, id, api_token, output_dir):
 
     return_code_list = []
     generator = CardGenerator(logger, app_configs)
-    for gh_id in id:
+    for gh_id in github_id_list:
         try:
             return_code_list.append(generator.generate_card(gh_id))
         except KeyboardInterrupt:
