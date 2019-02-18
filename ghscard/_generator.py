@@ -34,13 +34,17 @@ except ImportError:
 
 
 class CardGenerator(object):
-    def __init__(self, logger, app_config):
+    def __init__(self, logger, app_config, is_overwrite):
         self.__logger = logger
         self.__access_token = app_config.get(AppConfigKey.GITHUB_API_ACCESS_TOKEN)
         self.__output_dir = Path(app_config.get(AppConfigKey.OUTPUT_DIR))
         self.__indent = app_config.get(AppConfigKey.INDENT)
-        self.__cache_manager = CacheManager(logger, CacheTime(24 * (60 ** 2)))
         self.__data_fetcher = None
+
+        cache_time = CacheTime(24 * (60 ** 2))
+        if is_overwrite:
+            cache_time = CacheTime(0)
+        self.__cache_manager = CacheManager(logger, cache_time)
 
         if typepy.is_not_null_string(self.__access_token):
             logger.debug("access token found in the configuration file")

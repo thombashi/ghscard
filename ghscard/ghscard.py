@@ -94,11 +94,17 @@ def configure(ctx):
     default=None,
     help="Output path of the SQLite database file.",
 )
+@click.option(
+    "--overwrite",
+    "is_overwrite",
+    is_flag=True,
+    help="Overwrite card data even if data already exist and not expired.",
+)
 @click.pass_context
-def gen(ctx, github_id_list, api_token, output_dir):
+def gen(ctx, github_id_list, api_token, output_dir, is_overwrite):
     """
     Generate a GitHub user/repository card data file.
-    ID need to either <user name> or <user name>/<repository name>.
+    ID need to either '<user-name>' or '<user-name>/<repository-name>'.
 
     Example:
 
@@ -129,7 +135,7 @@ def gen(ctx, github_id_list, api_token, output_dir):
         sys.exit(errno.EINVAL)
 
     return_code_list = []
-    generator = CardGenerator(logger, app_configs)
+    generator = CardGenerator(logger, app_configs, is_overwrite)
     for gh_id in github_id_list:
         try:
             return_code_list.append(generator.generate_card(gh_id))
