@@ -124,7 +124,7 @@ def gen(ctx, github_id_list, api_token, output_dir):
     if not github_id_list:
         logger.error(
             "command requires at least one argument: "
-            "<user-name> or <user-name>/<repository-name>"
+            "'<user-name>' or '<user-name>/<repository-name>'"
         )
         sys.exit(errno.EINVAL)
 
