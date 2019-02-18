@@ -27,7 +27,7 @@ from ._logger import get_logger
 
 QUIET_LOG_LEVEL = logbook.NOTSET
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"], obj={})
-CONFIG_ITEM_LIST = [
+CONFIG_ITEMS = [
     ConfigItem(
         name=AppConfigKey.GITHUB_API_ACCESS_TOKEN,
         initial_value=None,
@@ -79,7 +79,7 @@ def configure(ctx):
 
     appconfigpy.set_log_level(ctx.obj[Context.LOG_LEVEL])
 
-    app_config_mgr = ConfigManager(PROGRAM_NAME, CONFIG_ITEM_LIST)
+    app_config_mgr = ConfigManager(PROGRAM_NAME, CONFIG_ITEMS)
 
     sys.exit(app_config_mgr.configure())
 
@@ -110,7 +110,7 @@ def gen(ctx, github_id_list, api_token, output_dir):
     appconfigpy.set_log_level(log_level)
 
     try:
-        app_configs = ConfigManager(PROGRAM_NAME, CONFIG_ITEM_LIST).load()
+        app_configs = ConfigManager(PROGRAM_NAME, CONFIG_ITEMS).load()
     except ValueError as e:
         logger.debug(msgfy.to_debug_message(e))
         app_configs = {}
