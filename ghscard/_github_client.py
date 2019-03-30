@@ -9,6 +9,7 @@ from __future__ import absolute_import, unicode_literals
 import re
 
 import msgfy
+import retryrequests
 import typepy
 from github.GithubException import RateLimitExceededException
 
@@ -79,8 +80,6 @@ class GitHubClient(object):
         self.__repos = None
 
     def get(self, operation, headers=None, params=None):
-        import requests
-
         if not headers:
             headers = {}
 
@@ -91,7 +90,7 @@ class GitHubClient(object):
             headers["authorization"] = "token {:s}".format(self.__access_token)
 
         api_url = "https://api.github.com{:s}".format(operation)
-        response = requests.get(api_url, headers=headers, params=params)
+        response = retryrequests.get(api_url, headers=headers, params=params)
         self._logger.debug("API called: {}".format(response.url))
 
         try:
