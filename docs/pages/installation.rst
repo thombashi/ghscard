@@ -13,5 +13,6 @@ Python 2.7+ or 3.4+
 - `pathvalidate <https://github.com/thombashi/pathvalidate>`__
 - `PyGithub <https://pygithub.readthedocs.io/en/latest/>`__
 - `requests <http://python-requests.org/>`__
+- `retryrequests https://github.com/thombashi/retryrequests>`__
 - `typepy <https://github.com/thombashi/typepy>`__
 - `six <https://pypi.org/project/six/>`__
