@@ -8,5 +8,6 @@ path.py
 pathvalidate>=0.26.0,<1.0.0
 PyGithub>=1.43.5,<2.0.0
 requests>=2.21.0,<3.0.0
+retryrequests>=0.0.1,<0.1.0
 typepy>=0.4.0,<1.0.0
 six>=1.11.0,<2.0.0

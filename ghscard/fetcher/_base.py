@@ -13,7 +13,6 @@ import multiprocessing
 import six
 
 from .._const import CARD_DATA_VERSION, DATETIME_FORMAT, CommonCardKey, Result
-from .._error import ApiStatusError
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -32,9 +31,6 @@ class AbstractCardDataFetcher(object):
 
         self._pygh_client = pygh_client
         self._ghc_client = ghc_client
-
-        if self._pygh_client.get_api_status() == "major":
-            raise ApiStatusError("GitHub API status is in red status")
 
         self._pool = multiprocessing.Pool(processes=4)
 

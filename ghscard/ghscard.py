@@ -15,6 +15,7 @@ import click
 import logbook
 import logbook.more
 import msgfy
+import retryrequests
 import typepy
 from appconfigpy import ConfigItem, ConfigManager, DefaultDisplayStyle
 from github.GithubException import RateLimitExceededException
@@ -47,6 +48,14 @@ logbook.more.ColorizedStderrHandler(
 
 class Context(object):
     LOG_LEVEL = "LOG_LEVEL"
+
+
+def get_api_status():
+    r = retryrequests.get("https://kctbh9vrtdwd.statuspage.io/api/v2/status.json")
+
+    r.raise_for_status()
+
+    return r.json()["status"]["indicator"]
 
 
 @click.group(context_settings=CONTEXT_SETTINGS)
@@ -114,6 +123,10 @@ def gen(ctx, github_id_list, api_token, output_dir, is_overwrite):
     log_level = ctx.obj[Context.LOG_LEVEL]
     logger = get_logger(log_level, "{:s} gen".format(PROGRAM_NAME))
     appconfigpy.set_log_level(log_level)
+
+    if get_api_status() == "major":
+        logger.error("GitHub API status is in red status")
+        sys.exit(1)
 
     try:
         app_configs = ConfigManager(PROGRAM_NAME, CONFIG_ITEMS).load()
