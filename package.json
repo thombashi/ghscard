@@ -33,15 +33,15 @@
     "homepage": "https://github.com/thombashi/ghscard",
     "devDependencies": {
         "jquery": "^3.3.1",
-        "moment": "^2.23.0",
+        "moment": "^2.24.0",
         "npm-watch": "^0.6.0",
-        "prettier": "^1.15.3",
+        "prettier": "^1.16.4",
         "rimraf": "^2.6.3",
-        "tslint": "^5.12.1",
-        "typescript": "^3.1.6",
-        "uglify-js": "^3.4.4",
-        "webpack": "^4.28.4",
-        "webpack-cli": "^3.2.1"
+        "tslint": "^5.14.0",
+        "typescript": "^3.4.1",
+        "uglify-js": "^3.5.2",
+        "webpack": "^4.29.6",
+        "webpack-cli": "^3.3.0"
     },
     "dependencies": {}
 }
