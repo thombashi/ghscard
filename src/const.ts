@@ -11,8 +11,8 @@ const CDN_PREFIX = "//cdnjs.cloudflare.com/ajax/libs";
 const SEMANTIC_UI_VERSION = "2.4.1";
 
 export namespace JsUrl {
-    export const CHART = `${CDN_PREFIX}/Chart.js/2.7.3/Chart.min.js`;
-    export const JQUERY = `${CDN_PREFIX}/jquery/3.3.1/jquery.min.js`;
+    export const CHART = `${CDN_PREFIX}/Chart.js/2.8.0/Chart.min.js`;
+    export const JQUERY = `${CDN_PREFIX}/jquery/3.4.0/jquery.min.js`;
     export const MOMENT = `${CDN_PREFIX}/moment.js/2.24.0/moment.min.js`;
     export const PLEASE = `${CDN_PREFIX}/pleasejs/0.4.2/Please.min.js`;
     export const SEMANTIC_UI: string = `${CDN_PREFIX}/semantic-ui/${SEMANTIC_UI_VERSION}/semantic.min.js`;
