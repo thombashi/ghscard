@@ -97,7 +97,7 @@ Dependencies
 
 CLI Tool Dependencies
 ----------------------
-Python 2.7+ or 3.4+
+Python 2.7+ or 3.5+
 
 - `appconfigpy <https://github.com/thombashi/appconfigpy>`__
 - `click <https://github.com/pallets/click>`__
