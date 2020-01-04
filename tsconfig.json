@@ -4,7 +4,8 @@
         "target": "ES5",
         "removeComments": true,
         "outDir": "./js",
-        "sourceMap": true
+        "sourceMap": true,
+        "esModuleInterop": true
     },
     "exclude": [
         "node_modules"
