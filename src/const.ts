@@ -8,17 +8,18 @@ export namespace Margin {
 }
 
 const CDN_PREFIX = "//cdnjs.cloudflare.com/ajax/libs";
-const SEMANTIC_UI_VERSION = "2.4.1";
+const JSDELIVR_PREFIX = "//cdn.jsdelivr.net/npm";
+const UI_VERSION = "2.8.3";
 
 export namespace JsUrl {
-    export const CHART = `${CDN_PREFIX}/Chart.js/2.8.0/Chart.min.js`;
+    export const CHART = `${JSDELIVR_PREFIX}/chart.js@2.9.3/dist/Chart.min.js`;
     export const JQUERY = `${CDN_PREFIX}/jquery/3.4.1/jquery.min.js`;
     export const MOMENT = `${CDN_PREFIX}/moment.js/2.24.0/moment.min.js`;
     export const PLEASE = `${CDN_PREFIX}/pleasejs/0.4.2/Please.min.js`;
-    export const SEMANTIC_UI: string = `${CDN_PREFIX}/semantic-ui/${SEMANTIC_UI_VERSION}/semantic.min.js`;
+    export const SEMANTIC_UI: string = `${JSDELIVR_PREFIX}/fomantic-ui@${UI_VERSION}/dist/semantic.min.js`;
 }
 
-export const DEFAULT_SEMANTIC_UI_CSS_URL: string = `${CDN_PREFIX}/semantic-ui/${SEMANTIC_UI_VERSION}/semantic.min.css`;
+export const DEFAULT_SEMANTIC_UI_CSS_URL: string = `${JSDELIVR_PREFIX}/fomantic-ui@${UI_VERSION}/dist/semantic.min.css`;
 
 export namespace Emoji {
     export const WIDTH = 16;
