@@ -4,7 +4,7 @@ import { EmojiProcessorFactory } from "./emoji";
 import { createCardGenerator } from "./factory";
 import { CardStyle } from "./types";
 
-import * as $ from "jquery";
+import $ from "jquery";
 
 namespace CardAttr {
     export namespace Display {

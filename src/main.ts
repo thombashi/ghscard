@@ -1,6 +1,6 @@
 import { CardGeneratorManager } from "./manager";
 
-import * as $ from "jquery";
+import $ from "jquery";
 
 (function(window, $) {
     $(window).on("load", function() {
