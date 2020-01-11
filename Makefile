@@ -54,3 +54,8 @@ readme:
 release:
 	@python setup.py release --sign
 	@make clean
+
+.PHONY: setup
+setup:
+	@pip install --upgrade --upgrade-strategy eager .[dev]
+	npm install
