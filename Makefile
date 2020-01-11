@@ -6,7 +6,7 @@ DOCS_BUILD_DIR := $(DOCS_DIR)/_build
 .PHONY: build
 build:
 	@make clean
-	@npm run-script package
+	@npm run-script build
 	@python setup.py sdist bdist_wheel
 	@twine check dist/*.whl
 	@twine check dist/*.tar.gz

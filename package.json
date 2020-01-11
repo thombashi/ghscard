@@ -12,9 +12,10 @@
         }
     },
     "scripts": {
-        "build": "rimraf dist/* && tsc && webpack",
+        "clean": "rimraf dist/*",
+        "build": "webpack --mode development && webpack --mode production",
         "lint": "tslint src/*.ts",
-        "package": "npm run build && uglifyjs dist/ghscard.js --compress drop_console=true -o dist/ghscard.min.js",
+        "bundle-analyzer": "webpack-bundle-analyzer dist/stats.json",
         "watch": "npm-watch"
     },
     "repository": {
