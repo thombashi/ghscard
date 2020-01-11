@@ -9,9 +9,10 @@ from __future__ import print_function, unicode_literals
 import github
 import logbook
 import pytest
+from github.GithubException import UnknownObjectException
+
 from ghscard._const import CardType
 from ghscard._detector import GithubIdDetector
-from github.GithubException import UnknownObjectException
 
 
 def monkey_get_organization(a, b):

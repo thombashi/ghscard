@@ -40,9 +40,7 @@ class EmojiResolver extends AbstractEmojiProcessor {
 
         for (let emojiText of matchList) {
             const emojiId = emojiText.substr(1, emojiText.length - 2);
-            const tag = `<img src='${this.emojiMapping[emojiId]}' width='${Emoji.WIDTH}' height='${
-                Emoji.HEIGHT
-            }'>`;
+            const tag = `<img src='${this.emojiMapping[emojiId]}' width='${Emoji.WIDTH}' height='${Emoji.HEIGHT}'>`;
             replaceMapping[emojiText] = tag;
         }
 
