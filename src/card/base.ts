@@ -3,7 +3,7 @@ import { EmojiProcessorInterface } from "../emoji";
 import { DateTimeKey, UiColor, UiSize } from "../types";
 import { CardGeratorInterface } from "./interface";
 
-import * as moment from "moment";
+import dayjs from "dayjs";
 
 export class AbstractCardGerator implements CardGeratorInterface {
     protected get headerSize(): UiSize {
@@ -236,9 +236,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
         datetimeElement.appendChild(this.createElement("i", iconName));
         datetimeElement.appendChild(
             this.createContentElement([
-                this._doc.createTextNode(
-                    `${prefix} ${moment(datetime_value).format("YYYY-MM-DD")}`
-                ),
+                this._doc.createTextNode(`${prefix} ${dayjs(datetime_value).format("YYYY-MM-DD")}`),
             ])
         );
 

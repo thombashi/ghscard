@@ -3,7 +3,7 @@ import { EmojiProcessorInterface } from "../../emoji";
 import { ElementDisplay, UiColor, UiSize, RepoCardDataKey } from "../../types";
 import { AbstractCardGerator } from "../base";
 
-import * as moment from "moment";
+import dayjs from "dayjs";
 
 namespace CanvasId {
     export const COMMITS_CHART = "__commits_chart_canvas__";
@@ -224,12 +224,13 @@ if (languageCanvas) {
     }
 
     private createCommitChartScript(): string {
-        let fetchDate = moment(this.getCardData("fetched_at"));
+        let fetchDate = dayjs(this.getCardData("fetched_at"));
         let dateArray = [];
 
         for (let i = 0; i < 52; i++) {
+            console.log(fetchDate.format("YYYY-MM-DD"));
             dateArray.push(`moment('${fetchDate.format("YYYY-MM-DD")}').toDate()`);
-            fetchDate.subtract(1, "weeks");
+            fetchDate = fetchDate.subtract(1, "week");
         }
         dateArray.reverse();
 
