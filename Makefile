@@ -40,10 +40,10 @@ docs:
 
 .PHONY: fmt
 fmt:
-	@black $(CURDIR)/$(PACKAGE)
-	@autoflake --in-place --recursive --remove-all-unused-imports --exclude "__init__.py" .
-	@isort --apply --recursive $(PACKAGE)
-	@./node_modules/.bin/prettier --tab-width 4 --print-width 100 --trailing-comma es5 --write "**/*.ts" --ignore-path "$(CURDIR)/node_modules/*"
+	black
+	autoflake --in-place --recursive --remove-all-unused-imports --ignore-init-module-imports .
+	isort --apply --recursive
+	npx prettier --tab-width 4 --print-width 100 --trailing-comma es5 --write "**/*.ts" --ignore-path "$(CURDIR)/node_modules/*"
 
 .PHONY: readme
 readme:
