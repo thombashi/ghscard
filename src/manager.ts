@@ -77,7 +77,8 @@ export class CardGeneratorManager {
                         return;
                     }
 
-                    //cardFrame.height = `${card.getBoundingClientRect().height + Margin.FRAME * 2}px`;
+                    // tslint:disable-next-line
+                    // cardFrame.height = `${card.getBoundingClientRect().height + Margin.FRAME * 2}px`;
                     cardFrame.height = `${card.getBoundingClientRect().height + Margin.FRAME}px`;
                     cardFrame.style.visibility = "visible";
                 });
