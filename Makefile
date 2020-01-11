@@ -17,7 +17,7 @@ build:
 .PHONY: upgrade
 upgrade:
 	@ncu --upgrade
-	@npm update
+	@npm install
 
 .PHONY: clean
 clean:
