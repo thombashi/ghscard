@@ -14,6 +14,12 @@ build:
 	ls -lh dist/*
 	@cp dist/ghscard.js test/html/
 
+.PHONY: check
+check:
+	npm run-script lint
+	tox -e lint
+	travis lint
+
 .PHONY: upgrade
 upgrade:
 	@ncu --upgrade
@@ -59,3 +65,10 @@ release:
 setup:
 	@pip install --upgrade --upgrade-strategy eager .[dev]
 	npm install
+
+
+.PHONY: install
+install:
+	cp dist/ghscard.js ../thombashi.github.io/js/
+	cp dist/ghscard.js.map ../thombashi.github.io/js/
+	cp dist/ghscard.min.js ../thombashi.github.io/js/
