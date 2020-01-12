@@ -1,10 +1,6 @@
-# encoding: utf-8
-
 """
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
-
-from __future__ import print_function, unicode_literals
 
 import github
 import logbook
@@ -22,7 +18,7 @@ def monkey_get_organization(a, b):
 logger = logbook.Logger("test")
 
 
-class Test_GithubIdDetector_constructor(object):
+class Test_GithubIdDetector_constructor:
     @pytest.mark.parametrize(
         ["value", "expected"],
         [
@@ -38,7 +34,7 @@ class Test_GithubIdDetector_constructor(object):
             GithubIdDetector(value, logger, pygh_client=github.Github(None))
 
 
-class Test_GithubIdDetector_id(object):
+class Test_GithubIdDetector_id:
     @pytest.mark.parametrize(
         ["value", "expected"],
         [
@@ -58,7 +54,7 @@ class Test_GithubIdDetector_id(object):
         assert detector.id == expected
 
 
-class Test_GithubIdDetector_is_user(object):
+class Test_GithubIdDetector_is_user:
     @pytest.mark.parametrize(
         ["value", "expected"],
         [["thombashi", True], ["thombashi/", True], ["/thombashi", True], ["/thombashi/", True]],
@@ -71,7 +67,7 @@ class Test_GithubIdDetector_is_user(object):
         assert detector.is_user() == expected
 
 
-class Test_GithubIdDetector_is_organization(object):
+class Test_GithubIdDetector_is_organization:
     @pytest.mark.parametrize(
         ["value", "expected"],
         [["thombashi", True], ["thombashi/", True], ["/thombashi", True], ["/thombashi/", True]],
@@ -84,7 +80,7 @@ class Test_GithubIdDetector_is_organization(object):
         assert detector.is_organization() == expected
 
 
-class Test_GithubIdDetector_is_repository(object):
+class Test_GithubIdDetector_is_repository:
     @pytest.mark.parametrize(
         ["value", "expected"], [["thombashi/ghscard", True], [" thombashi / ghscard ", True]]
     )
@@ -94,7 +90,7 @@ class Test_GithubIdDetector_is_repository(object):
         assert detector.is_repository() == expected
 
 
-class Test_GithubIdDetector_get_id_type(object):
+class Test_GithubIdDetector_get_id_type:
     @pytest.mark.parametrize(
         ["value", "expected"],
         [["thombashi", CardType.USER], ["thombashi/ghscard", CardType.REPOSITORY]],

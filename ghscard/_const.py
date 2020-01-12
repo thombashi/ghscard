@@ -1,11 +1,6 @@
-# encoding: utf-8
-
 """
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
-
-from __future__ import absolute_import, unicode_literals
-
 
 PROGRAM_NAME = "ghscard"
 
@@ -15,19 +10,19 @@ MAX_PER_PAGE = 100
 RETRY_COUNT = 3
 
 
-class AppConfigKey(object):
+class AppConfigKey:
     GITHUB_API_ACCESS_TOKEN = "github_api_personal_access_token"
     OUTPUT_DIR = "output_dir"
     INDENT = "indent"
 
 
-class CardType(object):
+class CardType:
     USER = "User"
     ORGANIZATION = "Organization"
     REPOSITORY = "Repository"
 
 
-class CommonCardKey(object):
+class CommonCardKey:
     AVATAR_URL = "avatar_url"
     CARD_TYPE = "card_type"
     CREATED_AT = "created_at"
@@ -42,6 +37,6 @@ class CommonCardKey(object):
     VERSION = "data_version"
 
 
-class Result(object):
+class Result:
     SUCCESS = "success"
     ERROR = "error"

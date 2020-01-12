@@ -1,13 +1,8 @@
-# encoding: utf-8
-
 """
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
-from __future__ import absolute_import, unicode_literals
-
 import errno
-import io
 import os.path
 import socket
 
@@ -33,7 +28,7 @@ except ImportError:
     import json
 
 
-class CardGenerator(object):
+class CardGenerator:
     def __init__(self, logger, app_config, is_overwrite):
         self.__logger = logger
         self.__access_token = app_config.get(AppConfigKey.GITHUB_API_ACCESS_TOKEN)
@@ -107,7 +102,7 @@ class CardGenerator(object):
             return e.args[0]
 
         try:
-            with io.open(output_path, "w", encoding="utf-8") as f:
+            with open(output_path, "w", encoding="utf-8") as f:
                 f.write(card_data_text + "\n")
         except IOError as e:
             self.__logger.error(msgfy.to_error_message(e))

@@ -1,10 +1,6 @@
-# encoding: utf-8
-
 """
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
-
-from __future__ import print_function, unicode_literals
 
 import pytest
 
@@ -36,14 +32,14 @@ def emoji_parser():
     return EmojiParser(emojis)
 
 
-class Test_Emoji_constructor(object):
+class Test_Emoji_constructor:
     @pytest.mark.parametrize(["value", "expected"], [[None, ValueError]])
     def test_exception(self, emoji_parser, value, expected):
         with pytest.raises(expected):
             EmojiParser(value)
 
 
-class Test_Emoji_parse(object):
+class Test_Emoji_parse:
     @pytest.mark.parametrize(
         ["value", "expected"],
         [
@@ -64,7 +60,7 @@ class Test_Emoji_parse(object):
             emoji_parser.parse(value)
 
 
-class Test_Emoji_get_url(object):
+class Test_Emoji_get_url:
     @pytest.mark.parametrize(
         ["value", "expected"],
         [

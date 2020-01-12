@@ -1,7 +1,3 @@
-# encoding: utf-8
-
-from __future__ import absolute_import, unicode_literals
-
 from datetime import datetime
 from functools import total_ordering
 
@@ -9,7 +5,7 @@ from datetimerange import DateTimeRange
 
 
 @total_ordering
-class CacheTime(object):
+class CacheTime:
     @property
     def second(self):
         return self.__second
@@ -28,7 +24,7 @@ class CacheTime(object):
         return self.second < other.second
 
 
-class CacheManager(object):
+class CacheManager:
     def __init__(self, logger, cache_lifetime):
         self.__logger = logger
         self.__cache_lifetime = cache_lifetime

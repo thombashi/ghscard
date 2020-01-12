@@ -1,22 +1,15 @@
-# encoding: utf-8
-
 """
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
-
-from __future__ import absolute_import, unicode_literals
 
 import abc
 import datetime
 import multiprocessing
 
-import six
-
 from .._const import CARD_DATA_VERSION, DATETIME_FORMAT, CommonCardKey, Result
 
 
-@six.add_metaclass(abc.ABCMeta)
-class AbstractCardDataFetcher(object):
+class AbstractCardDataFetcher(object, metaclass=abc.ABCMeta):
     @abc.abstractproperty
     def type(self):  # pragma: no cover
         pass

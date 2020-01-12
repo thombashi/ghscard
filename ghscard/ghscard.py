@@ -1,11 +1,8 @@
-#!/usr/bin/env python
-# encoding: utf-8
+#!/usr/bin/env python3
 
 """
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
-
-from __future__ import absolute_import, unicode_literals
 
 import errno
 import sys
@@ -46,7 +43,7 @@ logbook.more.ColorizedStderrHandler(
 ).push_application()
 
 
-class Context(object):
+class Context:
     LOG_LEVEL = "LOG_LEVEL"
 
 

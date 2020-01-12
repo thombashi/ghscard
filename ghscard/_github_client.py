@@ -1,10 +1,6 @@
-# encoding: utf-8
-
 """
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
-
-from __future__ import absolute_import, unicode_literals
 
 import re
 
@@ -18,7 +14,7 @@ from ._emoji import EmojiParser
 from ._stopwatch import stopwatch
 
 
-class GitHubClient(object):
+class GitHubClient:
     @property
     def emojis(self):
         if self.__emojis:

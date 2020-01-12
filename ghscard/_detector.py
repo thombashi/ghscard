@@ -1,10 +1,6 @@
-# encoding: utf-8
-
 """
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
-
-from __future__ import absolute_import, unicode_literals
 
 import typepy
 from github.GithubException import UnknownObjectException
@@ -12,7 +8,7 @@ from github.GithubException import UnknownObjectException
 from ._const import CardType
 
 
-class GithubIdDetector(object):
+class GithubIdDetector:
     @property
     def id(self):
         return self.__id
