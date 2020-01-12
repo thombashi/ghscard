@@ -6,6 +6,18 @@ Summary
 =========
 `ghscard <https://github.com/thombashi/ghscard>`__ is a JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).
 
+.. image:: https://badge.fury.io/py/ghscard.svg
+    :target: https://badge.fury.io/py/ghscard
+    :alt: PyPI package version
+
+.. image:: https://img.shields.io/pypi/pyversions/ghscard.svg
+    :target: https://pypi.org/project/ghscard
+    :alt: Supported Python versions
+
+.. image:: https://img.shields.io/npm/v/ghscard
+    :target: https://www.npmjs.com/package/ghscard
+    :alt: npm package version
+
 .. image:: https://img.shields.io/travis/thombashi/ghscard/master.svg?label=Linux%20CI
     :target: https://travis-ci.org/thombashi/ghscard
     :alt: Linux CI status
@@ -97,10 +109,10 @@ Dependencies
 
 CLI Tool Dependencies
 ----------------------
-Python 2.7+ or 3.5+
+Python 3.5+
 
 - `appconfigpy <https://github.com/thombashi/appconfigpy>`__
-- `click <https://github.com/pallets/click>`__
+- `click <https://palletsprojects.com/p/click/>`__
 - `DateTimeRange <https://github.com/thombashi/DateTimeRange>`__
 - `logbook <https://logbook.readthedocs.io/en/stable/>`__
 - `msgfy <https://github.com/thombashi/msgfy>`__
@@ -109,7 +121,6 @@ Python 2.7+ or 3.5+
 - `requests <http://python-requests.org/>`__
 - `retryrequests <https://github.com/thombashi/retryrequests>`__
 - `typepy <https://github.com/thombashi/typepy>`__
-- `six <https://pypi.org/project/six/>`__
 
 Tested environment
 =======================
