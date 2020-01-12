@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 import io
 import os.path
 import sys
+from typing import List
 
 import setuptools
 
@@ -15,6 +16,13 @@ REQUIREMENT_DIR = "requirements"
 ENCODING = "utf8"
 
 pkg_info = {}
+
+
+def pytest_runner_requires() -> List[str]:
+    if set(["pytest", "test", "ptr"]).intersection(sys.argv):
+        return ["pytest-runner"]
+
+    return []
 
 
 def get_release_command_class():
@@ -44,9 +52,6 @@ with open(os.path.join(REQUIREMENT_DIR, "test_requirements.txt")) as f:
 with open(os.path.join(REQUIREMENT_DIR, "docs_requirements.txt")) as f:
     docs_requires = [line.strip() for line in f if line.strip()]
 
-needs_pytest = set(["pytest", "test", "ptr"]).intersection(sys.argv)
-pytest_runner = ["pytest-runner"] if needs_pytest else []
-
 SETUPTOOLS_REQUIRES = ["setuptools>=38.3.0"]
 
 setuptools.setup(
@@ -70,7 +75,7 @@ setuptools.setup(
     },
 
     install_requires=SETUPTOOLS_REQUIRES + install_requires,
-    setup_requires=SETUPTOOLS_REQUIRES + pytest_runner,
+    setup_requires=SETUPTOOLS_REQUIRES + pytest_runner_requires(),
     tests_require=tests_requires,
     extras_require={
         "dev": ["releasecmd>=0.2.0,<1", "twine", "wheel"] + docs_requires + tests_requires,
