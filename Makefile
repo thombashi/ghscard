@@ -47,7 +47,7 @@ docs:
 
 .PHONY: fmt
 fmt:
-	black
+	black setup.py test ghscard
 	autoflake --in-place --recursive --remove-all-unused-imports --ignore-init-module-imports .
 	isort --apply --recursive
 	npx prettier --tab-width 4 --print-width 100 --trailing-comma es5 --write "**/*.ts" --ignore-path "$(CURDIR)/node_modules/*"
