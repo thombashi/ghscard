@@ -47,6 +47,7 @@ with open(os.path.join(REQUIREMENT_DIR, "docs_requirements.txt")) as f:
 needs_pytest = set(["pytest", "test", "ptr"]).intersection(sys.argv)
 pytest_runner = ["pytest-runner"] if needs_pytest else []
 
+SETUPTOOLS_REQUIRES = ["setuptools>=38.3.0"]
 
 setuptools.setup(
     name=MODULE_NAME,
@@ -57,7 +58,6 @@ setuptools.setup(
     author_email=pkg_info["__email__"],
     description=summary,
     include_package_data=True,
-    install_requires=install_requires,
     keywords=["GitHub", "JavaScript", "Widget"],
     license=pkg_info["__license__"],
     long_description=long_description,
@@ -69,7 +69,8 @@ setuptools.setup(
         "Tracker": "{:s}/issues".format(REPOSITORY_URL),
     },
 
-    setup_requires=pytest_runner,
+    install_requires=SETUPTOOLS_REQUIRES + install_requires,
+    setup_requires=SETUPTOOLS_REQUIRES + pytest_runner,
     tests_require=tests_requires,
     extras_require={
         "dev": ["releasecmd>=0.2.0,<1", "twine", "wheel"] + docs_requires + tests_requires,
