@@ -123,6 +123,8 @@ class CardGenerator:
         self.__data_fetcher.terminate()
 
     def __get_data_fetcher_class(self):
+        # pytype: disable=attribute-error
+
         if self.__detector.is_repository():
             return RepositoryCardDataFetcher
 
@@ -133,6 +135,7 @@ class CardGenerator:
             return OrganizationCardDataFetcher
 
         raise ValueError("unknown id type: {}".format(self.__detector.id))
+        # pytype: enable=attribute-error
 
     def __set_github_id(self, github_id: str) -> None:
         self.__github_id = github_id
@@ -142,6 +145,7 @@ class CardGenerator:
         self.__data_fetcher = self.__create_data_fetcher()
 
     def __create_data_fetcher(self) -> AbstractCardDataFetcher:
+        # pytype: disable=attribute-error
         return self.__get_data_fetcher_class()(
             pygh_client=self.__pygh_client,
             ghc_client=GitHubClient(
@@ -150,6 +154,7 @@ class CardGenerator:
             id=self.__detector.id,
             logger=self.__logger,
         )
+        # pytype: enable=attribute-error
 
     def __make_output_dir(self) -> None:
         if os.path.isdir(self.__output_dir):
