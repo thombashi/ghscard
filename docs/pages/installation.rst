@@ -3,10 +3,10 @@ Dependencies
 
 CLI Tool Dependencies
 ----------------------
-Python 2.7+ or 3.5+
+Python 3.5+
 
 - `appconfigpy <https://github.com/thombashi/appconfigpy>`__
-- `click <https://github.com/pallets/click>`__
+- `click <https://palletsprojects.com/p/click/>`__
 - `DateTimeRange <https://github.com/thombashi/DateTimeRange>`__
 - `logbook <https://logbook.readthedocs.io/en/stable/>`__
 - `msgfy <https://github.com/thombashi/msgfy>`__
@@ -15,4 +15,3 @@ Python 2.7+ or 3.5+
 - `requests <http://python-requests.org/>`__
 - `retryrequests <https://github.com/thombashi/retryrequests>`__
 - `typepy <https://github.com/thombashi/typepy>`__
-- `six <https://pypi.org/project/six/>`__
