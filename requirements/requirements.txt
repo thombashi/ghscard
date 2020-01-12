@@ -9,3 +9,4 @@ pathvalidate>=1.1.0,<2
 PyGithub>=1.43.7,<2.0.0
 retryrequests>=0.0.2,<1
 typepy>=0.6.4,<2
+typing-extensions>=3.7.4

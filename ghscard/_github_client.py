@@ -3,6 +3,7 @@
 """
 
 import re
+from typing import Dict
 
 import msgfy
 import retryrequests
@@ -16,18 +17,18 @@ from ._stopwatch import stopwatch
 
 class GitHubClient:
     @property
-    def emojis(self):
-        if self.__emojis:
-            return self.__emojis
+    def emojis(self) -> Dict[str, str]:
+        if self.__emojis:  # type: ignore
+            return self.__emojis  # type: ignore
 
         self.__emojis = self.get("/emojis")
 
         return self.__emojis
 
     @property
-    def emoji_parser(self):
-        if self.__emoji_parser:
-            return self.__emoji_parser
+    def emoji_parser(self) -> EmojiParser:
+        if self.__emoji_parser:  # type: ignore
+            return self.__emoji_parser  # type: ignore
 
         self.__emoji_parser = EmojiParser(self.emojis)
 
@@ -47,23 +48,23 @@ class GitHubClient:
         return self.__repos
 
     @property
-    def branches_count(self):
+    def branches_count(self) -> int:
         return self.__get_count("branches")
 
     @property
-    def contributors_count(self):
+    def contributors_count(self) -> int:
         return self.__get_count("contributors")
 
     @property
-    def pulls_count(self):
+    def pulls_count(self) -> int:
         return self.__get_count("pulls")
 
     @property
-    def tags_count(self):
+    def tags_count(self) -> int:
         return self.__get_count("tags")
 
     @property
-    def starred_count(self):
+    def starred_count(self) -> int:
         return self.__get_count("starred")
 
     def __init__(self, logger, github_id, access_token=None):
@@ -75,7 +76,7 @@ class GitHubClient:
         self.__emoji_parser = None
         self.__repos = None
 
-    def get(self, operation, headers=None, params=None):
+    def get(self, operation: str, headers: dict = None, params: dict = None) -> dict:
         if not headers:
             headers = {}
 
@@ -108,32 +109,32 @@ class GitHubClient:
 
         return response_json
 
-    def get_page(self, operation, page):
+    def get_page(self, operation: str, page) -> dict:
         return self.get(operation, params={"per_page": str(MAX_PER_PAGE), "page": page})
 
-    def _get_branches(self, page):
+    def _get_branches(self, page) -> dict:
         # https://developer.github.com/v3/repos/branches/
         return self.get_page("/repos/{:s}/branches".format(self.__github_id), page=page)
 
-    def _get_contributors(self, page):
+    def _get_contributors(self, page) -> dict:
         return self.get_page("/repos/{:s}/contributors".format(self.__github_id), page=page)
 
-    def _get_pulls(self, page):
+    def _get_pulls(self, page) -> dict:
         # https://developer.github.com/v3/pulls/
         return self.get_page("/repos/{:s}/pulls".format(self.__github_id), page=page)
 
-    def _get_tags(self, page):
+    def _get_tags(self, page) -> dict:
         # https://developer.github.com/v3/git/tags/
         return self.get_page("/repos/{:s}/tags".format(self.__github_id), page=page)
 
-    def _get_releases(self, page):
+    def _get_releases(self, page) -> dict:
         # https://developer.github.com/v3/repos/releases/
         return self.get_page("/repos/{:s}/releases".format(self.__github_id), page=page)
 
-    def _get_starred(self, page):
+    def _get_starred(self, page) -> dict:
         return self.get_page("/users/{:s}/starred".format(self.__github_id), page=page)
 
-    def __get_count(self, param_name):
+    def __get_count(self, param_name: str) -> int:
         attr_template = "__{:s}"
         method_template = "_get_{:s}"
 
@@ -155,7 +156,7 @@ class GitHubClient:
                         subtotal_count = len(getattr(self, method_name)(page))
                     except IOError as e:
                         self._logger.debug(msgfy.to_debug_message(e))
-                        total_count = None
+                        # total_count = None
                         break
 
                 if not subtotal_count:

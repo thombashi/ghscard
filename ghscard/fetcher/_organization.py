@@ -2,16 +2,17 @@
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
+
 from .._const import DATETIME_FORMAT, CardType, CommonCardKey
-from ._base import AbstractCardDataFetcher
+from ._base import AbstractCardDataFetcher, CardData
 
 
 class OrganizationCardDataFetcher(AbstractCardDataFetcher):
     @property
-    def type(self):
+    def type(self) -> str:
         return CardType.ORGANIZATION
 
-    def fetch(self):
+    def fetch(self) -> CardData:
         self._logger.debug("fetching org data: id={}".format(self.id))
 
         card_data = super(OrganizationCardDataFetcher, self).fetch()

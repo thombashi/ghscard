@@ -4,15 +4,16 @@
 
 import random
 import time
+from typing import Any, Dict, List, cast
 
 import typepy
 
 from .._const import DATETIME_FORMAT, RETRY_COUNT, CardType, CommonCardKey, Result
-from ._base import AbstractCardDataFetcher
+from ._base import AbstractCardDataFetcher, CardData
 from ._common import dump_organization, to_chart_data
 
 
-def ghc_client_thread_helper(ghc_client):
+def ghc_client_thread_helper(ghc_client) -> Dict[str, Any]:
     return {
         "branches_count": ghc_client.branches_count,
         "pulls_count": ghc_client.pulls_count,
@@ -21,16 +22,16 @@ def ghc_client_thread_helper(ghc_client):
     }
 
 
-def get_contributors_count_helper(ghc_client):
+def get_contributors_count_helper(ghc_client) -> Dict[str, Any]:
     return {"contributors_count": ghc_client.contributors_count}
 
 
-def get_tags_count_helper(ghc_client):
+def get_tags_count_helper(ghc_client) -> Dict[str, Any]:
     return {"tags_count": ghc_client.tags_count}
 
 
-def get_open_issues_helper(repo):
-    from collections import Counter
+def get_open_issues_helper(repo) -> Dict[str, Dict[str, list]]:
+    import collections
 
     issue_counter = None
 
@@ -40,19 +41,23 @@ def get_open_issues_helper(repo):
             label_names = ["not set"]
 
         if issue_counter is None:
-            issue_counter = Counter(label_names)
+            issue_counter = collections.Counter(label_names)
         else:
-            issue_counter += Counter(label_names)
+            issue_counter += collections.Counter(label_names)
 
-    return {"open_issues": to_chart_data(issue_counter, aggregate_threshold=7)}
+    return {
+        "open_issues": to_chart_data(
+            cast(collections.Counter, issue_counter), aggregate_threshold=7
+        )
+    }
 
 
 class RepositoryCardDataFetcher(AbstractCardDataFetcher):
     @property
-    def type(self):
+    def type(self) -> str:
         return CardType.REPOSITORY
 
-    def fetch(self):
+    def fetch(self) -> CardData:
         self._logger.debug("fetching repository data: id={}".format(self.id))
 
         thread_list = [
@@ -108,7 +113,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
             self._logger.error("failed to get participation stats")
             card_data[CommonCardKey.RESULT] = Result.ERROR
 
-        card_data["commits_last_year"] = sum(card_data["participation"])
+        card_data["commits_last_year"] = sum(cast(List[int], card_data["participation"]))
 
         try:
             card_data["latest_tag"] = repo.get_tags()[0].name
@@ -126,11 +131,11 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
     # def __get_releases(self):
     #    return self._ghc_client.get("/repos/{:s}/releases".format(self.id))
 
-    def __get_topics(self):
+    def __get_topics(self) -> List[str]:
         values = self._ghc_client.get(
             "/repos/{:s}".format(self.id),
             headers={"accept": "application/vnd.github.mercy-preview+json"},
         )
         # get topics: https://developer.github.com/v3/repos/
 
-        return values.get("topics")
+        return cast(List[str], values.get("topics"))

@@ -2,34 +2,35 @@ from datetime import datetime
 from functools import total_ordering
 
 from datetimerange import DateTimeRange
+from path import Path
 
 
 @total_ordering
 class CacheTime:
     @property
-    def second(self):
+    def second(self) -> int:
         return self.__second
 
     @property
-    def hour(self):
+    def hour(self) -> float:
         return self.second / (60 ** 2)
 
-    def __init__(self, second):
+    def __init__(self, second: int):
         self.__second = second
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self.second == other.second
 
-    def __lt__(self, other):
+    def __lt__(self, other) -> bool:
         return self.second < other.second
 
 
 class CacheManager:
-    def __init__(self, logger, cache_lifetime):
+    def __init__(self, logger, cache_lifetime: CacheTime) -> None:
         self.__logger = logger
         self.__cache_lifetime = cache_lifetime
 
-    def is_cache_available(self, cache_file_path):
+    def is_cache_available(self, cache_file_path: Path) -> bool:
         if not cache_file_path.isfile():
             self.__logger.debug("cache not found: {}".format(cache_file_path))
             return False

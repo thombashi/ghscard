@@ -1,6 +1,6 @@
 import os.path
 import sys
-from typing import List
+from typing import Dict, List  # noqa
 
 import setuptools
 
@@ -10,7 +10,7 @@ REPOSITORY_URL = "https://github.com/thombashi/{:s}".format(MODULE_NAME)
 REQUIREMENT_DIR = "requirements"
 ENCODING = "utf8"
 
-pkg_info = {}
+pkg_info = {}  # type: Dict[str, str]
 
 
 def pytest_runner_requires() -> List[str]:

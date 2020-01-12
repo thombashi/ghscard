@@ -47,7 +47,7 @@ class Context:
     LOG_LEVEL = "LOG_LEVEL"
 
 
-def get_api_status():
+def get_api_status() -> str:
     r = retryrequests.get("https://kctbh9vrtdwd.statuspage.io/api/v2/status.json")
 
     r.raise_for_status()

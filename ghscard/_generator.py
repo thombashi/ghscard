@@ -5,6 +5,7 @@
 import errno
 import os.path
 import socket
+from typing import Dict
 
 import click
 import github
@@ -19,22 +20,26 @@ from ._const import MAX_PER_PAGE, AppConfigKey
 from ._detector import GithubIdDetector
 from ._github_client import GitHubClient
 from ._stopwatch import stopwatch
-from .fetcher import OrganizationCardDataFetcher, RepositoryCardDataFetcher, UserCardDataFetcher
+from .fetcher import (
+    AbstractCardDataFetcher,
+    OrganizationCardDataFetcher,
+    RepositoryCardDataFetcher,
+    UserCardDataFetcher,
+)
 
 
 try:
     import simplejson as json
 except ImportError:
-    import json
+    import json  # type: ignore
 
 
 class CardGenerator:
-    def __init__(self, logger, app_config, is_overwrite):
+    def __init__(self, logger, app_config: Dict[str, str], is_overwrite: bool) -> None:
         self.__logger = logger
         self.__access_token = app_config.get(AppConfigKey.GITHUB_API_ACCESS_TOKEN)
         self.__output_dir = Path(app_config.get(AppConfigKey.OUTPUT_DIR))
         self.__indent = app_config.get(AppConfigKey.INDENT)
-        self.__data_fetcher = None
 
         cache_time = CacheTime(24 * (60 ** 2))
         if is_overwrite:
@@ -46,7 +51,7 @@ class CardGenerator:
 
         self.__pygh_client = github.Github(self.__access_token, per_page=MAX_PER_PAGE)
 
-    def generate_card(self, github_id):
+    def generate_card(self, github_id: str) -> int:
         self.__set_github_id(github_id)
 
         output_path = self.__output_dir.joinpath(
@@ -114,7 +119,7 @@ class CardGenerator:
 
         return 0
 
-    def terminate(self):
+    def terminate(self) -> None:
         self.__data_fetcher.terminate()
 
     def __get_data_fetcher_class(self):
@@ -129,14 +134,14 @@ class CardGenerator:
 
         raise ValueError("unknown id type: {}".format(self.__detector.id))
 
-    def __set_github_id(self, github_id):
+    def __set_github_id(self, github_id: str) -> None:
         self.__github_id = github_id
         self.__detector = GithubIdDetector(
             self.__github_id, self.__logger, pygh_client=self.__pygh_client
         )
         self.__data_fetcher = self.__create_data_fetcher()
 
-    def __create_data_fetcher(self):
+    def __create_data_fetcher(self) -> AbstractCardDataFetcher:
         return self.__get_data_fetcher_class()(
             pygh_client=self.__pygh_client,
             ghc_client=GitHubClient(
@@ -146,7 +151,7 @@ class CardGenerator:
             logger=self.__logger,
         )
 
-    def __make_output_dir(self):
+    def __make_output_dir(self) -> None:
         if os.path.isdir(self.__output_dir):
             return
 

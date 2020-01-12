@@ -3,27 +3,28 @@
 """
 
 import re
+from typing import Dict, cast
 
 
 class EmojiParser:
 
     __re_emoji = re.compile(r":[\+a-zA-Z0-9_-]+:")
 
-    def __init__(self, emoji_kv_mapping):
+    def __init__(self, emoji_kv_mapping: Dict[str, str]) -> None:
         if not emoji_kv_mapping:
             raise ValueError("required emoji key-value mapping")
 
         self.__emoji_mapping = emoji_kv_mapping
 
-    def get_url(self, emoji):
+    def get_url(self, emoji: str) -> str:
         try:
             emoji = emoji.strip().strip(":")
         except (TypeError, AttributeError) as e:
             raise ValueError(e)
 
-        return self.__emoji_mapping.get(emoji)
+        return cast(str, self.__emoji_mapping.get(emoji))
 
-    def parse(self, text):
+    def parse(self, text: str) -> list:
         emoji_list = []
 
         try:

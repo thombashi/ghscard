@@ -2,10 +2,15 @@
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
+from typing import Counter, Dict
+
 from .._const import CommonCardKey
 
 
-def dump_organization(organization):
+ChartData = Dict[str, list]
+
+
+def dump_organization(organization) -> Dict[str, str]:
     if not organization:
         return {}
 
@@ -22,7 +27,7 @@ def dump_organization(organization):
     }
 
 
-def to_chart_data(label_count_mapping, aggregate_threshold):
+def to_chart_data(label_count_mapping: Counter, aggregate_threshold: int) -> ChartData:
     if not label_count_mapping:
         return {"labels": [], "data": []}
 

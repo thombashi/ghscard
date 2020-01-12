@@ -2,23 +2,28 @@
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
+import collections
+from multiprocessing.pool import AsyncResult  # noqa
+from typing import Any, Counter, Dict, List, Optional, Union  # noqa
+
 from .._const import DATETIME_FORMAT, CardType, CommonCardKey
-from ._base import AbstractCardDataFetcher
+from ._base import AbstractCardDataFetcher, CardData
 from ._common import dump_organization, to_chart_data
 
 
-def ghc_starred_count_helper(ghc_client):
+def ghc_starred_count_helper(ghc_client) -> Dict[str, int]:
     return {"stars": ghc_client.starred_count}
 
 
-def ghc_organizations_helper(user):
+def ghc_organizations_helper(user) -> Dict[str, List[Dict[str, str]]]:
     return {"organizations": [dump_organization(organization) for organization in user.get_orgs()]}
 
 
-def ghc_languages_helper(user):
-    language_mapping = {}
+def ghc_languages_helper(user) -> Dict[str, Dict[str, list]]:
+    language_mapping = collections.Counter()  # type: Counter
+
     for repo in user.get_repos():
-        language_mapping[repo.language] = language_mapping.get(repo.language, 0) + 1
+        language_mapping[repo.language] += 1
 
     try:
         del language_mapping[None]
@@ -30,10 +35,10 @@ def ghc_languages_helper(user):
 
 class UserCardDataFetcher(AbstractCardDataFetcher):
     @property
-    def type(self):
+    def type(self) -> str:
         return CardType.USER
 
-    def fetch(self):
+    def fetch(self) -> CardData:
         self._logger.debug("fetching user data: id={}".format(self.id))
 
         card_data = super(UserCardDataFetcher, self).fetch()
@@ -43,7 +48,7 @@ class UserCardDataFetcher(AbstractCardDataFetcher):
             self._pool.apply_async(ghc_starred_count_helper, args=[self._ghc_client]),
             self._pool.apply_async(ghc_organizations_helper, args=[user]),
             self._pool.apply_async(ghc_languages_helper, args=[user]),
-        ]
+        ]  # type: List[AsyncResult]
 
         # this will raise UnknownObjectException when failed to get data
         card_data["profile_name"] = user.name

@@ -2,6 +2,7 @@
 .. codeauthor:: Tsuyoshi Hombashi <tsuyoshi.hombashi@gmail.com>
 """
 
+import github
 import typepy
 from github.GithubException import UnknownObjectException
 
@@ -13,7 +14,7 @@ class GithubIdDetector:
     def id(self):
         return self.__id
 
-    def __init__(self, id, logger, pygh_client):
+    def __init__(self, id: str, logger, pygh_client: github.Github) -> None:
         try:
             self.__id = id.strip().strip("/")
         except (TypeError, AttributeError) as e:
@@ -30,19 +31,19 @@ class GithubIdDetector:
         self.__pygh_client = pygh_client
         self.__card_type = self.__get_card_type()
 
-    def is_user(self):
+    def is_user(self) -> bool:
         return self.get_id_type() == CardType.USER
 
-    def is_organization(self):
+    def is_organization(self) -> bool:
         return self.get_id_type() == CardType.ORGANIZATION
 
-    def is_repository(self):
+    def is_repository(self) -> bool:
         return self.get_id_type() == CardType.REPOSITORY
 
-    def get_id_type(self):
+    def get_id_type(self) -> str:
         return self.__card_type
 
-    def __get_card_type(self):
+    def __get_card_type(self) -> str:
         id_item_list = self.id.split("/")
 
         if len(id_item_list) > 2:
@@ -71,11 +72,11 @@ class GithubIdDetector:
         return CardType.USER
 
     @staticmethod
-    def __validate_user_name(user_name):
+    def __validate_user_name(user_name: str) -> None:
         if typepy.is_null_string(user_name):
             raise ValueError("user/organization name must be a not empty string")
 
     @staticmethod
-    def __validate_repo_name(repo_name):
+    def __validate_repo_name(repo_name: str) -> None:
         if typepy.is_null_string(repo_name):
             raise ValueError("repository name must be a not empty string")
