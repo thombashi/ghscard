@@ -59,6 +59,16 @@ release:
 	@python setup.py release --sign
 	@make clean
 
+.PHONY: pack
+pack:
+	@pandoc -f rst -t markdown -o README.md README.rst
+	npm pack
+
+.PHONY: publish
+publish:
+	pandoc -f rst -t markdown -o README.md README.rst
+	npm publish
+
 .PHONY: setup
 setup:
 	@pip install --upgrade --upgrade-strategy eager .[dev]
