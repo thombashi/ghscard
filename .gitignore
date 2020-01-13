@@ -208,3 +208,4 @@ _sandbox/
 js/
 test/html/data/
 
+.pytype
