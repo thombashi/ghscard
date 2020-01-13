@@ -209,3 +209,5 @@ js/
 test/html/data/
 
 .pytype
+
+README.md
