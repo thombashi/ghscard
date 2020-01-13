@@ -17,7 +17,7 @@ build:
 .PHONY: check
 check:
 	npm run-script lint
-	tox -e lint
+	@tox -e lint
 	travis lint
 
 .PHONY: upgrade
@@ -47,7 +47,7 @@ docs:
 
 .PHONY: fmt
 fmt:
-	tox -e fmt
+	@tox -e fmt
 	npx prettier --tab-width 4 --print-width 100 --trailing-comma es5 --write "**/*.ts" --ignore-path "$(CURDIR)/node_modules/*"
 
 .PHONY: readme
