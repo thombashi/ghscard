@@ -206,8 +206,10 @@ test/html/data/
 
 
 ###############################
+dist/*.json
 dist/*.whl
 dist/*.tar.gz
+dist/*.js.LICENSE
 dist/ghscard.js.map
 docs/
 ghscard/
@@ -218,12 +220,15 @@ test/
 *.lnk
 Makefile
 MANIFEST.in
+README.rst
 pylama.ini
 pyproject.toml
 setup.cfg
 setup.py
 tox.ini
+tsconfig.json
 tslint.json
+webpack.config.js
 
 .prettierrc
 .pytype
