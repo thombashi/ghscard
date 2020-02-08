@@ -19,7 +19,7 @@ Topics = List[str]
 CardData = Dict[str, Union[int, str, None, ChartData, EmojiMap, Topics]]
 
 
-class AbstractCardDataFetcher(object, metaclass=abc.ABCMeta):
+class AbstractCardDataFetcher(metaclass=abc.ABCMeta):
     @abc.abstractproperty
     def type(self) -> str:  # pragma: no cover
         pass

@@ -66,7 +66,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
             self._pool.apply_async(get_tags_count_helper, args=[self._ghc_client]),
         ]
 
-        card_data = super(RepositoryCardDataFetcher, self).fetch()
+        card_data = super().fetch()
         repo = self._pygh_client.get_repo(self.id)
 
         thread_list.append(self._pool.apply_async(get_open_issues_helper, args=[repo]))

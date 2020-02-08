@@ -41,7 +41,7 @@ class UserCardDataFetcher(AbstractCardDataFetcher):
     def fetch(self) -> CardData:
         self._logger.debug("fetching user data: id={}".format(self.id))
 
-        card_data = super(UserCardDataFetcher, self).fetch()
+        card_data = super().fetch()
         user = self._pygh_client.get_user(self.id)
 
         thread_list = [

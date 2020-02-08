@@ -102,7 +102,7 @@ class GitHubClient:
 
         if message:
             if re.search(".* list is too large to list .* via the API", message):
-                raise IOError(message)
+                raise OSError(message)
 
             if response.status_code == 403 and re.search("^API rate limit exceeded for ", message):
                 raise RateLimitExceededException(status=response.status_code, data=message)
@@ -154,7 +154,7 @@ class GitHubClient:
                 with stopwatch(self._logger, "{:s} page {:d}".format(method_name, page)):
                     try:
                         subtotal_count = len(getattr(self, method_name)(page))
-                    except IOError as e:
+                    except OSError as e:
                         self._logger.debug(msgfy.to_debug_message(e))
                         # total_count = None
                         break

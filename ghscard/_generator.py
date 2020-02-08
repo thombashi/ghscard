@@ -66,7 +66,7 @@ class CardGenerator:
                 self.__logger, "fetch {} {}".format(github_id, self.__data_fetcher.type)
             ):
                 card_data = self.__data_fetcher.fetch()
-        except socket.error as e:
+        except OSError as e:
             self.__logger.error(msgfy.to_error_message(e))
             return errno.ECONNRESET
         except BadCredentialsException:
@@ -109,7 +109,7 @@ class CardGenerator:
         try:
             with open(output_path, "w", encoding="utf-8") as f:
                 f.write(card_data_text + "\n")
-        except IOError as e:
+        except OSError as e:
             self.__logger.error(msgfy.to_error_message(e))
             return e.args[0]
 
