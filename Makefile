@@ -60,7 +60,7 @@ publish:
 
 .PHONY: setup
 setup:
-	@pip install --upgrade --upgrade-strategy eager .[dev]
+	@pip install --upgrade -e .[test]
 	npm install
 
 
