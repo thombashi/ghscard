@@ -4,7 +4,6 @@
 
 import errno
 import os.path
-import socket
 from typing import Dict
 
 import click
