@@ -7,10 +7,7 @@ DOCS_BUILD_DIR := $(DOCS_DIR)/_build
 build:
 	@make clean
 	@npm run-script build
-	@python setup.py sdist bdist_wheel
-	@twine check dist/*.whl
-	@twine check dist/*.tar.gz
-	@python setup.py clean --all
+	@tox -e build
 	ls -lh dist/*
 	@cp dist/ghscard.js test/html/
 
@@ -33,7 +30,7 @@ clean:
 
 .PHONY: docs
 docs:
-	@python setup.py build_sphinx --source-dir=$(DOCS_DIR)/ --build-dir=$(DOCS_BUILD_DIR) --all-files
+	@tox -e docs
 
 .PHONY: fmt
 fmt:
@@ -42,11 +39,11 @@ fmt:
 
 .PHONY: readme
 readme:
-	@cd $(DOCS_DIR) && python make_readme.py
+	@tox -e readme
 
 .PHONY: release
 release:
-	@python setup.py release --sign
+	@tox -e release
 	@make clean
 
 .PHONY: pack
