@@ -136,6 +136,8 @@ def gen(ctx, github_id_list, api_token, output_dir, is_overwrite):
 
     if typepy.is_not_null_string(api_token):
         app_configs[AppConfigKey.GITHUB_API_ACCESS_TOKEN] = api_token
+    elif os.environ.get("GITHUB_TOKEN"):
+        app_configs[AppConfigKey.GITHUB_API_ACCESS_TOKEN] = os.environ.get("GITHUB_TOKEN")
 
     if not github_id_list:
         logger.error(
