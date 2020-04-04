@@ -5,6 +5,7 @@
 """
 
 import errno
+import os
 import sys
 
 import appconfigpy
