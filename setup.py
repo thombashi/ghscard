@@ -36,9 +36,6 @@ with open(os.path.join(REQUIREMENT_DIR, "requirements.txt")) as f:
 with open(os.path.join(REQUIREMENT_DIR, "test_requirements.txt")) as f:
     tests_requires = [line.strip() for line in f if line.strip()]
 
-with open(os.path.join(REQUIREMENT_DIR, "docs_requirements.txt")) as f:
-    docs_requires = [line.strip() for line in f if line.strip()]
-
 SETUPTOOLS_REQUIRES = ["setuptools>=38.3.0"]
 
 setuptools.setup(
@@ -60,10 +57,7 @@ setuptools.setup(
         "Tracker": "{:s}/issues".format(REPOSITORY_URL),
     },
     install_requires=SETUPTOOLS_REQUIRES + install_requires,
-    extras_require={
-        "dev": ["releasecmd>=0.2.0,<1", "twine", "wheel"] + docs_requires + tests_requires,
-        "test": tests_requires,
-    },
+    extras_require={"test": tests_requires},
     python_requires=">=3.5",
     classifiers=[
         "Development Status :: 4 - Beta",
