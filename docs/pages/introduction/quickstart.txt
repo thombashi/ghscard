@@ -45,7 +45,7 @@ Add widget to an HTML file
                     </td>
                 </tr>
             </table>
-            
+
             <script src='//cdn.jsdelivr.net/gh/thombashi/ghscard@master/dist/ghscard.min.js'></script>
         </body>
         </html>
@@ -62,6 +62,6 @@ CDN
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Version specific
     - ``https://cdn.jsdelivr.net/npm/ghscard@<version>/dist/ghscard.min.js``
-    - e.g. https://cdn.jsdelivr.net/npm/ghscard@0.2.1/dist/ghscard.min.js
+    - e.g. https://cdn.jsdelivr.net/npm/ghscard@0.4.1/dist/ghscard.min.js
 - Latest version
     - https://cdn.jsdelivr.net/gh/thombashi/ghscard@master/dist/ghscard.min.js
