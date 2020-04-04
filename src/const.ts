@@ -9,7 +9,7 @@ export namespace Margin {
 
 const CDNJS_PREFIX = "//cdnjs.cloudflare.com/ajax/libs";
 const JSDELIVR_PREFIX = "//cdn.jsdelivr.net/npm";
-const UI_VERSION = "2.8.3";
+const UI_VERSION = "2.8.4";
 
 export namespace JsUrl {
     export const CHART = `${JSDELIVR_PREFIX}/chart.js@2.9.3/dist/Chart.min.js`;
