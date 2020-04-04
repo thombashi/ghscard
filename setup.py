@@ -74,6 +74,6 @@ setuptools.setup(
         "Topic :: Software Development",
         "Topic :: Software Development :: Widget Sets",
     ],
-    entry_points={"console_scripts": ["ghscard=ghscard.ghscard:cmd"]},
+    entry_points={"console_scripts": ["ghscard=ghscard.__main__:cmd"]},
     cmdclass=get_release_command_class(),
 )
