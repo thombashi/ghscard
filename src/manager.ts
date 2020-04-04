@@ -32,7 +32,7 @@ export class CardGeneratorManager {
         console.debug(navigator.userAgent);
         let frameCount = 0;
 
-        Array.prototype.forEach.call(this._doc.getElementsByClassName("ghscard"), cardElement => {
+        Array.prototype.forEach.call(this._doc.getElementsByClassName("ghscard"), (cardElement) => {
             const dataSourcePath: string = cardElement.getAttribute("src");
             let cardStyle: CardStyle;
 
@@ -43,7 +43,7 @@ export class CardGeneratorManager {
                 cardStyle = DEFAULT_CARD_STYLE;
             }
 
-            $.getJSON(dataSourcePath, cardData => {
+            $.getJSON(dataSourcePath, (cardData) => {
                 console.info(`--- creating a GitHub card from ${dataSourcePath} ---`);
                 console.debug(cardData);
 

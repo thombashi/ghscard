@@ -182,7 +182,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     protected createElementWithChild<T>(className: string, childNodeArray: Array<T>): HTMLElement {
         let element = this.createElement("div", className);
 
-        Array.prototype.forEach.call(childNodeArray, childNode => {
+        Array.prototype.forEach.call(childNodeArray, (childNode) => {
             if (childNode) {
                 element.appendChild(childNode);
             }
@@ -194,7 +194,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     protected createContentElement<T>(childNodeArray: Array<T>): HTMLElement {
         let content = this.createElement("div", "content");
 
-        Array.prototype.forEach.call(childNodeArray, childNode => {
+        Array.prototype.forEach.call(childNodeArray, (childNode) => {
             if (childNode) {
                 content.appendChild(childNode);
             }

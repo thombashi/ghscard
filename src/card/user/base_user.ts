@@ -132,7 +132,7 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
     protected createOrganizations(): HTMLElement {
         let orgList = this.createElement("div", "ui mini rounded images");
 
-        Array.prototype.forEach.call(this.getCardData("organizations"), organizationData => {
+        Array.prototype.forEach.call(this.getCardData("organizations"), (organizationData) => {
             let orgLink = this.createAnchorElement(organizationData["html_url"], "ui image");
             orgLink.setAttribute("data-content", organizationData["name"]);
             orgLink.setAttribute("data-position", "top center");
