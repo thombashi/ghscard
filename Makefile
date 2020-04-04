@@ -19,6 +19,7 @@ check:
 	npm run-script lint
 	@tox -e lint
 	travis lint
+	pip check
 
 .PHONY: upgrade
 upgrade:
@@ -41,7 +42,7 @@ fmt:
 
 .PHONY: readme
 readme:
-	@cd $(DOCS_DIR); python make_readme.py
+	@cd $(DOCS_DIR) && python make_readme.py
 
 .PHONY: release
 release:
@@ -62,6 +63,7 @@ publish:
 setup:
 	@pip install --upgrade -e .[test]
 	npm install
+	pip check
 
 
 .PHONY: install
