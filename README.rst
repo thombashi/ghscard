@@ -4,7 +4,7 @@
 
 Summary
 =========
-`ghscard <https://github.com/thombashi/ghscard>`__ is a JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages).
+`ghscard <https://github.com/thombashi/ghscard>`__ is a JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages/Read the Docs).
 
 .. image:: https://badge.fury.io/py/ghscard.svg
     :target: https://badge.fury.io/py/ghscard
@@ -95,7 +95,7 @@ CDN
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Version specific
     - ``https://cdn.jsdelivr.net/npm/ghscard@<version>/dist/ghscard.min.js``
-    - e.g. https://cdn.jsdelivr.net/npm/ghscard@0.2.1/dist/ghscard.min.js
+    - e.g. https://cdn.jsdelivr.net/npm/ghscard@0.4.1/dist/ghscard.min.js
 - Latest version
     - https://cdn.jsdelivr.net/gh/thombashi/ghscard@master/dist/ghscard.min.js
 
