@@ -27,6 +27,7 @@ upgrade:
 clean:
 	@npm run-script clean
 	@tox -e clean
+	@rm $(PACKAGE)-*.tgz
 
 .PHONY: docs
 docs:
