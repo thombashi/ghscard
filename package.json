@@ -1,6 +1,6 @@
 {
     "name": "ghscard",
-    "version": "0.5.0",
+    "version": "0.5.1",
     "description": "ghscard is a JavaScript widget to generate interactive GitHub user/repository/organization cards for static web pages (like GitHub pages/Read the Docs).",
     "main": "index.js",
     "watch": {
