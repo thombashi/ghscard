@@ -13,7 +13,7 @@ const UI_VERSION = "2.8.4";
 
 export namespace JsUrl {
     export const CHART = `${JSDELIVR_PREFIX}/chart.js@2.9.3/dist/Chart.min.js`;
-    export const JQUERY = `${CDNJS_PREFIX}/jquery/3.4.1/jquery.min.js`;
+    export const JQUERY = `${CDNJS_PREFIX}/jquery/3.5.0/jquery.min.js`;
     export const MOMENT = `${CDNJS_PREFIX}/moment.js/2.24.0/moment.min.js`;
     export const PLEASE = `${CDNJS_PREFIX}/pleasejs/0.4.2/Please.min.js`;
     export const SEMANTIC_UI: string = `${JSDELIVR_PREFIX}/fomantic-ui@${UI_VERSION}/dist/semantic.min.js`;
