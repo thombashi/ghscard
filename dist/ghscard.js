@@ -2289,7 +2289,7 @@ var UI_VERSION = "2.8.4";
 var JsUrl;
 (function (JsUrl) {
     JsUrl.CHART = JSDELIVR_PREFIX + "/chart.js@2.9.3/dist/Chart.min.js";
-    JsUrl.JQUERY = CDNJS_PREFIX + "/jquery/3.4.1/jquery.min.js";
+    JsUrl.JQUERY = CDNJS_PREFIX + "/jquery/3.5.0/jquery.min.js";
     JsUrl.MOMENT = CDNJS_PREFIX + "/moment.js/2.24.0/moment.min.js";
     JsUrl.PLEASE = CDNJS_PREFIX + "/pleasejs/0.4.2/Please.min.js";
     JsUrl.SEMANTIC_UI = JSDELIVR_PREFIX + "/fomantic-ui@" + UI_VERSION + "/dist/semantic.min.js";
