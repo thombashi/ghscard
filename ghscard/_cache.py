@@ -1,5 +1,6 @@
 from datetime import datetime
 from functools import total_ordering
+from typing import Union
 
 from datetimerange import DateTimeRange
 from path import Path
@@ -8,14 +9,14 @@ from path import Path
 @total_ordering
 class CacheTime:
     @property
-    def second(self) -> int:
+    def second(self) -> Union[int, float]:
         return self.__second
 
     @property
     def hour(self) -> float:
         return self.second / (60 ** 2)
 
-    def __init__(self, second: int):
+    def __init__(self, second: Union[int, float]):
         self.__second = second
 
     def __eq__(self, other) -> bool:

@@ -98,7 +98,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
 
         for i in range(RETRY_COUNT):
             try:
-                card_data["participation"] = repo.get_stats_participation().all
+                card_data["participation"] = repo.get_stats_participation().all  # type: ignore
             except AttributeError:
                 max_sleep_secs = 2 ** i  # noqa
                 self._logger.warn(

@@ -4,7 +4,7 @@
 
 import errno
 import os.path
-from typing import Dict
+from typing import Mapping
 
 import click
 import github
@@ -34,7 +34,7 @@ except ImportError:
 
 
 class CardGenerator:
-    def __init__(self, logger, app_config: Dict[str, str], is_overwrite: bool) -> None:
+    def __init__(self, logger, app_config: Mapping[str, str], is_overwrite: bool) -> None:
         self.__logger = logger
         self.__access_token = app_config.get(AppConfigKey.GITHUB_API_ACCESS_TOKEN)
         self.__output_dir = Path(app_config.get(AppConfigKey.OUTPUT_DIR))
@@ -78,7 +78,7 @@ class CardGenerator:
             if e.status == 404:
                 message = "'{}' {}".format(self.__data_fetcher.id, e.data.get("message"))
             else:
-                message = e.data.message
+                message = e.data.message  # type: ignore
             self.__logger.error(
                 "{:s} failed to get GitHub data: type={}, id={}, status={}, "
                 "message={}".format(

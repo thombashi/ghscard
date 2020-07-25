@@ -3,14 +3,14 @@
 """
 
 import re
-from typing import Dict, cast
+from typing import Mapping, cast
 
 
 class EmojiParser:
 
     __re_emoji = re.compile(r":[\+a-zA-Z0-9_-]+:")
 
-    def __init__(self, emoji_kv_mapping: Dict[str, str]) -> None:
+    def __init__(self, emoji_kv_mapping: Mapping[str, str]) -> None:
         if not emoji_kv_mapping:
             raise ValueError("required emoji key-value mapping")
 
