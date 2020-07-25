@@ -44,7 +44,7 @@ readme:
 
 .PHONY: release
 release:
-	@tox -e release
+	@python setup.py release --sign
 	@make clean
 
 .PHONY: pack
