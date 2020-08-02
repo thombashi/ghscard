@@ -1,16 +1,6 @@
 Quick Start
 ================
 
-CLI Tool Installation
-----------------------------------
-Install ``ghscard`` CLI tool from `PyPI <//pypi.python.org/pypi>`__ via
-`pip <//pip.pypa.io/en/stable/installing/>`__ (Python package manager) command.
-
-::
-
-    pip install ghscard
-
-
 Generate card data files
 ----------------------------------
 Execute ``ghscard gen`` command to generate a GitHub user/organization/repository card data file.

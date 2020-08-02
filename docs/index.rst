@@ -14,10 +14,8 @@ Welcome to ghscard's documentation!
 
    pages/introduction/index
    pages/usage/index
-   pages/installation
    pages/environment
    pages/links
-   pages/genindex
 
 
 Indices and tables
