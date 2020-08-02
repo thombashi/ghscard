@@ -31,11 +31,8 @@ Demo
 - `Popular Repositories on GitHub <https://thombashi.github.io/ghscard/demo/>`__
 - https://thombashi.github.io/
 
-Quick Start
-================
-
 CLI Tool Installation
-----------------------------------
+====================================
 Install ``ghscard`` CLI tool from `PyPI <//pypi.python.org/pypi>`__ via
 `pip <//pip.pypa.io/en/stable/installing/>`__ (Python package manager) command.
 
@@ -43,6 +40,17 @@ Install ``ghscard`` CLI tool from `PyPI <//pypi.python.org/pypi>`__ via
 
     pip install ghscard
 
+
+Dependencies
+====================================
+
+CLI Tool Dependencies
+----------------------
+- Python 3.5+
+- `Python package dependencies (automatically installed) <https://github.com/thombashi/ghscard/network/dependencies>`__
+
+Quick Start
+================
 
 Generate card data files
 ----------------------------------
@@ -104,24 +112,6 @@ For more information
 More examples are available at 
 https://ghscard.rtfd.io/en/latest/pages/usage/index.html
 
-Dependencies
-============
-
-CLI Tool Dependencies
-----------------------
-Python 3.5+
-
-- `appconfigpy <https://github.com/thombashi/appconfigpy>`__
-- `click <https://palletsprojects.com/p/click/>`__
-- `DateTimeRange <https://github.com/thombashi/DateTimeRange>`__
-- `logbook <https://logbook.readthedocs.io/en/stable/>`__
-- `msgfy <https://github.com/thombashi/msgfy>`__
-- `pathvalidate <https://github.com/thombashi/pathvalidate>`__
-- `PyGithub <https://pygithub.readthedocs.io/en/latest/>`__
-- `requests <http://python-requests.org/>`__
-- `retryrequests <https://github.com/thombashi/retryrequests>`__
-- `typepy <https://github.com/thombashi/typepy>`__
-
 Tested environment
 =======================
 
@@ -137,4 +127,12 @@ Tested environment
 Documentation
 ---------------
 https://ghscard.rtfd.io/
+
+Sponsors
+====================================
+.. image:: https://avatars0.githubusercontent.com/u/44389260?s=48&u=6da7176e51ae2654bcfd22564772ef8a3bb22318&v=4
+   :target: https://github.com/chasbecker
+   :alt: Charles Becker (chasbecker)
+
+`Become a sponsor <https://github.com/sponsors/thombashi>`__
 

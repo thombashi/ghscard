@@ -41,14 +41,16 @@ def main():
 
     maker.write_chapter("Demo")
     maker.write_introduction_file("demo.txt")
+    maker.write_introduction_file("installation.rst")
 
     write_quickstart(maker)
 
-    maker.write_file(maker.doc_page_root_dir_path.joinpath("installation.rst"))
     maker.write_file(maker.doc_page_root_dir_path.joinpath("environment.rst"))
 
     maker.write_chapter("Documentation")
     maker.write_lines(["https://{:s}.rtfd.io/".format(PROJECT_NAME)])
+
+    maker.write_file(maker.doc_page_root_dir_path.joinpath("sponsors.rst"))
 
     return 0
 
