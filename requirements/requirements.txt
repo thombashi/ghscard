@@ -8,5 +8,5 @@ path>=13.0.0,<16
 pathvalidate>=2.2.2,<3
 PyGithub>=1.43.7,<2
 retryrequests>=0.0.2,<1
-typepy>=1.1.1,<2
+typepy>=1.1.4,<2
 typing-extensions>=3.7.4
