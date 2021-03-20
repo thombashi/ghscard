@@ -36,8 +36,6 @@ with open(os.path.join(REQUIREMENT_DIR, "requirements.txt")) as f:
 with open(os.path.join(REQUIREMENT_DIR, "test_requirements.txt")) as f:
     tests_requires = [line.strip() for line in f if line.strip()]
 
-SETUPTOOLS_REQUIRES = ["setuptools>=38.3.0"]
-
 setuptools.setup(
     name=MODULE_NAME,
     version=pkg_info["__version__"],
@@ -56,7 +54,7 @@ setuptools.setup(
         "Source": REPOSITORY_URL,
         "Tracker": "{:s}/issues".format(REPOSITORY_URL),
     },
-    install_requires=SETUPTOOLS_REQUIRES + install_requires,
+    install_requires=install_requires,
     extras_require={"test": tests_requires},
     python_requires=">=3.5",
     classifiers=[
