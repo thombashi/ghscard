@@ -34,6 +34,7 @@
     "homepage": "https://github.com/thombashi/ghscard",
     "devDependencies": {
         "dot-prop": "^5.2.0",
+        "npm-check-updates": "^11.3.0",
         "npm-watch": "^0.6.0",
         "prettier": "^2.0.5",
         "rimraf": "^3.0.2",
