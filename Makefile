@@ -21,7 +21,7 @@ check:
 
 .PHONY: upgrade
 upgrade:
-	@ncu --upgrade
+	@npx ncu --upgrade
 	@npm install
 
 .PHONY: clean
