@@ -1,6 +1,7 @@
 PACKAGE := ghscard
 DOCS_DIR := docs
 DOCS_BUILD_DIR := $(DOCS_DIR)/_build
+PYTHON := python3
 
 
 .PHONY: build
@@ -16,7 +17,7 @@ check:
 	npm run-script lint
 	@tox -e lint
 	travis lint
-	pip check
+	$(PYTHON) -m pip check
 
 .PHONY: upgrade
 upgrade:
@@ -59,9 +60,9 @@ publish:
 
 .PHONY: setup
 setup:
-	@pip install --upgrade -e .[test]
+	@$(PYTHON) -m pip install -q --disable-pip-version-check --upgrade -e .[test] releasecmd tox
 	npm install
-	pip check
+	@$(PYTHON) -m pip check
 
 
 .PHONY: install
