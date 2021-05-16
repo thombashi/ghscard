@@ -41,7 +41,7 @@ def to_chart_data(
         key, value = kv
 
         if (i + 1) > aggregate_threshold:
-            if not others_count:
+            if others_count is None:
                 others_count = value
             else:
                 others_count += value
