@@ -12,7 +12,7 @@ from ghscard._detector import GithubIdDetector
 
 
 def monkey_get_organization(a, b):
-    raise UnknownObjectException("dummy", "dummy")
+    raise UnknownObjectException("dummy_status", "dummy_data", None)
 
 
 logger = logbook.Logger("test")
