@@ -5,8 +5,7 @@ PYTHON := python3
 
 
 .PHONY: build
-build:
-	@make clean
+build: clean
 	@npm run-script build
 	@tox -e build
 	ls -lh dist/*
