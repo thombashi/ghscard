@@ -57,9 +57,13 @@ publish:
 	pandoc -f rst -t markdown -o README.md README.rst
 	npm publish
 
+.PHONY: setup-ci
+setup-ci:
+	@$(PYTHON) -m pip install -q --disable-pip-version-check --upgrade tox
+
 .PHONY: setup
-setup:
-	@$(PYTHON) -m pip install -q --disable-pip-version-check --upgrade -e .[test] releasecmd tox
+setup: setup-ci
+	@$(PYTHON) -m pip install -q --disable-pip-version-check --upgrade -e .[test] releasecmd
 	npm install
 	@$(PYTHON) -m pip check
 
