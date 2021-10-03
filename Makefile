@@ -20,7 +20,7 @@ check:
 
 .PHONY: upgrade
 upgrade:
-	@npx ncu --upgrade
+	@npx ncu --upgrade --timeout 60000
 	@npm install
 
 .PHONY: clean
