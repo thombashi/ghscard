@@ -44,7 +44,7 @@ readme:
 .PHONY: release
 release:
 	@$(PYTHON) setup.py release --sign --search-dir $(PACKAGE)
-	@make clean
+	@$(MAKE) clean
 
 .PHONY: pack
 pack:
