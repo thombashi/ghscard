@@ -15,7 +15,6 @@ build: clean
 check:
 	npm run-script lint
 	@tox -e lint
-	travis lint
 	$(PYTHON) -m pip check
 
 .PHONY: upgrade
