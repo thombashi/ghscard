@@ -24,7 +24,7 @@ class GithubIdDetector:
         self.__id = "/".join(id_item_list)
 
         if typepy.is_null_string(self.__id):
-            raise ValueError("id must be a not empty string")
+            raise ValueError("id must not be an empty string")
 
         logger.debug("id: {}".format(id))
 
@@ -74,9 +74,9 @@ class GithubIdDetector:
     @staticmethod
     def __validate_user_name(user_name: str) -> None:
         if typepy.is_null_string(user_name):
-            raise ValueError("user/organization name must be a not empty string")
+            raise ValueError("user/organization name must not be an empty string")
 
     @staticmethod
     def __validate_repo_name(repo_name: str) -> None:
         if typepy.is_null_string(repo_name):
-            raise ValueError("repository name must be a not empty string")
+            raise ValueError("repository name must not be an empty string")
