@@ -50,8 +50,8 @@ export class AbstractCardGerator implements CardGeratorInterface {
         cardFrame.width = `${this.iframeWidth}px`;
         cardFrame.style.visibility = "hidden";
         cardFrame.style.border = "0px";
-        //cardFrame.style.overflow = "visible";
-        //this.appendCardCss(cardFrame.id);
+        // cardFrame.style.overflow = "visible";
+        // this.appendCardCss(cardFrame.id);
 
         let iframeBody = this._doc.createElement("body");
         iframeBody.appendChild(this.createCardElement());

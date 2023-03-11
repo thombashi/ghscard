@@ -7,7 +7,6 @@ from typing import Mapping, cast
 
 
 class EmojiParser:
-
     __re_emoji = re.compile(r":[\+a-zA-Z0-9_-]+:")
 
     def __init__(self, emoji_kv_mapping: Mapping[str, str]) -> None:

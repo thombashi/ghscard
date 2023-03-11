@@ -14,7 +14,7 @@ class CacheTime:
 
     @property
     def hour(self) -> float:
-        return self.second / (60 ** 2)
+        return self.second / (60**2)
 
     def __init__(self, second: Union[int, float]):
         self.__second = second

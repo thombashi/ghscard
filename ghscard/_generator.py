@@ -40,7 +40,7 @@ class CardGenerator:
         self.__output_dir = Path(app_config.get(AppConfigKey.OUTPUT_DIR))
         self.__indent = app_config.get(AppConfigKey.INDENT)
 
-        cache_time = CacheTime(24 * (60 ** 2))
+        cache_time = CacheTime(24 * (60**2))
         if is_overwrite:
             cache_time = CacheTime(0)
         self.__cache_manager = CacheManager(logger, cache_time)

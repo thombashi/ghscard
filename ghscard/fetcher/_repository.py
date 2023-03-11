@@ -100,7 +100,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
             try:
                 card_data["participation"] = repo.get_stats_participation().all  # type: ignore
             except AttributeError:
-                max_sleep_secs = 2 ** i  # noqa
+                max_sleep_secs = 2**i  # noqa
                 self._logger.warn(
                     f"failed to get '{self.id}' participation stats. retrying in 5 seconds"
                 )
