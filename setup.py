@@ -5,7 +5,7 @@ import setuptools
 
 
 MODULE_NAME = "ghscard"
-REPOSITORY_URL = "https://github.com/thombashi/{:s}".format(MODULE_NAME)
+REPOSITORY_URL = f"https://github.com/thombashi/{MODULE_NAME:s}"
 REQUIREMENT_DIR = "requirements"
 ENCODING = "utf8"
 
@@ -50,9 +50,9 @@ setuptools.setup(
     long_description_content_type="text/x-rst",
     packages=setuptools.find_packages(exclude=["test*"]),
     project_urls={
-        "Documentation": "https://{:s}.rtfd.io/".format(MODULE_NAME),
+        "Documentation": f"https://{MODULE_NAME:s}.rtfd.io/",
         "Source": REPOSITORY_URL,
-        "Tracker": "{:s}/issues".format(REPOSITORY_URL),
+        "Tracker": f"{REPOSITORY_URL:s}/issues",
     },
     install_requires=install_requires,
     extras_require={"test": tests_requires},

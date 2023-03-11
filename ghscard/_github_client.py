@@ -40,7 +40,7 @@ class GitHubClient:
             return self.__repos
 
         self.__repos = self.get(
-            "/repos/{:s}".format(self.__github_id),
+            f"/repos/{self.__github_id:s}",
             headers={"accept": "application/vnd.github.drax-preview+json"},
         )
         # get license: https://developer.github.com/v3/licenses/
@@ -84,11 +84,11 @@ class GitHubClient:
             params = {}
 
         if typepy.is_not_null_string(self.__access_token):
-            headers["authorization"] = "token {:s}".format(self.__access_token)
+            headers["authorization"] = f"token {self.__access_token:s}"
 
-        api_url = "https://api.github.com{:s}".format(operation)
+        api_url = f"https://api.github.com{operation:s}"
         response = retryrequests.get(api_url, headers=headers, params=params)
-        self._logger.debug("API called: {}".format(response.url))
+        self._logger.debug(f"API called: {response.url}")
 
         try:
             response_json = response.json()
@@ -114,25 +114,25 @@ class GitHubClient:
 
     def _get_branches(self, page) -> dict:
         # https://developer.github.com/v3/repos/branches/
-        return self.get_page("/repos/{:s}/branches".format(self.__github_id), page=page)
+        return self.get_page(f"/repos/{self.__github_id:s}/branches", page=page)
 
     def _get_contributors(self, page) -> dict:
-        return self.get_page("/repos/{:s}/contributors".format(self.__github_id), page=page)
+        return self.get_page(f"/repos/{self.__github_id:s}/contributors", page=page)
 
     def _get_pulls(self, page) -> dict:
         # https://developer.github.com/v3/pulls/
-        return self.get_page("/repos/{:s}/pulls".format(self.__github_id), page=page)
+        return self.get_page(f"/repos/{self.__github_id:s}/pulls", page=page)
 
     def _get_tags(self, page) -> dict:
         # https://developer.github.com/v3/git/tags/
-        return self.get_page("/repos/{:s}/tags".format(self.__github_id), page=page)
+        return self.get_page(f"/repos/{self.__github_id:s}/tags", page=page)
 
     def _get_releases(self, page) -> dict:
         # https://developer.github.com/v3/repos/releases/
-        return self.get_page("/repos/{:s}/releases".format(self.__github_id), page=page)
+        return self.get_page(f"/repos/{self.__github_id:s}/releases", page=page)
 
     def _get_starred(self, page) -> dict:
-        return self.get_page("/users/{:s}/starred".format(self.__github_id), page=page)
+        return self.get_page(f"/users/{self.__github_id:s}/starred", page=page)
 
     def __get_count(self, param_name: str) -> int:
         attr_template = "__{:s}"
@@ -148,10 +148,10 @@ class GitHubClient:
         total_count = 0
         page = 1
 
-        with stopwatch(self._logger, "get {:s}".format(param_name)):
+        with stopwatch(self._logger, f"get {param_name:s}"):
             while True:
                 method_name = method_template.format(param_name)
-                with stopwatch(self._logger, "{:s} page {:d}".format(method_name, page)):
+                with stopwatch(self._logger, f"{method_name:s} page {page:d}"):
                     try:
                         subtotal_count = len(getattr(self, method_name)(page))
                     except OSError as e:

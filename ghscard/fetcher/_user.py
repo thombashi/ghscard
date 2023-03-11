@@ -39,7 +39,7 @@ class UserCardDataFetcher(AbstractCardDataFetcher):
         return CardType.USER
 
     def fetch(self) -> CardData:
-        self._logger.debug("fetching user data: id={}".format(self.id))
+        self._logger.debug(f"fetching user data: id={self.id}")
 
         card_data = super().fetch()
         user = self._pygh_client.get_user(self.id)

@@ -58,7 +58,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
         return CardType.REPOSITORY
 
     def fetch(self) -> CardData:
-        self._logger.debug("fetching repository data: id={}".format(self.id))
+        self._logger.debug(f"fetching repository data: id={self.id}")
 
         thread_list = [
             self._pool.apply_async(ghc_client_thread_helper, args=[self._ghc_client]),
@@ -102,7 +102,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
             except AttributeError:
                 max_sleep_secs = 2 ** i  # noqa
                 self._logger.warn(
-                    "failed to get '{}' participation stats. retrying in 5 seconds".format(self.id)
+                    f"failed to get '{self.id}' participation stats. retrying in 5 seconds"
                 )
                 card_data["participation"] = []
                 time.sleep(random.random())
@@ -121,10 +121,10 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
             self._logger.debug("tag not found in the repository")
 
         for i, thread in enumerate(thread_list):
-            thead_id = "thread {:d}/{:d}".format(i + 1, len(thread_list))
-            self._logger.debug("wait for {}".format(thead_id))
+            thead_id = f"thread {i + 1:d}/{len(thread_list):d}"
+            self._logger.debug(f"wait for {thead_id}")
             card_data.update(thread.get())
-            self._logger.debug("complete {}".format(thead_id))
+            self._logger.debug(f"complete {thead_id}")
 
         return card_data
 
@@ -133,7 +133,7 @@ class RepositoryCardDataFetcher(AbstractCardDataFetcher):
 
     def __get_topics(self) -> List[str]:
         values = self._ghc_client.get(
-            "/repos/{:s}".format(self.id),
+            f"/repos/{self.id:s}",
             headers={"accept": "application/vnd.github.mercy-preview+json"},
         )
         # get topics: https://developer.github.com/v3/repos/

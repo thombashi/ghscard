@@ -117,7 +117,7 @@ def gen(ctx, github_id_list, api_token, output_dir, is_overwrite):
     """
 
     log_level = ctx.obj[Context.LOG_LEVEL]
-    logger = get_logger(log_level, "{:s} gen".format(PROGRAM_NAME))
+    logger = get_logger(log_level, f"{PROGRAM_NAME:s} gen")
     appconfigpy.set_log_level(log_level)
 
     if get_api_status() == "major":

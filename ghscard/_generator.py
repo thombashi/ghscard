@@ -54,16 +54,14 @@ class CardGenerator:
         self.__set_github_id(github_id)
 
         output_path = self.__output_dir.joinpath(
-            "{:s}.json".format(sanitize_filename(github_id, "_"))
+            "{:s}.json".format(sanitize_filename(github_id, "_"), null_value_handler=raise_error)
         )
         if self.__cache_manager.is_cache_available(output_path):
-            self.__logger.notice("skip: valid card data already exist: {}".format(output_path))
+            self.__logger.notice(f"skip: valid card data already exist: {output_path}")
             return 0
 
         try:
-            with stopwatch(
-                self.__logger, "fetch {} {}".format(github_id, self.__data_fetcher.type)
-            ):
+            with stopwatch(self.__logger, f"fetch {github_id} {self.__data_fetcher.type}"):
                 card_data = self.__data_fetcher.fetch()
         except OSError as e:
             self.__logger.error(msgfy.to_error_message(e))
@@ -93,7 +91,7 @@ class CardGenerator:
 
         card_data_text = json.dumps(card_data, indent=self.__indent, ensure_ascii=False)
 
-        self.__logger.debug("fetched card data: {}".format(card_data_text))
+        self.__logger.debug(f"fetched card data: {card_data_text}")
 
         try:
             self.__make_output_dir()
@@ -113,7 +111,7 @@ class CardGenerator:
             return e.args[0]
 
         self.__logger.info(
-            "written {:s} data to '{:s}'".format(self.__detector.get_id_type().lower(), output_path)
+            f"written {self.__detector.get_id_type().lower():s} data to '{output_path:s}'"
         )
 
         return 0
@@ -133,7 +131,7 @@ class CardGenerator:
         if self.__detector.is_organization():
             return OrganizationCardDataFetcher
 
-        raise ValueError("unknown id type: {}".format(self.__detector.id))
+        raise ValueError(f"unknown id type: {self.__detector.id}")
         # pytype: enable=attribute-error
 
     def __set_github_id(self, github_id: str) -> None:
@@ -159,6 +157,6 @@ class CardGenerator:
         if os.path.isdir(self.__output_dir):
             return
 
-        self.__logger.debug("creating directory: {}".format(self.__output_dir))
+        self.__logger.debug(f"creating directory: {self.__output_dir}")
 
         os.makedirs(self.__output_dir)

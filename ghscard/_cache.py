@@ -33,7 +33,7 @@ class CacheManager:
 
     def is_cache_available(self, cache_file_path: Path) -> bool:
         if not cache_file_path.isfile():
-            self.__logger.debug("cache not found: {}".format(cache_file_path))
+            self.__logger.debug(f"cache not found: {cache_file_path}")
             return False
 
         try:
@@ -50,9 +50,9 @@ class CacheManager:
         )
 
         if cache_elapsed < self.__cache_lifetime:
-            self.__logger.debug("cache available: {}".format(cache_msg))
+            self.__logger.debug(f"cache available: {cache_msg}")
             return True
 
-        self.__logger.debug("cache expired: {}".format(cache_msg))
+        self.__logger.debug(f"cache expired: {cache_msg}")
 
         return False

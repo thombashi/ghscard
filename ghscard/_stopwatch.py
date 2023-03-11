@@ -12,11 +12,9 @@ from ._const import DATETIME_FORMAT
 def stopwatch(logger, name):
     start_time = datetime.datetime.now()
 
-    logger.debug("start {:s}: {:s}".format(name, start_time.strftime(DATETIME_FORMAT)))
+    logger.debug(f"start {name:s}: {start_time.strftime(DATETIME_FORMAT):s}")
 
     try:
         yield
     finally:
-        logger.debug(
-            "complete {:s}: time={} [sec]".format(name, datetime.datetime.now() - start_time)
-        )
+        logger.debug(f"complete {name:s}: time={datetime.datetime.now() - start_time} [sec]")

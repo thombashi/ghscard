@@ -13,7 +13,7 @@ class OrganizationCardDataFetcher(AbstractCardDataFetcher):
         return CardType.ORGANIZATION
 
     def fetch(self) -> CardData:
-        self._logger.debug("fetching org data: id={}".format(self.id))
+        self._logger.debug(f"fetching org data: id={self.id}")
 
         card_data = super().fetch()
         org = self._pygh_client.get_organization(self.id)
@@ -38,4 +38,4 @@ class OrganizationCardDataFetcher(AbstractCardDataFetcher):
         return card_data
 
     def __get_description(self):
-        return self._ghc_client.get("/orgs/{:s}".format(self.id)).get("description")
+        return self._ghc_client.get(f"/orgs/{self.id:s}").get("description")

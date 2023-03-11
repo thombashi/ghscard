@@ -26,7 +26,7 @@ class GithubIdDetector:
         if typepy.is_null_string(self.__id):
             raise ValueError("id must not be an empty string")
 
-        logger.debug("id: {}".format(id))
+        logger.debug(f"id: {id}")
 
         self.__pygh_client = pygh_client
         self.__card_type = self.__get_card_type()
