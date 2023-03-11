@@ -11,7 +11,7 @@ from ._const import CardType
 
 class GithubIdDetector:
     @property
-    def id(self):
+    def id(self) -> str:
         return self.__id
 
     def __init__(self, id: str, logger, pygh_client: github.Github) -> None:
