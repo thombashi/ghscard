@@ -36,6 +36,7 @@ docs:
 fmt:
 	@tox -e fmt
 	npx prettier --tab-width 4 --print-width 100 --trailing-comma es5 --write "**/*.ts" --ignore-path "$(CURDIR)/node_modules/*"
+	npm run-script lint-fix
 
 .PHONY: readme
 readme:
