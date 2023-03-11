@@ -22,7 +22,7 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
 
     constructor(
         doc: Document,
-        cardData: Object,
+        cardData: object,
         iframeWidth: number,
         color: string,
         emojiProcessor: EmojiProcessorInterface
@@ -41,10 +41,10 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
     protected getScript(): string {
         return [
             `$('#${AVATAR_ELEMENT_ID}.ui.image').popup({`,
-            `  on: 'hover',`,
-            `  inline: true`,
-            `});`,
-            `$('.ui.images .image').popup();`,
+            "  on: 'hover',",
+            "  inline: true",
+            "});",
+            "$('.ui.images .image').popup();",
         ].join("\n");
     }
 
@@ -58,13 +58,13 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
 
     protected _createCardContent(): HTMLElement {
         const segmentClassName = "ui vertical basic compact segment";
-        let content = this.createContentElement([this.createCardHeader()]);
+        const content = this.createContentElement([this.createCardHeader()]);
 
         {
-            let grid = this.createElement("div", "ui grid");
+            const grid = this.createElement("div", "ui grid");
 
             {
-                let avatarColumn = this.createElement(
+                const avatarColumn = this.createElement(
                     "div",
                     `${this.avatarColumnWide} wide center aligned column`
                 );
@@ -74,7 +74,7 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
             }
 
             {
-                let statsColumn = this.createElement(
+                const statsColumn = this.createElement(
                     "div",
                     `${this.statsColumnWide} wide left aligned column`
                 );
@@ -110,14 +110,14 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
     }
 
     protected _createCardContentTiny(): HTMLElement {
-        const segment_style = "ui vertical basic compact segment";
-        let content = this.createContentElement([this.createCardHeader()]);
+        const segmentStyle = "ui vertical basic compact segment";
+        const content = this.createContentElement([this.createCardHeader()]);
 
         {
-            let grid = this.createElement("div", "ui grid");
+            const grid = this.createElement("div", "ui grid");
 
             {
-                let avatarColumn = this.createElement(
+                const avatarColumn = this.createElement(
                     "div",
                     `${this.avatarColumnWide} wide center aligned column`
                 );
@@ -127,12 +127,12 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
             }
 
             {
-                let userInfoColumn = this.createElement("div", `nine wide left aligned column`);
+                const userInfoColumn = this.createElement("div", "nine wide left aligned column");
                 userInfoColumn.appendChild(this.createUserInfoList());
                 grid.appendChild(userInfoColumn);
             }
 
-            let segment = this.createElement("div", segment_style);
+            const segment = this.createElement("div", segmentStyle);
             segment.appendChild(grid);
 
             content.appendChild(segment);
@@ -141,7 +141,7 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
         {
             const bioElement = this.createDescription(this.getCardData("description"));
             if (bioElement) {
-                let segment = this.createElement("div", segment_style);
+                const segment = this.createElement("div", segmentStyle);
                 segment.appendChild(bioElement);
 
                 content.appendChild(segment);
@@ -156,7 +156,7 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
     }
 
     protected createAvatar(): HTMLElement {
-        let avatar = this.createImageElement(
+        const avatar = this.createImageElement(
             this.getCardData("avatar_url"),
             "ui medium rounded image"
         );
@@ -182,7 +182,7 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
             return null;
         }
 
-        let company = this.createElement("div", className);
+        const company = this.createElement("div", className);
         company.title = "Company";
         company.appendChild(this.createElement("i", "users icon"));
         company.appendChild(
@@ -199,7 +199,7 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
             return null;
         }
 
-        let location = this.createElement("div", className);
+        const location = this.createElement("div", className);
         location.title = "Location";
         location.appendChild(this.createElement("i", "marker icon"));
         location.appendChild(
@@ -216,7 +216,7 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
             return null;
         }
 
-        let blogLink = this.createAnchorElement(url, "content");
+        const blogLink = this.createAnchorElement(url, "content");
         blogLink.appendChild(this._doc.createTextNode(this.escapeHtml(url)));
 
         return this.createElementWithChild(className, [
@@ -229,13 +229,13 @@ export class AbstractUserOrgCardGerator extends AbstractCardGerator {
         return super._createEmailElement(this.getCardData("email"), className);
     }
 
-    protected _createInfoList(displayMapping: Object, size: UiSize = null): HTMLElement {
+    protected _createInfoList(displayMapping: object, size: UiSize = null): HTMLElement {
         if (size === null) {
             size = this.infoSize;
         }
 
         const itemClassName = "item";
-        let infoList = this.createElement("div", `ui ${size} list`);
+        const infoList = this.createElement("div", `ui ${size} list`);
 
         if (displayMapping["company"]) {
             const element = this.createCompanyElement(itemClassName);

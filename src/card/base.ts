@@ -36,14 +36,14 @@ export class AbstractCardGerator implements CardGeratorInterface {
 
     constructor(
         protected _doc: Document,
-        protected _cardData: Object,
+        protected _cardData: object,
         private _iframeWidth: number,
         private _color: string,
         protected _emojiProcessor: EmojiProcessorInterface
     ) {}
 
     public createCard(uniqueFrameNumber: number): HTMLIFrameElement {
-        let cardFrame = this._doc.createElement("iframe");
+        const cardFrame = this._doc.createElement("iframe");
 
         cardFrame.id = `__ghscard_iframe${uniqueFrameNumber}__`;
         cardFrame.scrolling = "no";
@@ -53,7 +53,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
         // cardFrame.style.overflow = "visible";
         // this.appendCardCss(cardFrame.id);
 
-        let iframeBody = this._doc.createElement("body");
+        const iframeBody = this._doc.createElement("body");
         iframeBody.appendChild(this.createCardElement());
         iframeBody.appendChild(this.createScriptElement());
 
@@ -63,16 +63,16 @@ export class AbstractCardGerator implements CardGeratorInterface {
         return cardFrame;
     }
 
-    protected isDisplayChart(): Boolean {
+    protected isDisplayChart(): boolean {
         return false;
     }
 
-    protected isDisplayCommitChart(): Boolean {
+    protected isDisplayCommitChart(): boolean {
         return false;
     }
 
     private createCardElement(): HTMLElement {
-        let card: HTMLElement = this.createElement("div", `ui ${this.getColor()} card`);
+        const card: HTMLElement = this.createElement("div", `ui ${this.getColor()} card`);
         card.id = CARD_ELEMENT_ID;
         card.style.margin = `${Margin.CARD_CONTENT}px`;
         card.appendChild(this.createCardContent());
@@ -106,7 +106,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     private createHeaderElement(): HTMLElement {
-        let header = this._doc.createElement("header");
+        const header = this._doc.createElement("header");
         header.appendChild(this.createScriptSrcElement(JsUrl.JQUERY));
         header.appendChild(
             this.createStyleSheetLinkElement(this._doc, DEFAULT_SEMANTIC_UI_CSS_URL)
@@ -127,7 +127,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     private createCssElement(doc: Document, cssText: string) {
-        let css = doc.createElement("style");
+        const css = doc.createElement("style");
         css.type = "text/css";
         css.appendChild(doc.createTextNode(cssText));
 
@@ -135,7 +135,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     private createStyleSheetLinkElement(doc: Document, href: string) {
-        let link = doc.createElement("link");
+        const link = doc.createElement("link");
         link.rel = "stylesheet";
         link.href = href;
 
@@ -143,14 +143,14 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     protected createElement(tagName: string, className: string): HTMLElement {
-        let element: HTMLElement = this._doc.createElement(tagName);
+        const element: HTMLElement = this._doc.createElement(tagName);
         element.className = className;
 
         return element;
     }
 
     protected createAnchorElement(href: string, className: string = null): HTMLAnchorElement {
-        let element: HTMLAnchorElement = this._doc.createElement("a");
+        const element: HTMLAnchorElement = this._doc.createElement("a");
         if (className) {
             element.className = className;
         }
@@ -161,7 +161,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     protected createImageElement(src: string, className: string = null): HTMLImageElement {
-        let element: HTMLImageElement = this._doc.createElement("img");
+        const element: HTMLImageElement = this._doc.createElement("img");
         if (className) {
             element.className = className;
         }
@@ -171,7 +171,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     protected createLabelElement(text: string, size: UiSize): HTMLElement {
-        let label = this.createElement("div", `ui circular horizontal ${size} label`);
+        const label = this.createElement("div", `ui circular horizontal ${size} label`);
 
         label.style.marginLeft = `${Margin.LABEL}px`;
         label.appendChild(this._doc.createTextNode(text));
@@ -180,7 +180,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     protected createElementWithChild<T>(className: string, childNodeArray: Array<T>): HTMLElement {
-        let element = this.createElement("div", className);
+        const element = this.createElement("div", className);
 
         Array.prototype.forEach.call(childNodeArray, (childNode) => {
             if (childNode) {
@@ -192,7 +192,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     protected createContentElement<T>(childNodeArray: Array<T>): HTMLElement {
-        let content = this.createElement("div", "content");
+        const content = this.createElement("div", "content");
 
         Array.prototype.forEach.call(childNodeArray, (childNode) => {
             if (childNode) {
@@ -203,19 +203,19 @@ export class AbstractCardGerator implements CardGeratorInterface {
         return content;
     }
 
-    protected createColumn(element: HTMLElement, wide: string = ""): HTMLElement {
-        let column = this.createElement("div", `${wide} column`);
+    protected createColumn(element: HTMLElement, wide = ""): HTMLElement {
+        const column = this.createElement("div", `${wide} column`);
         column.appendChild(element);
 
         return column;
     }
 
-    protected createDescription(text: string) {
+    protected createDescription(text: string): HTMLElement {
         if (!text) {
             return null;
         }
 
-        let descElement = this.createElement("div", "description");
+        const descElement = this.createElement("div", "description");
         descElement.innerHTML = this._emojiProcessor.processEmoji(this.escapeHtml(text));
 
         return descElement;
@@ -227,16 +227,16 @@ export class AbstractCardGerator implements CardGeratorInterface {
         iconName: string,
         className: string
     ): HTMLElement {
-        const datetime_value = this._cardData[key];
-        if (!datetime_value) {
+        const datetimeValue = this._cardData[key];
+        if (!datetimeValue) {
             return null;
         }
 
-        let datetimeElement: HTMLElement = this.createElement("div", className);
+        const datetimeElement: HTMLElement = this.createElement("div", className);
         datetimeElement.appendChild(this.createElement("i", iconName));
         datetimeElement.appendChild(
             this.createContentElement([
-                this._doc.createTextNode(`${prefix} ${dayjs(datetime_value).format("YYYY-MM-DD")}`),
+                this._doc.createTextNode(`${prefix} ${dayjs(datetimeValue).format("YYYY-MM-DD")}`),
             ])
         );
 
@@ -244,7 +244,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     protected createPopup(): HTMLElement {
-        let popup = this.createElement("div", "ui special popup");
+        const popup = this.createElement("div", "ui special popup");
         popup.appendChild(this.createPopupInfoList());
 
         return popup;
@@ -255,18 +255,18 @@ export class AbstractCardGerator implements CardGeratorInterface {
     }
 
     private createScriptElement(): HTMLElement {
-        const scriptContent = [`$(window).on("load", function() {`, this.getScript(), `});`].join(
+        const scriptContent = ["$(window).on(\"load\", function() {", this.getScript(), "});"].join(
             "\n"
         );
 
-        let scriptElement = this._doc.createElement("script");
+        const scriptElement = this._doc.createElement("script");
         scriptElement.innerHTML = scriptContent;
 
         return scriptElement;
     }
 
     private createScriptSrcElement(src: string, charset = null) {
-        let script = this._doc.createElement("script");
+        const script = this._doc.createElement("script");
         script.src = src;
 
         if (charset) {
@@ -281,10 +281,10 @@ export class AbstractCardGerator implements CardGeratorInterface {
             return null;
         }
 
-        let mailLink = this.createAnchorElement(`mailto:${emailAddress}`, "content");
+        const mailLink = this.createAnchorElement(`mailto:${emailAddress}`, "content");
         mailLink.appendChild(this._doc.createTextNode(this.escapeHtml(emailAddress)));
 
-        let email = this.createElement("div", className);
+        const email = this.createElement("div", className);
         email.title = "email address";
         email.appendChild(this.createElement("i", "mail icon"));
         email.appendChild(mailLink);
@@ -292,7 +292,7 @@ export class AbstractCardGerator implements CardGeratorInterface {
         return email;
     }
 
-    protected escapeHtml(text: string) {
+    protected escapeHtml(text: string): string {
         return text
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")

@@ -6,7 +6,7 @@ export class AbstractOrgCardGerator extends AbstractUserOrgCardGerator {
     }
 
     protected createCardHeader(): HTMLElement {
-        let header = this.createAnchorElement(
+        const header = this.createAnchorElement(
             this.htmlUrl,
             `ui ${this.headerSize} dividing header`
         );
@@ -14,7 +14,7 @@ export class AbstractOrgCardGerator extends AbstractUserOrgCardGerator {
         if (this.getCardData("name")) {
             header.appendChild(this._doc.createTextNode(this.getCardData("name")));
 
-            let subheader: HTMLElement = this.createElement("div", "sub header");
+            const subheader: HTMLElement = this.createElement("div", "sub header");
             subheader.appendChild(this._doc.createTextNode(this.getCardData("id")));
 
             header.appendChild(subheader);
@@ -26,10 +26,10 @@ export class AbstractOrgCardGerator extends AbstractUserOrgCardGerator {
     }
 
     protected createStatisticsElement(): HTMLElement {
-        let items = this.createElement("div", `ui ${this.infoSize} aligned selection list`);
+        const items = this.createElement("div", `ui ${this.infoSize} aligned selection list`);
 
         if (Number(this.publicRepos) > 0) {
-            let item = this.createAnchorElement(`${this.htmlUrl}?tab=repositories`, "item");
+            const item = this.createAnchorElement(`${this.htmlUrl}?tab=repositories`, "item");
             /*
             item.appendChild(this.createElement("i", "book icon"));
             item.appendChild(this.createContentElement([
@@ -44,7 +44,7 @@ export class AbstractOrgCardGerator extends AbstractUserOrgCardGerator {
         }
 
         if (Number(this.getCardData("public_members_count")) > 0) {
-            let item = this.createAnchorElement(
+            const item = this.createAnchorElement(
                 `//github.com/orgs/${this.getCardData("id")}/people`,
                 "item"
             );

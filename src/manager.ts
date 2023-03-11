@@ -1,5 +1,5 @@
 import { CardGeratorInterface } from "./card/interface";
-import { AVATAR_ELEMENT_ID, DEFAULT_SEMANTIC_UI_CSS_URL, Margin, JsUrl } from "./const";
+import { Margin } from "./const";
 import { EmojiProcessorFactory } from "./emoji";
 import { createCardGenerator } from "./factory";
 import { CardStyle } from "./types";
@@ -66,12 +66,12 @@ export class CardGeneratorManager {
                     return;
                 }
 
-                let cardFrame = cardGenerator.createCard(frameCount);
+                const cardFrame = cardGenerator.createCard(frameCount);
 
                 frameCount++;
                 cardElement.parentNode.insertBefore(cardFrame, cardElement);
                 $(cardFrame).on("load", () => {
-                    let card = cardFrame.contentWindow.document.getElementsByTagName("div")[0];
+                    const card = cardFrame.contentWindow.document.getElementsByTagName("div")[0];
 
                     if (card === undefined) {
                         return;

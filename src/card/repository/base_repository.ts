@@ -1,4 +1,4 @@
-import { AVATAR_ELEMENT_ID, CARD_ELEMENT_ID } from "../../const";
+import { AVATAR_ELEMENT_ID } from "../../const";
 import { EmojiProcessorInterface } from "../../emoji";
 import { ElementDisplay, UiColor, UiSize, RepoCardDataKey } from "../../types";
 import { AbstractCardGerator } from "../base";
@@ -54,7 +54,7 @@ export class AbstractRepositoryCardGerator extends AbstractCardGerator {
 
     constructor(
         doc: Document,
-        cardData: Object,
+        cardData: object,
         iframeWidth: number,
         color: string,
         protected chartDisplay: ElementDisplay,
@@ -103,7 +103,7 @@ export class AbstractRepositoryCardGerator extends AbstractCardGerator {
         this.colorMap["Shell"] = "green";
     }
 
-    protected isDisplayChart(): Boolean {
+    protected isDisplayChart(): boolean {
         if (this.chartDisplay === "none") {
             return false;
         }
@@ -111,11 +111,11 @@ export class AbstractRepositoryCardGerator extends AbstractCardGerator {
         return true;
     }
 
-    protected isDisplayCommitChart(): Boolean {
+    protected isDisplayCommitChart(): boolean {
         return this.isDisplayChart() && Number(this.getCardData("commits_last_year")) > 0;
     }
 
-    protected isDisplayTopic(): Boolean {
+    protected isDisplayTopic(): boolean {
         if (this.topicDisplay === "none") {
             return false;
         }
@@ -130,15 +130,15 @@ export class AbstractRepositoryCardGerator extends AbstractCardGerator {
     protected getScript(): string {
         const popupScript = [
             `$('#${AVATAR_ELEMENT_ID}.ui.image').popup({`,
-            `on: 'hover',`,
-            `inline: true,`,
-            `});`,
+            "on: 'hover',",
+            "inline: true,",
+            "});",
         ].join("\n");
 
-        let scriptArray = [popupScript];
+        const scriptArray = [popupScript];
 
         if (this.isDisplayChart()) {
-            scriptArray.push(`$('.ui.accordion').accordion();`);
+            scriptArray.push("$('.ui.accordion').accordion();");
             scriptArray.push(this.getGlobalChartOption());
             scriptArray.push(this.createIssuesLabeChartScript());
             scriptArray.push(this.createLanguageLabeChartScript());
@@ -155,7 +155,7 @@ export class AbstractRepositoryCardGerator extends AbstractCardGerator {
         return "Chart.defaults.global.defaultFontSize = 10;";
     }
 
-    private getPieChartOption(): Object {
+    private getPieChartOption(): object {
         return {
             responsive: false,
             legend: {
@@ -168,9 +168,9 @@ export class AbstractRepositoryCardGerator extends AbstractCardGerator {
     }
 
     private createIssuesLabeChartScript(): string {
-        let issuesLabelArray = [];
+        const issuesLabelArray = [];
         if (this.getCardData("has_issues")) {
-            for (let issueLabel of this.getCardData("open_issues")["labels"]) {
+            for (const issueLabel of this.getCardData("open_issues")["labels"]) {
                 issuesLabelArray.push(`'${issueLabel}'`);
             }
         }
@@ -196,8 +196,8 @@ if (issuesCanvas) {
     }
 
     private createLanguageLabeChartScript(): string {
-        let languageLabelArray = [];
-        for (let languageLabel of this.getCardData("languages")["labels"]) {
+        const languageLabelArray = [];
+        for (const languageLabel of this.getCardData("languages")["labels"]) {
             languageLabelArray.push(`'${languageLabel}'`);
         }
 
@@ -225,7 +225,7 @@ if (languageCanvas) {
 
     private createCommitChartScript(): string {
         let fetchDate = dayjs(this.getCardData("fetched_at"));
-        let dateArray = [];
+        const dateArray = [];
 
         for (let i = 0; i < 52; i++) {
             console.log(fetchDate.format("YYYY-MM-DD"));
@@ -280,7 +280,7 @@ if (commitsCanvas) {
     }
 
     protected createCardHeader(): HTMLElement {
-        let header = this.createElement("div", `ui dividing ${this.headerSize} header`);
+        const header = this.createElement("div", `ui dividing ${this.headerSize} header`);
         header.appendChild(this.createOwnerAvatar());
         header.appendChild(this.createPopup());
 
@@ -289,14 +289,14 @@ if (commitsCanvas) {
             subheaderText = this.getCardData("organization")["name"];
         }
         if (subheaderText != null) {
-            let subheader = this.createElement("div", "sub header");
+            const subheader = this.createElement("div", "sub header");
             subheader.appendChild(this._doc.createTextNode(subheaderText));
 
             header.appendChild(this.createContentElement([this.createRepositoryName(), subheader]));
         }
 
-        const latest_tag = this.getCardData("latest_tag");
-        if (typeof latest_tag === "string" && latest_tag) {
+        const latestTag = this.getCardData("latest_tag");
+        if (typeof latestTag === "string" && latestTag) {
             header.appendChild(this.createTagLabel());
         }
 
@@ -350,7 +350,7 @@ if (commitsCanvas) {
     protected createCardContent(): HTMLElement {
         const segmentClassName = "ui vertical basic compact segment";
 
-        let childArray = [
+        const childArray = [
             this.createCardHeader(),
             this.createElementWithChild(segmentClassName, [
                 this.createDescription(this.getDescription()),
@@ -358,7 +358,7 @@ if (commitsCanvas) {
         ];
 
         {
-            let infoArray = [];
+            const infoArray = [];
 
             const cardInfoList = this.createCardInfoList();
             if (cardInfoList) {
@@ -382,8 +382,8 @@ if (commitsCanvas) {
         }
 
         if (this.isDisplayTopic()) {
-            let topicsLabelList = [];
-            for (let labelText of this.getCardData("topics")) {
+            const topicsLabelList = [];
+            for (const labelText of this.getCardData("topics")) {
                 topicsLabelList.push(this.createTopicLabelElement(labelText, this.topicSize));
             }
             if (topicsLabelList.length > 0) {
@@ -395,7 +395,7 @@ if (commitsCanvas) {
     }
 
     private createCommitChart(): HTMLElement {
-        let canvas = this._doc.createElement("canvas");
+        const canvas = this._doc.createElement("canvas");
         canvas.id = CanvasId.COMMITS_CHART;
         canvas.height = this.lineChartHeight;
 
@@ -403,7 +403,7 @@ if (commitsCanvas) {
     }
 
     protected createExtraCardContent(): HTMLElement {
-        let grid = this.createElement("div", "ui equal width center middle aligned grid");
+        const grid = this.createElement("div", "ui equal width center middle aligned grid");
 
         const languageLabel = this.createLanguageLabel();
         if (languageLabel) {
@@ -412,14 +412,14 @@ if (commitsCanvas) {
         grid.appendChild(this.createColumn(this.createStars()));
         grid.appendChild(this.createColumn(this.createForks()));
 
-        let extraContent = this.createElement("div", "extra content");
+        const extraContent = this.createElement("div", "extra content");
         extraContent.appendChild(grid);
 
         return extraContent;
     }
 
     protected createPopupInfoList(): HTMLElement {
-        let displayMapping = {
+        const displayMapping = {
             subscribers_count: true,
             open_issues_count: true,
             branches_count: true,
@@ -432,7 +432,7 @@ if (commitsCanvas) {
     }
 
     protected createCardInfoList(): HTMLElement {
-        let displayMapping = {
+        const displayMapping = {
             repo_homepage: true,
             wiki: true,
             pulls_count: true,
@@ -451,10 +451,10 @@ if (commitsCanvas) {
             return null;
         }
 
-        let accordion = this.createElement("div", "ui accordion");
+        const accordion = this.createElement("div", "ui accordion");
 
         if (this.getCardData("open_issues_count")) {
-            let title = this.createElementWithChild("title", [
+            const title = this.createElementWithChild("title", [
                 this.createElement("i", "dropdown icon"),
                 this._doc.createTextNode("Open issues"),
                 this.createLabelElement(
@@ -464,7 +464,7 @@ if (commitsCanvas) {
             ]);
             accordion.appendChild(title);
 
-            let canvas = this._doc.createElement("canvas");
+            const canvas = this._doc.createElement("canvas");
             canvas.id = CanvasId.ISSUES_CHART;
             canvas.height = this.pieChartHeight;
 
@@ -472,14 +472,14 @@ if (commitsCanvas) {
         }
 
         if (Number(this.getCardData("languages_count")) > 1) {
-            let title = this.createElementWithChild("title", [
+            const title = this.createElementWithChild("title", [
                 this.createElement("i", "dropdown icon"),
                 this._doc.createTextNode("Languages"),
                 this.createLabelElement(String(this.getCardData("languages_count")), this.infoSize),
             ]);
             accordion.appendChild(title);
 
-            let canvas = this._doc.createElement("canvas");
+            const canvas = this._doc.createElement("canvas");
             canvas.id = CanvasId.LANGUAGES_CHART;
             canvas.height = this.pieChartHeight;
 
@@ -493,13 +493,13 @@ if (commitsCanvas) {
         return accordion;
     }
 
-    protected _createInfoList(displayMapping: Object, size: UiSize = null): HTMLElement {
+    protected _createInfoList(displayMapping: object, size: UiSize = null): HTMLElement {
         if (size === null) {
             size = this.infoSize;
         }
 
         const itemClassName = "item";
-        let infoList = this.createElement("div", `ui ${size} list`);
+        const infoList = this.createElement("div", `ui ${size} list`);
 
         if (displayMapping["repo_homepage"]) {
             const element = this.createHomepageElement(itemClassName);
@@ -593,7 +593,7 @@ if (commitsCanvas) {
     }
 
     private createTopicLabelElement(topic: string, size: UiSize): HTMLElement {
-        let label = this.createAnchorElement(
+        const label = this.createAnchorElement(
             `//github.com/search?q=topic%3A${topic}&type=Repositories`,
             `ui blue horizontal basic ${size} label`
         );
@@ -611,7 +611,7 @@ if (commitsCanvas) {
             return null;
         }
 
-        let linkElement = this.createAnchorElement(homepageUrl, "content");
+        const linkElement = this.createAnchorElement(homepageUrl, "content");
         linkElement.title = "Repository homepage";
         linkElement.appendChild(this._doc.createTextNode(this.escapeHtml(linkElement.hostname)));
 
@@ -627,7 +627,7 @@ if (commitsCanvas) {
             return null;
         }
 
-        let linkElement = this.createAnchorElement(`${this.htmlUrl}/wiki`, "content");
+        const linkElement = this.createAnchorElement(`${this.htmlUrl}/wiki`, "content");
         linkElement.title = "Repository wiki";
         linkElement.appendChild(this._doc.createTextNode("Wiki"));
 
@@ -638,7 +638,7 @@ if (commitsCanvas) {
     }
 
     private createWatchersElement(className: string): HTMLElement {
-        let linkElement = this.createAnchorElement(`${this.htmlUrl}/watchers`, "content");
+        const linkElement = this.createAnchorElement(`${this.htmlUrl}/watchers`, "content");
         linkElement.appendChild(this._doc.createTextNode("Watchers"));
         linkElement.appendChild(
             this.createLabelElement(String(this.getCardData("subscribers_count")), this.infoSize)
@@ -651,7 +651,7 @@ if (commitsCanvas) {
     }
 
     private createIssuesElement(className: string): HTMLElement {
-        let linkElement = this.createAnchorElement(`${this.htmlUrl}/issues`, "content");
+        const linkElement = this.createAnchorElement(`${this.htmlUrl}/issues`, "content");
         linkElement.appendChild(this._doc.createTextNode("Issues"));
         linkElement.appendChild(
             this.createLabelElement(String(this.getCardData("open_issues_count")), this.infoSize)
@@ -664,7 +664,7 @@ if (commitsCanvas) {
     }
 
     private createPullsElement(className: string): HTMLElement {
-        let linkElement = this.createAnchorElement(`${this.htmlUrl}/pulls`, "content");
+        const linkElement = this.createAnchorElement(`${this.htmlUrl}/pulls`, "content");
         linkElement.appendChild(this._doc.createTextNode("Pull requests"));
         linkElement.appendChild(
             this.createLabelElement(String(this.getCardData("pulls_count")), this.infoSize)
@@ -677,7 +677,7 @@ if (commitsCanvas) {
     }
 
     private createBranchElement(className: string): HTMLElement {
-        let linkElement = this.createAnchorElement(`${this.htmlUrl}/branches`, "content");
+        const linkElement = this.createAnchorElement(`${this.htmlUrl}/branches`, "content");
         linkElement.appendChild(this._doc.createTextNode("Branches"));
         linkElement.appendChild(
             this.createLabelElement(String(this.getCardData("branches_count")), this.infoSize)
@@ -690,7 +690,7 @@ if (commitsCanvas) {
     }
 
     private createContributorsElement(className: string): HTMLElement {
-        let linkElement = this.createAnchorElement(
+        const linkElement = this.createAnchorElement(
             `${this.htmlUrl}/graphs/contributors`,
             "content"
         );
@@ -712,7 +712,7 @@ if (commitsCanvas) {
             return null;
         }
 
-        let licenseElement: HTMLElement = this.createElement("div", className);
+        const licenseElement: HTMLElement = this.createElement("div", className);
         licenseElement.appendChild(this.createElement("i", "law icon"));
         licenseElement.appendChild(
             this.createContentElement([this._doc.createTextNode(licenseData["spdx_id"])])
@@ -736,14 +736,14 @@ if (commitsCanvas) {
     }
 
     private createOwnerAvatar(): HTMLElement {
-        let avatar = this.createImageElement(this.getCardData("avatar_url"), "ui avatar image");
+        const avatar = this.createImageElement(this.getCardData("avatar_url"), "ui avatar image");
         avatar.id = AVATAR_ELEMENT_ID;
 
         return avatar;
     }
 
     private createTagLabel(): HTMLElement {
-        let tagLabel = this.createAnchorElement(
+        const tagLabel = this.createAnchorElement(
             `${this.htmlUrl}/releases`,
             `ui ${this.releaseTagColor} ${this.versionLabelSize} label`
         );
@@ -761,7 +761,7 @@ if (commitsCanvas) {
             return null;
         }
 
-        let languageElement = this.createElement("div", `ui ${this.getColor()} label`);
+        const languageElement = this.createElement("div", `ui ${this.getColor()} label`);
         languageElement.title = "Language";
         languageElement.appendChild(this._doc.createTextNode(this.language));
 
@@ -769,7 +769,7 @@ if (commitsCanvas) {
     }
 
     private createStars(): HTMLElement {
-        let icon = this.createElement("i", "star black icon");
+        const icon = this.createElement("i", "star black icon");
         icon.title = "Stargazers";
 
         let stargazersLink: HTMLElement;
@@ -786,7 +786,7 @@ if (commitsCanvas) {
     }
 
     private createForks(): HTMLElement {
-        let icon = this.createElement("i", "fork black icon");
+        const icon = this.createElement("i", "fork black icon");
         icon.title = "Forks";
 
         let forksLink: HTMLElement;
@@ -802,5 +802,5 @@ if (commitsCanvas) {
         return forksLink;
     }
 
-    private colorMap: Object;
+    private colorMap: object;
 }

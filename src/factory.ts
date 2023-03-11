@@ -14,7 +14,7 @@ import { CardStyle, CardType, ElementDisplay } from "./types";
 export function createCardGenerator(
     doc: Document,
     cardStyle: CardStyle,
-    cardData: Object,
+    cardData: object,
     iframeWidth: number,
     color: string,
     chartDisplay: ElementDisplay,

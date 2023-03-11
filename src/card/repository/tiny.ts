@@ -43,7 +43,7 @@ export class TinyRepoCardGerator extends AbstractRepositoryCardGerator {
         return ChartSize.Line.Tiny.TICK_FONT_SIZE;
     }
 
-    protected isDisplayChart(): Boolean {
+    protected isDisplayChart(): boolean {
         if (this.chartDisplay === "block") {
             return true;
         }

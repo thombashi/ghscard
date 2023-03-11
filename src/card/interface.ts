@@ -1,3 +1,3 @@
 export interface CardGeratorInterface {
-    createCard(uniqueFrameNumber: number): HTMLIFrameElement;
+    createCard(uniqueFrameNumber: number): HTMLIFrameElement
 }

@@ -1,6 +1,3 @@
-import { AVATAR_ELEMENT_ID } from "../../const";
-import { EmojiProcessorInterface } from "../../emoji";
-import { UiSize, UserCardDataKey } from "../../types";
 import { AbstractUserOrgCardGerator } from "../base_user_org";
 
 export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
@@ -25,7 +22,7 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
     }
 
     protected createCardHeader(): HTMLElement {
-        let header = this.createAnchorElement(
+        const header = this.createAnchorElement(
             this.htmlUrl,
             `ui ${this.headerSize} dividing header`
         );
@@ -33,7 +30,7 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
         if (this.getCardData("profile_name")) {
             header.appendChild(this._doc.createTextNode(this.getCardData("profile_name")));
 
-            let subheader: HTMLElement = this.createElement("div", "sub header");
+            const subheader: HTMLElement = this.createElement("div", "sub header");
             subheader.appendChild(this._doc.createTextNode(this.getCardData("id")));
 
             header.appendChild(subheader);
@@ -46,7 +43,7 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
 
     protected createExtraCardContent(): HTMLElement {
         const organizationsContent = this.createOrganizations();
-        let validContentCount: number = 0;
+        let validContentCount = 0;
 
         if (organizationsContent) {
             validContentCount++;
@@ -56,13 +53,13 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
             return null;
         }
 
-        let extraContent = this.createElement("div", "extra content");
+        const extraContent = this.createElement("div", "extra content");
 
         if (organizationsContent) {
-            let header = this.createElement("div", "ui tiny header");
+            const header = this.createElement("div", "ui tiny header");
             header.appendChild(this._doc.createTextNode("Organizations"));
 
-            let organizationSegment = this.createExtraContentSegment(validContentCount);
+            const organizationSegment = this.createExtraContentSegment(validContentCount);
             organizationSegment.appendChild(header);
             organizationSegment.appendChild(organizationsContent);
 
@@ -81,10 +78,10 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
     }
 
     protected createStatisticsElement(): HTMLElement {
-        let items = this.createElement("div", `ui ${this.infoSize} aligned selection list`);
+        const items = this.createElement("div", `ui ${this.infoSize} aligned selection list`);
 
         if (Number(this.publicRepos) > 0) {
-            let item = this.createAnchorElement(this.htmlUrl + "?tab=repositories", "item");
+            const item = this.createAnchorElement(this.htmlUrl + "?tab=repositories", "item");
             item.appendChild(this._doc.createTextNode("Repositories"));
             item.appendChild(this.createLabelElement(this.publicRepos, this.infoSize));
 
@@ -92,7 +89,7 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
         }
 
         if (Number(this.stars) > 0) {
-            let item = this.createAnchorElement(this.htmlUrl + "?tab=stars", "item");
+            const item = this.createAnchorElement(this.htmlUrl + "?tab=stars", "item");
             item.appendChild(this._doc.createTextNode("Stars"));
             item.appendChild(this.createLabelElement(this.stars, this.infoSize));
 
@@ -100,7 +97,7 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
         }
 
         if (Number(this.followers) > 0) {
-            let item = this.createAnchorElement(this.htmlUrl + "?tab=followers", "item");
+            const item = this.createAnchorElement(this.htmlUrl + "?tab=followers", "item");
             item.appendChild(this._doc.createTextNode("Followers"));
             item.appendChild(this.createLabelElement(this.followers, this.infoSize));
 
@@ -108,7 +105,7 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
         }
 
         if (Number(this.following) > 0) {
-            let item = this.createAnchorElement(this.htmlUrl + "?tab=following", "item");
+            const item = this.createAnchorElement(this.htmlUrl + "?tab=following", "item");
             item.appendChild(this._doc.createTextNode("Following"));
             item.appendChild(this.createLabelElement(this.following, this.infoSize));
 
@@ -116,7 +113,7 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
         }
 
         if (Number(this.publicGists) > 0) {
-            let item = this.createAnchorElement(
+            const item = this.createAnchorElement(
                 `//gist.github.com/${this.getCardData("id")}`,
                 "item"
             );
@@ -130,10 +127,10 @@ export class AbstractUserCardGerator extends AbstractUserOrgCardGerator {
     }
 
     protected createOrganizations(): HTMLElement {
-        let orgList = this.createElement("div", "ui mini rounded images");
+        const orgList = this.createElement("div", "ui mini rounded images");
 
         Array.prototype.forEach.call(this.getCardData("organizations"), (organizationData) => {
-            let orgLink = this.createAnchorElement(organizationData["html_url"], "ui image");
+            const orgLink = this.createAnchorElement(organizationData["html_url"], "ui image");
             orgLink.setAttribute("data-content", organizationData["name"]);
             orgLink.setAttribute("data-position", "top center");
             orgLink.setAttribute("data-variation", "inverted mini");

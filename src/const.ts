@@ -2,9 +2,9 @@ export const AVATAR_ELEMENT_ID = "__avatar_id__";
 export const CARD_ELEMENT_ID = "__card_id__";
 
 export namespace Margin {
-    export const CARD_CONTENT: number = 4;
-    export const FRAME: number = 6;
-    export const LABEL: number = 4;
+    export const CARD_CONTENT = 4;
+    export const FRAME = 6;
+    export const LABEL = 4;
 }
 
 const CDNJS_PREFIX = "//cdnjs.cloudflare.com/ajax/libs";
@@ -19,7 +19,7 @@ export namespace JsUrl {
     export const SEMANTIC_UI: string = `${JSDELIVR_PREFIX}/fomantic-ui@${UI_VERSION}/dist/semantic.min.js`;
 }
 
-export const DEFAULT_SEMANTIC_UI_CSS_URL: string = `${JSDELIVR_PREFIX}/fomantic-ui@${UI_VERSION}/dist/semantic.min.css`;
+export const DEFAULT_SEMANTIC_UI_CSS_URL = `${JSDELIVR_PREFIX}/fomantic-ui@${UI_VERSION}/dist/semantic.min.css`;
 
 export namespace Emoji {
     export const WIDTH = 16;
